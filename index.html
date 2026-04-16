@@ -9,7 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;600&display=swap');
 
 :root {
-    --matrix-green: #20C20E;
+    --matrix-green: #85e67b;
     --terminal-bg: #0A0A0A;
 }
 
@@ -97,128 +97,416 @@ body {
 document.addEventListener('DOMContentLoaded', () => {
     const terminalOutput = document.getElementById('terminal-output');
 
+    /* ---------------- FILE SYSTEM ---------------- */
+    const fileSystem = {
+
+        "skills.txt": `
+  ===================
+|| <span style='color:yellow;'>🧠 My skills:</span> ||
+  ===================
+1. <span style='color:white;'>PHP 8.x</span> - Modern server-side scripting language for building dynamic web applications,
+2. <span style='color:white;'>Laravel</span> - Popular PHP framework for building scalable, secure, and maintainable web applications quickly,
+3. <span style='color:white;'>CakePHP</span> - PHP framework focused on convention over configuration, enabling rapid application development,
+4. <span style='color:white;'>Python</span> - High-level, versatile programming language known for readability, simplicity, and broad ecosystem,
+5. <span style='color:white;'>Gradio</span> - Python framework for easily building and sharing machine learning demos and web interfaces,
+6. <span style='color:white;'>MySQL/MariaDB</span> - Relational database system for managing structured data efficiently
+        `.trim(),
+
+        "experience.txt": `
+  =======================
+|| <span style='color:yellow;'>💼 My Experience:</span> ||
+  =======================
+<span style='color:white;'>RESEARCH SCIENTIST (COMPUTER) @ SAMEER</span>
+Aug 2023 – Current,
+&nbsp;&nbsp;&nbsp;&nbsp;- Developed dynamic web-based applications including a QR code-based Bus Pass System and Manpower Requisition Portal using Laravel.
+&nbsp;&nbsp;&nbsp;&nbsp;- Leveraged Laravel framework for rapid, scalable and maintainable application development.
+<br>
+<span style='color:white;'>RESEARCH SCIENTIST (COMPUTER) @ SAMEER</span>
+July 2021 – July 2023,
+&nbsp;&nbsp;&nbsp;&nbsp;- Implemented CakePHP framework to design and develop an Online Recruitment Portal.
+&nbsp;&nbsp;&nbsp;&nbsp;- Streamlined employee performance appraisal management within the organization.
+<br>
+<span style='color:white;'>GRADUATE APPRENTICESHIP TRAINEE @ SAMEER</span>
+Dec 2018 – Dec 2019,
+&nbsp;&nbsp;&nbsp;&nbsp;- Developed web applications using CakePHP for rapid application development.
+&nbsp;&nbsp;&nbsp;&nbsp;- Built an Online Annual Performance Appraisal Report (APAR) system.
+&nbsp;&nbsp;&nbsp;&nbsp;- Developed an Online Recruitment Portal enabling complete digital recruitment workflow.
+        `.trim(),
+
+        "projects.txt": `
+  =====================
+|| <span style='color:yellow;'>🚀 My Projects:</span> ||
+  =====================
+1. Name of Project: <span style='color:white;'>Online Annual Performance Appraisal Report (APAR) System</span>
+   Description: <span style='color:white;'>Web-based application for managing employee performance appraisals, allowing employees to submit annual work reports to higher authorities based on reporting structure.</span>
+   <br/>
+2. Name of Project: <span style='color:white;'>Online Recruitment Portal</span>
+   Description: <span style='color:white;'>Digitizes the offline recruitment process by allowing candidates to register and apply for multiple positions. Essentially replicates the offline form in digital format.</span>
+   <br/>
+3. Name of Project: <span style='color:white;'>Device Registration Portal</span>
+   Description: <span style='color:white;'>Web application enabling employees to register devices (Desktop, Laptop, Mobile, etc.) MAC addresses for internet access via the organization’s proxy tunnel, digitally recording all device access to the network.</span>
+   <br/>
+4. Name of Project: <span style='color:white;'>Manpower Requisition Portal</span>
+   Description: <span style='color:white;'>Web application for maintaining online records of manpower requests and allocation per project, allowing department heads to acquire manpower based on required qualifications.</span>
+   <br/>
+5. Name of Project: <span style='color:white;'>Bus Pass Portal</span>
+   Description: <span style='color:white;'>Web application for generating QR code-based bus passes for staff and managing daily attendance.</span>
+        `.trim(),
+
+        "contact.txt": `
+  ===============================
+|| <span style='color:yellow;'>📬 You can contact me on:</span> ||
+  ===============================
+🚀 GitHub: <span style='color:white;'><a target='__blank' href='https://github.com/tejasashinde'>https://github.com/tejasashinde</a></span>
+🤗 HuggingFace: <span style='color:white;'><a target='__blank' href='https://huggingface.co/tejasashinde'>https://huggingface.co/tejasashinde</a></span>
+        `.trim(),
+
+        "education.txt": `
+  ======================
+|| 🎓 My Education: ||
+  ======================
+Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
+        `.trim()
+    };
+
+    const commandMeta = {
+        cat: { fileArgIndex: 1 },
+        head: { fileArgIndex: 1 },
+        tail: { fileArgIndex: 1 },
+        wc: { fileArgIndex: 1 },
+        grep: { fileArgIndex: 2 }
+    };
+
+    /* ---------------- COMMANDS ---------------- */
     const commands = {
-        whoami: () => [
-            "<span style='color:yellow;'>Hello, I'm Tejas Shinde</span>",
-            "- PHP Developer with 4+ years of experience crafting robust web applications",
-            "- Specializing in Laravel and CakePHP Frameworks",
-            "- Self-taught Python developer focused on AI-driven applications and real-world tools",
+        exit: () => [
+            "<span style='color:yellow;'>Bye, bye!</span>",
         ],
-        skills: () => [
-            "<span style='color:yellow;'>Here are my skills:</span>",
-            "1. <span style='color:white;'>PHP 8.x</span> - Modern server-side scripting language for building dynamic web applications",
-            "2. <span style='color:white;'>Laravel</span> - Popular PHP framework for building scalable, secure, and maintainable web applications quickly",
-            "3. <span style='color:white;'>CakePHP</span> - PHP framework focused on convention over configuration, enabling rapid application development",
-            "4. <span style='color:white;'>Python</span> - High-level, versatile programming language known for readability, simplicity, and broad ecosystem",
-            "5. <span style='color:white;'>Gradio</span> - Python framework for easily building and sharing machine learning demos and web interfaces",
-            "6. <span style='color:white;'>MySQL/MariaDB</span> - Relational database system for managing structured data efficiently"
-        ],
-        experience: () => [
-            "<span style='color:yellow;'>My Experience:</span>",
-            "<span style='color:white;'>RESEARCH SCIENTIST (COMPUTER) @ SAMEER</span>",
-            "Aug 2023 – Current",
-            "&nbsp;&nbsp;&nbsp;&nbsp;- Developed dynamic web-based applications including a QR code-based Bus Pass System and Manpower Requisition Portal using Laravel.",
-            "&nbsp;&nbsp;&nbsp;&nbsp;- Leveraged Laravel framework for rapid, scalable and maintainable application development.",
-            "<br>",
-            "<span style='color:white;'>RESEARCH SCIENTIST (COMPUTER) @ SAMEER</span>",
-            "July 2021 – July 2023",
-            "&nbsp;&nbsp;&nbsp;&nbsp;- Implemented CakePHP framework to design and develop an Online Recruitment Portal.",
-            "&nbsp;&nbsp;&nbsp;&nbsp;- Streamlined employee performance appraisal management within the organization.",
-            "<br>",
-            "<span style='color:white;'>GRADUATE APPRENTICESHIP TRAINEE @ SAMEER</span>",
-            "Dec 2018 – Dec 2019",
-            "&nbsp;&nbsp;&nbsp;&nbsp;- Developed web applications using CakePHP for rapid application development.",
-            "&nbsp;&nbsp;&nbsp;&nbsp;- Built an Online Annual Performance Appraisal Report (APAR) system.",
-            "&nbsp;&nbsp;&nbsp;&nbsp;- Developed an Online Recruitment Portal enabling complete digital recruitment workflow."
-        ],
-        contact: () => [
-            "<span style='color:yellow;'>You can contact me on:</span>",
-            "🚀 GitHub: <a target='__blank' href='https://github.com/tejasashinde'>https://github.com/tejasashinde</a>",
-            "🤗 HuggingFace: <a target='__blank' href='https://huggingface.co/tejasashinde'>https://huggingface.co/tejasashinde</a>",
-        ],
+
+        ls: () => Object.keys(fileSystem),
+
+        l: () => Object.keys(fileSystem),
+
         help: () => [
-            "<span style='color:yellow;'>Available commands:</span> ",
-            "clear     - Clear this terminal screen",
-            "contact   - Show ways to reach me",
-            "experience - Show my professional experience",
-            "help      - Show this help menu",
-            "projects  - Show my projects",
-            "skills    - Show my technical skills",
-            "whoami    - Show info about me"
+            "<span style='color:yellow;'>Available commands:</span>",
+            "ls / l            - list files",
+            "cat <file>        - view a file",
+            "clear             - clear terminal screen",
+            "history           - show command history",
+            "head <file>       - first 5 lines",
+            "tail <file>       - last 5 lines",
+            "wc <file>         - word count",
+            "grep <term> file  - search in file / grep <term> .",
+            "open github       - open my GitHub",
+            "whoami            - about me",
         ],
-        education: () => [
-            "<span style='color:yellow;'>My Education:</span>",
-            "B.E in Computer Engineering"
-        ],
-        projects: () => [
-            "<span style='color:yellow;'>My Projects:</span>",
-            "<span style='color:white;'>1. <span style='color:yellow;'>Name of Project:</span> Online Annual Performance Appraisal Report (APAR) System</span>",
-            "&emsp;&nbsp;<span style='color:yellow;'>Description:</span> Web-based application for managing employee performance appraisals, allowing employees to submit annual work reports to higher authorities based on reporting structure.",
-            "<br/>",
-            "<span style='color:white;'>2. <span style='color:yellow;'>Name of Project:</span> Online Recruitment Portal</span>",
-            "&emsp;&nbsp;<span style='color:yellow;'>Description:</span> Digitizes the offline recruitment process by allowing candidates to register and apply for multiple positions. Essentially replicates the offline form in digital format.",
-            "<br/>",
-            "<span style='color:white;'>3. <span style='color:yellow;'>Name of Project:</span> Device Registration Portal</span>",
-            "&emsp;&nbsp;<span style='color:yellow;'>Description:</span> Web application enabling employees to register devices (Desktop, Laptop, Mobile, etc.) MAC addresses for internet access via the organization’s proxy tunnel, digitally recording all device access to the network.",
-            "<br/>",
-            "<span style='color:white;'>4. <span style='color:yellow;'>Name of Project:</span> Manpower Requisition Portal</span>",
-            "&emsp;&nbsp;<span style='color:yellow;'>Description:</span> Web application for maintaining online records of manpower requests/allocation per project,allowing department heads to acquire manpower based on required qualifications.",
-            "<br/>",
-            "<span style='color:white;'>5. <span style='color:yellow;'>Name of Project:</span> Bus Pass Portal</span>",
-            "&emsp;&nbsp;<span style='color:yellow;'>Description:</span> Web application for generating QR code based bus passes for staff and managing daily attendance.",
-        ],
+
         clear: () => {
             terminalOutput.innerHTML = '';
             return [];
-        }
+        },
+
+        cat: (args) => {
+            const file = args[0];
+            if (!file) return ["Usage: <span style='color:white;'>cat filename</span>"];
+            if (!fileSystem[file]) return [`cat: ${file}: No such file`];
+            return fileSystem[file].split("\n");
+        },
+
+        pwd: () => ["/home/tejas"],
+
+        echo: (args) => [args.join(" ")],
+
+        date: () => [new Date().toString()],
+
+        uname: () => ["Linux tejas-portfolio 5.15.0-portfolio x86_64 GNU/Linux"],
+
+        history: () => history.map((cmd, i) => `${i + 1}  ${cmd}`),
+
+        head: (args) => {
+            const file = args[0];
+            if (!file || !fileSystem[file]) return ["Usage: <span style='color:white;'>head filename</span>"];
+            return fileSystem[file].split("\n").slice(0, 5);
+        },
+
+        tail: (args) => {
+            const file = args[0];
+            if (!file || !fileSystem[file]) return ["Usage: <span style='color:white;'>tail filename</span>"];
+            const lines = fileSystem[file].split("\n");
+            return lines.slice(-5);
+        },
+
+        wc: (args) => {
+            const file = args[0];
+            if (!file || !fileSystem[file]) return ["Usage: <span style='color:white;'>wc filename</span>"];
+
+            const text = fileSystem[file];
+            const lines = text.split("\n").length;
+            const words = text.split(/\s+/).filter(Boolean).length;
+            const chars = text.length;
+
+            return [`${lines} ${words} ${chars} ${file}`];
+        },
+
+        grep: (args) => {
+            const term = args[0];
+            const file = args[1];
+
+            if (!term || !file || !fileSystem[file]) {
+                return ["Usage: <span style='color:white;'>grep search-term filename</span>"];
+            }
+
+            return fileSystem[file]
+                .split("\n")
+                .filter(line => line.toLowerCase().includes(term.toLowerCase()));
+        },
+
+        open: (args) => {
+            const target = args[0];
+
+            if (target === "github") {
+                window.open("https://github.com/tejasashinde", "_blank");
+                return ["Opening GitHub..."];
+            }
+
+            if (target === "huggingface") {
+                window.open("https://huggingface.co/tejasashinde", "_blank");
+                return ["Opening HuggingFace..."];
+            }
+
+            return ["Usage: <span style='color:white;'>open github | huggingface</span>"];
+        },
+        
+        whoami: () => [
+"████████╗███████╗     &nbsp;&nbsp;&nbsp;&nbsp;██╗ █████╗ ███████╗",
+"╚══██╔══╝██╔════╝     &nbsp;&nbsp;&nbsp;&nbsp;██║██╔══██╗██╔════╝",
+"&nbsp;&nbsp;  ██║   &nbsp;&nbsp;█████╗&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       ██║███████║███████╗",
+"&nbsp;&nbsp;   ██║  &nbsp;&nbsp;██╔══╝  ██   &nbsp;&nbsp;&nbsp;██║██╔══██║╚════██║",
+"&nbsp;&nbsp;   ██║  &nbsp;&nbsp;███████╗╚█████╔╝██║  &nbsp;██║███████║",
+"&nbsp;&nbsp;   ╚═╝   &nbsp;&nbsp;╚══════╝ ╚════╝ ╚═╝  ╚═╝╚══════╝",
+"<span style='color:yellow;'>👋 Hello, I'm Tejas Shinde</span>",
+"- PHP Developer with 4+ years of experience building scalable web applications using Laravel and CakePHP frameworks.",
+"- Currently expanding into Python, focusing on AI-driven applications and practical real-world tools"
+        ],
     };
 
+    function runSingleCommand(cmdLine) {
+        const parts = cmdLine.trim().split(" ");
+        const baseCmd = parts[0];
+        const args = parts.slice(1);
+
+        if (commands[baseCmd]) {
+            return commands[baseCmd](args);
+        } else {
+            return [`bash: ${baseCmd}: command not found`];
+        }
+    }
+
+    /* ---------------- HISTORY ---------------- */
     let history = [];
     let historyIndex = -1;
 
+    /* ---------------- AUTOCOMPLETE ---------------- */
+    const getAllTokens = () => [
+        ...Object.keys(commands),
+        ...Object.keys(fileSystem)
+    ];
+
+    const findMatches = (token, mode = "any") => {
+        const commandsList = Object.keys(commands);
+        const filesList = Object.keys(fileSystem);
+
+        let pool = [];
+
+        if (mode === "command") pool = commandsList;
+        else if (mode === "file") pool = filesList;
+        else pool = [...commandsList, ...filesList];
+
+        return pool.filter(item =>
+            item.toLowerCase().startsWith(token.toLowerCase())
+        );
+    };
+
+    /* ---------------- INPUT LINE ---------------- */
     const createInputLine = () => {
         const line = document.createElement('div');
         line.className = 'command-line';
-        line.innerHTML = `<span class="prompt">></span>
-            <input type="text" placeholder="Type 'help' to see available commands." class="terminal-input" autocomplete="off" autofocus />`;
+        line.innerHTML = `
+            <span class="prompt">tejas@portfolio:~$</span>
+            <input type="text" class="terminal-input"
+                placeholder="Type 'help'..."
+                autocomplete="off" autofocus />
+        `;
+
         terminalOutput.appendChild(line);
 
         const input = line.querySelector('input');
         input.focus();
 
+        const fileCommands = new Set([
+            "cat",
+            "head",
+            "tail",
+            "wc",
+            "grep"
+        ]);
+
         input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') handleCommand(input.value.trim(), line);
-            else if (e.key === 'ArrowUp') { if(history.length && historyIndex > 0) input.value = history[--historyIndex]; }
-            else if (e.key === 'ArrowDown') { if(history.length && historyIndex < history.length-1) input.value = history[++historyIndex]; else input.value=''; }
+
+            if (e.key === 'Tab') e.preventDefault();
+
+            /* ENTER */
+            if (e.key === 'Enter') {
+                handleCommand(input.value.trim(), line);
+            }
+
+            /* HISTORY UP */
+            else if (e.key === 'ArrowUp') {
+                if (history.length && historyIndex > 0) {
+                    input.value = history[--historyIndex];
+                }
+            }
+
+            /* HISTORY DOWN */
+            else if (e.key === 'ArrowDown') {
+                if (history.length && historyIndex < history.length - 1) {
+                    input.value = history[++historyIndex];
+                } else {
+                    input.value = '';
+                }
+            }
+
+            /* Ctrl+l - CLEAR TERMINAL */
+            if (e.ctrlKey && e.key.toLowerCase() === 'l') {
+                e.preventDefault();
+                commands.clear();
+                createInputLine();
+                return;
+            }
+
+            /* TAB AUTOCOMPLETE */
+            else if (e.key === 'Tab') {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const value = input.value.trim();
+                if (!value) return;
+
+                const parts = value.split(" ");
+                const command = parts[0];
+                const lastToken = parts[parts.length - 1];
+
+                const isFirstToken = parts.length === 1;
+
+                let mode = "none";
+
+                if (isFirstToken) {
+                    mode = "command";
+                }
+                else if (commandMeta[command]) {
+
+                    const expectedIndex = commandMeta[command].fileArgIndex;
+
+                    // parts.length - 1 = current argument position
+                    if (parts.length - 1 === expectedIndex) {
+                        mode = "file";
+                    } else {
+                        return;
+                    }
+                }
+                else {
+                    return;
+                }
+
+                const matches = findMatches(lastToken, mode);
+
+                if (matches.length === 1) {
+                    parts[parts.length - 1] = matches[0];
+                    input.value = parts.join(" ") + " ";
+                    return;
+                }
+
+                if (matches.length > 1) {
+
+                    const echoLine = document.createElement('div');
+                    echoLine.className = 'command-line echo-command';
+                    echoLine.innerHTML = `<span class="prompt">${getPrompt()}</span> ${value}`;
+
+                    terminalOutput.replaceChild(echoLine, line);
+
+                    const suggestionLine = document.createElement('div');
+                    suggestionLine.className = 'command-line';
+
+                    suggestionLine.innerHTML = `
+                        <span class="prompt"></span>
+                        <pre style="
+                            color:#999;
+                            margin:0;
+                            font-family: 'Source Code Pro', monospace;
+                            white-space: pre;
+                        ">${matches.join('   ')}</pre>
+                    `;
+
+                    terminalOutput.appendChild(suggestionLine);
+
+                    createInputLine();
+
+                    requestAnimationFrame(() => {
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    });
+
+                    return;
+                }
+            }
         });
     };
 
+    const getPrompt = () => "tejas@portfolio:~$";
+
+    /* ---------------- COMMAND HANDLER ---------------- */
     const handleCommand = (cmd, lineElement) => {
         const input = lineElement.querySelector('input');
         input.disabled = true;
 
         const echo = document.createElement('div');
         echo.className = 'command-line echo-command';
-        echo.innerHTML = `<span class="prompt">></span> ${cmd}`;
+        echo.innerHTML = `<span class="prompt">${getPrompt()}</span> ${cmd}`;
         terminalOutput.replaceChild(echo, lineElement);
 
-        if(cmd) { history.push(cmd); historyIndex = history.length; }
+        if (cmd) {
+            history.push(cmd);
+            historyIndex = history.length;
+        }
 
-        const responseLines = commands[cmd] ? commands[cmd]() : ["Command not recognized. Type 'help' for a list of commands."];
-        responseLines.forEach(text => {
-            const resp = document.createElement('div');
-            resp.className = 'response';
-            resp.innerHTML = `<p>${text}</p>`;
-            terminalOutput.appendChild(resp);
-        });
+        // SPLIT BY &&
+        const pipeline = cmd.split("&&").map(c => c.trim()).filter(Boolean);
 
+        let lastOutput = [];
+
+        for (let i = 0; i < pipeline.length; i++) {
+            const result = runSingleCommand(pipeline[i]);
+
+            // print output immediately
+            result.forEach(text => {
+                const resp = document.createElement('div');
+                resp.className = 'response';
+                resp.innerHTML = `<p>${text}</p>`;
+                terminalOutput.appendChild(resp);
+            });
+
+            lastOutput = result;
+        }
         createInputLine();
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        requestAnimationFrame(() => {
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        });
     };
 
+    /* ---------------- BOOT ---------------- */
     const welcome = document.createElement('div');
     welcome.className = 'response';
-    welcome.innerHTML = `<p style="color: yellow;">Welcome! You’ve entered my terminal playground. Start typing to discover more about me.</p>`;
+    welcome.innerHTML = `<p style="color: yellow;">Welcome! You’ve entered my terminal playground.</p>`;
+
     terminalOutput.appendChild(welcome);
 
     createInputLine();
