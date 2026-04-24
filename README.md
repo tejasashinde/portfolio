@@ -1,6 +1,6 @@
 # 🌐 Personal Portfolio
 
-Hey 👋 I’m **Tejas Shinde**, and this is my interactive terminal-style portfolio.
+This repo represents my interactive terminal-style portfolio.
 
 Instead of a traditional website, I wanted to build something that reflects how many developers naturally enjoy working - inside a terminal. So this portfolio is designed as a **bash-like experience** in the browser, where you can explore content using familiar command-line interactions.
 
