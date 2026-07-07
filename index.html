@@ -1075,6 +1075,95 @@ a {
         background: linear-gradient(180deg, #f4f4f4 0%, #ececec 100%);
     }
 
+    .files-rename-popover {
+        position: absolute;
+        top: 0.85rem;
+        left: 50%;
+        width: min(16rem, calc(100vw - 2rem));
+        transform: translateX(-50%);
+        border-radius: 1rem;
+        background: #1e1d22;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+        padding: 1rem 1rem 1.1rem;
+        pointer-events: auto;
+    }
+
+    .files-rename-popover::before {
+        content: "";
+        position: absolute;
+        top: -0.48rem;
+        left: 50%;
+        width: 0.95rem;
+        height: 0.95rem;
+        transform: translateX(-50%) rotate(45deg);
+        background: #1e1d22;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .files-rename-popover__title {
+        margin: 0 0 0.9rem;
+        color: #ffffff;
+        font-size: 0.82rem;
+        line-height: 1.2;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .files-rename-popover__input {
+        width: 100%;
+        min-height: 2.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.45rem;
+        background: #2a2930;
+        color: #ffffff;
+        font-size: 0.96rem;
+        line-height: 1.3;
+        padding: 0.5rem 0.72rem;
+        box-sizing: border-box;
+        outline: none;
+    }
+
+    .files-rename-popover__input::selection {
+        background: #f36d1f;
+        color: #ffffff;
+    }
+
+    .files-rename-popover__input:focus {
+        border-color: rgba(255, 255, 255, 0.18);
+        box-shadow: 0 0 0 2px rgba(243, 109, 31, 0.18);
+    }
+
+    .files-rename-popover__actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 0.9rem;
+    }
+
+    .files-rename-popover__button {
+        min-width: 5.6rem;
+        min-height: 2.3rem;
+        border: 0;
+        border-radius: 0.45rem;
+        background: #179b34;
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .files-rename-popover__button:hover,
+    .files-rename-popover__button:focus-visible {
+        background: #1cb13e;
+        transform: translateY(-1px);
+        outline: none;
+    }
+
     .dock {
         position: fixed;
         top: var(--topbar-height);
@@ -1149,6 +1238,11 @@ a {
     transition: transform 180ms ease, background 180ms ease;
 }
 
+.dock-item.is-running .dock-item__button::before {
+    background: rgba(255, 255, 255, 0.26);
+    transform: translateY(-50%) scaleY(1);
+}
+
 .dock-item.is-active .dock-item__button::before {
     background: var(--accent-orange);
     transform: translateY(-50%) scaleY(1);
@@ -1163,10 +1257,8 @@ a {
     font-size: 1.7rem;
     font-weight: 700;
     color: #fff;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.18)), var(--icon-bg, #505050);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.18),
-        0 10px 20px rgba(0, 0, 0, 0.22);
+    background: transparent;
+    box-shadow: none;
 }
 
 .dock-item__icon--mono {
@@ -1184,8 +1276,8 @@ a {
 
 .dock-item__icon svg,
 .app-tile__icon svg {
-    width: 72%;
-    height: 72%;
+    width: 100%;
+    height: 100%;
     display: block;
     color: currentColor;
 }
@@ -1213,7 +1305,7 @@ a {
     grid-template-columns: repeat(3, 0.33rem);
     gap: 0.22rem;
     place-content: center;
-    background: linear-gradient(135deg, #757575, #4a4a4a);
+    background: transparent;
 }
 
 .dock-item__icon--grid span {
@@ -1256,20 +1348,22 @@ a {
 .activities-overview__stage,
 .app-overview__panel {
     position: relative;
-    width: min(100%, 78rem);
-    min-height: calc(100vh - var(--topbar-height) - 2.4rem);
-    height: 100%;
-    padding: 1rem 0 0;
+    width: min(100%, 100%);
+    min-height: calc(100vh - var(--topbar-height) - 1.5rem);
+    height: calc(100vh - var(--topbar-height) - 1.5rem);
+    padding: 0.25rem 0 0.65rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    overflow: hidden;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .activities-overview__preview {
     width: min(100%, calc(100vw - var(--dock-width) - 1.5rem));
-    min-height: clamp(14rem, 22vw, 18rem);
+    min-height: clamp(10rem, 16vw, 13rem);
     align-self: stretch;
     justify-content: center;
     display: flex;
@@ -1277,7 +1371,7 @@ a {
     justify-content: center;
     position: relative;
     isolation: isolate;
-    padding: 0.35rem 0;
+    padding: 0.15rem 0 0;
 }
 
 .activities-overview__preview::before {
@@ -1320,10 +1414,12 @@ a {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
     gap: 1.1rem 1.15rem;
-    flex: 1 1 auto;
+    flex: none;
     min-height: 0;
-    width: min(100%, 76rem);
+    width: 100%;
+    max-width: none;
     margin: 0 auto;
+    padding: 0.05rem 0 0.65rem;
     opacity: 0;
     transform: translateY(0.9rem);
     align-content: start;
@@ -1686,8 +1782,8 @@ a {
 }
 
 .desktop-window.is-minimized {
-    opacity: 0;
-    transform: translateY(0.8rem) scale(0.98);
+    display: none !important;
+    pointer-events: none !important;
 }
 
 .desktop-window:focus-within,
@@ -1706,6 +1802,13 @@ a {
 .desktop-window--editor {
     border-color: rgba(255, 255, 255, 0.08);
     background: #252528;
+    box-shadow: 0 28px 62px rgba(10, 5, 16, 0.45);
+    isolation: isolate;
+}
+
+.desktop-window--files {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: #ece8ee;
     box-shadow: 0 28px 62px rgba(10, 5, 16, 0.45);
     isolation: isolate;
 }
@@ -2462,6 +2565,510 @@ a {
     overflow: hidden;
     background: #252528;
     color: #edf1f7;
+}
+
+.window-body--files {
+    padding: 0;
+    overflow: hidden;
+    background: #f5f3f7;
+    color: #1d1d20;
+}
+
+.files-shell {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: #f6f4f8;
+    color: #202025;
+}
+
+.files-toolbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 3.55rem;
+    padding: 0.55rem 0.85rem 0.55rem 0.9rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f1f1f1 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.files-toolbar__left,
+.files-toolbar__center,
+.files-toolbar__right {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.files-toolbar__center {
+    justify-content: flex-start;
+}
+
+.files-toolbar__app {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.62rem;
+    color: #23232a;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+}
+
+.files-toolbar__app-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #e56b1f;
+}
+
+.files-toolbar__app-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.files-toolbar__nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.files-toolbar__button {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.58rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+    color: #454051;
+    cursor: pointer;
+    transition: background 140ms ease, transform 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.files-toolbar__button svg {
+    width: 1rem;
+    height: 1rem;
+    display: block;
+}
+
+.files-toolbar__button:hover,
+.files-toolbar__button:focus-visible,
+.files-toolbar__button.is-active {
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+    color: #2f2851;
+    border-color: rgba(0, 0, 0, 0.18);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.files-toolbar__button[disabled] {
+    opacity: 0.38;
+    cursor: default;
+    transform: none;
+}
+
+.files-breadcrumb {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.48rem;
+    max-width: min(100%, 28rem);
+    padding: 0.34rem 0.55rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.45rem;
+    background: linear-gradient(180deg, #f8f8f8 0%, #efefef 100%);
+    color: #2a2532;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.files-breadcrumb__icon {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+    color: #7a6997;
+}
+
+.files-breadcrumb__icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.files-breadcrumb__text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.files-breadcrumb__trail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.files-breadcrumb__crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+    padding: 0.18rem 0.22rem;
+    border: 0;
+    border-radius: 0.3rem;
+    background: transparent;
+    color: #2b2b2b;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.files-breadcrumb__crumb:hover,
+.files-breadcrumb__crumb:focus-visible {
+    background: rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+.files-breadcrumb__crumb.is-current {
+    cursor: default;
+}
+
+.files-breadcrumb__separator {
+    color: rgba(0, 0, 0, 0.42);
+    font-size: 0.95rem;
+    line-height: 1;
+    user-select: none;
+}
+
+.files-toolbar__right {
+    justify-self: end;
+}
+
+.files-toolbar__search-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.files-toolbar__search {
+    width: min(18rem, 36vw);
+    height: 2rem;
+    padding: 0 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.65rem;
+    background: #ffffff;
+    color: #22212b;
+    font-size: 0.92rem;
+    outline: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.files-toolbar__search[hidden] {
+    display: none;
+}
+
+.files-toolbar__search::placeholder {
+    color: rgba(81, 74, 94, 0.52);
+}
+
+.files-toolbar__window-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-left: 0.2rem;
+}
+
+.files-toolbar__window-controls .gedit-window-control {
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: linear-gradient(180deg, #ffffff 0%, #ececec 100%);
+    color: rgba(33, 31, 38, 0.84);
+}
+
+.files-workspace {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 15.25rem minmax(0, 1fr);
+    background: #ffffff;
+}
+
+.files-sidebar {
+    padding: 0.55rem 0.45rem 0.55rem 0.55rem;
+    border-right: 1px solid rgba(49, 38, 63, 0.12);
+    background: linear-gradient(180deg, #ffffff 0%, #f6f6f6 100%);
+    overflow: auto;
+}
+
+.files-sidebar__section {
+    margin-bottom: 0.75rem;
+}
+
+.files-sidebar__heading {
+    display: none;
+}
+
+.files-sidebar__item {
+    display: flex;
+    align-items: center;
+    gap: 0.68rem;
+    width: 100%;
+    margin: 0.05rem 0;
+    padding: 0.48rem 0.6rem;
+    border: 0;
+    border-radius: 0.35rem;
+    background: transparent;
+    color: #1f1f1f;
+    text-align: left;
+    font-size: 0.92rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+.files-sidebar__item:hover,
+.files-sidebar__item:focus-visible {
+    background: rgba(0, 0, 0, 0.05);
+    color: #111111;
+    transform: translateX(1px);
+    outline: none;
+}
+
+.files-sidebar__item.is-active {
+    background: rgba(0, 0, 0, 0.07);
+    color: #111111;
+}
+
+.files-sidebar__icon {
+    width: 1.08rem;
+    height: 1.08rem;
+    flex: 0 0 auto;
+    color: currentColor;
+}
+
+.files-sidebar__icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+    .files-content {
+        min-width: 0;
+        min-height: 0;
+        position: relative;
+        padding: 1rem 1.15rem 1.15rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        background: linear-gradient(180deg, #ffffff 0%, #fcfbfd 100%);
+}
+
+.files-content__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.files-content__title {
+    margin: 0;
+    color: #24212d;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.files-content__summary {
+    color: rgba(67, 60, 79, 0.72);
+    font-size: 0.88rem;
+}
+
+    .files-grid {
+        min-height: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+        gap: 0.9rem 1rem;
+        align-content: start;
+        overflow: auto;
+        padding-right: 0.2rem;
+    }
+
+    .files-rename-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 24;
+        pointer-events: none;
+    }
+
+.files-empty {
+    min-height: 12rem;
+    display: grid;
+    place-items: center;
+    border: 1px dashed rgba(89, 72, 109, 0.18);
+    border-radius: 1rem;
+    background: linear-gradient(180deg, rgba(248, 246, 251, 0.9), rgba(243, 239, 247, 0.82));
+    color: rgba(69, 61, 80, 0.78);
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.files-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 0.5rem 0.55rem;
+    border: 0;
+    border-radius: 1rem;
+    background: transparent;
+    color: #2c2a31;
+    cursor: pointer;
+    transition: background 140ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.files-entry:hover,
+.files-entry:focus-visible {
+    background: rgba(122, 94, 167, 0.08);
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 0 1px rgba(122, 94, 167, 0.12);
+    outline: none;
+}
+
+.files-entry__thumb {
+    width: 5rem;
+    height: 5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.1rem;
+    overflow: hidden;
+}
+
+.files-entry__thumb img,
+.files-entry__thumb svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.files-entry__label {
+    max-width: 100%;
+    color: #2b2731;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.files-entry__meta {
+    color: rgba(76, 68, 90, 0.64);
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.files-statusbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2rem;
+    padding: 0.38rem 0.95rem 0.48rem;
+    border-top: 1px solid rgba(54, 42, 67, 0.08);
+    background: linear-gradient(180deg, #f4f2f5 0%, #ebe8ee 100%);
+    color: rgba(61, 55, 71, 0.74);
+    font-size: 0.8rem;
+}
+
+.files-sidebar__divider {
+    height: 1px;
+    margin: 0.55rem 0.25rem 0.45rem;
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.files-statusbar__selection {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.files-context-menu {
+    position: absolute;
+    z-index: 15;
+    min-width: 12rem;
+    padding: 0.4rem;
+    border: 1px solid rgba(30, 30, 36, 0.12);
+    border-radius: 0.95rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f5f8 100%);
+    box-shadow: 0 18px 42px rgba(15, 12, 20, 0.18);
+    color: #1f1f24;
+}
+
+.files-context-menu[hidden] {
+    display: none;
+}
+
+.files-context-menu__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.72rem;
+    padding: 0.72rem 0.82rem;
+    border: 0;
+    border-radius: 0.72rem;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    font-size: 0.94rem;
+    cursor: pointer;
+}
+
+.files-context-menu__item:hover,
+.files-context-menu__item:focus-visible {
+    background: rgba(118, 88, 168, 0.09);
+    outline: none;
+}
+
+.files-context-menu__item[disabled] {
+    opacity: 0.42;
+    cursor: default;
+}
+
+.files-context-menu__divider {
+    height: 1px;
+    margin: 0.35rem 0.2rem;
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.files-context-menu__item-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: 0 0 auto;
+    color: #7c5fbb;
+}
+
+.files-context-menu__item-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .window-body--music {
@@ -6418,6 +7025,23 @@ body.has-project-lightbox {
         display: none;
     }
 
+    .files-toolbar {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: stretch;
+    }
+
+    .files-toolbar__center {
+        order: 3;
+    }
+
+    .files-toolbar__right {
+        justify-content: space-between;
+    }
+
+    .files-workspace {
+        grid-template-columns: 12.5rem minmax(0, 1fr);
+    }
+
     .projects-shell {
         grid-template-columns: 1fr;
     }
@@ -6499,7 +7123,12 @@ body.has-project-lightbox {
         transform: translateX(-50%) scaleX(0);
     }
 
+    .dock-item.is-running .dock-item__button::before {
+        transform: translateX(-50%) scaleX(1);
+    }
+
     .dock-item.is-active .dock-item__button::before {
+        background: var(--accent-orange);
         transform: translateX(-50%) scaleX(1);
     }
 
@@ -6530,13 +7159,15 @@ body.has-project-lightbox {
 
     .activities-overview__stage,
     .app-overview__panel {
-        min-height: calc(100vh - var(--topbar-height) - 1.9rem);
-        padding: 0.9rem 0.85rem 1.1rem;
+        min-height: calc(100vh - var(--topbar-height) - 1.25rem);
+        height: calc(100vh - var(--topbar-height) - 1.25rem);
+        padding: 0.4rem 0.7rem 0.9rem;
+        gap: 0.28rem;
     }
 
     .activities-overview__preview {
         width: min(100%, 42rem);
-        min-height: clamp(12rem, 20vw, 15rem);
+        min-height: clamp(9rem, 15vw, 12rem);
     }
 
     .activities-overview__preview .window-preview {
@@ -6548,6 +7179,8 @@ body.has-project-lightbox {
         grid-template-columns: repeat(auto-fit, minmax(6.8rem, 1fr));
         gap: 0.65rem 0.6rem;
         margin-top: 0;
+        width: 100%;
+        padding-bottom: 0.35rem;
     }
 
     .app-tile__icon {
@@ -6621,6 +7254,10 @@ body.has-project-lightbox {
     }
 
     .desktop-window--browser {
+        box-shadow: 0 24px 52px rgba(7, 4, 12, 0.42);
+    }
+
+    .desktop-window--files {
         box-shadow: 0 24px 52px rgba(7, 4, 12, 0.42);
     }
 
@@ -6985,12 +7622,22 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         "Currently expanding into Python, focusing on AI-driven applications and practical real-world tools."
     ];
 
+    const customEditorDocuments = new Map();
+
     const textEditorIconSvg = [
         "<svg viewBox='0 0 24 24' aria-hidden='true'>",
         "  <path fill='currentColor' opacity='0.22' d='M5 4h10l4 4v12H5z'/>",
         "  <path fill='currentColor' d='M15 4v4h4z'/>",
         "  <path fill='currentColor' d='M7 8h8v1.6H7zm0 3.8h8v1.6H7zm0 3.8h6v1.6H7z'/>",
         "  <path fill='currentColor' d='m14.1 17.8 4.8-4.8 1.8 1.8-4.8 4.8H14.1z'/>",
+        "</svg>"
+    ].join("");
+
+    const terminalIconSvg = [
+        "<svg viewBox='0 0 100 100' aria-hidden='true' xmlns='http://www.w3.org/2000/svg'>",
+        "  <rect x='8' y='8' width='84' height='84' rx='22' fill='#404046'/>",
+        "  <path d='M30 42l11 10-11 10' fill='none' stroke='#ffffff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/>",
+        "  <path d='M49 62h19' fill='none' stroke='#ffffff' stroke-width='7' stroke-linecap='round'/>",
         "</svg>"
     ].join("");
 
@@ -7041,6 +7688,35 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         "</svg>"
     ].join("");
 
+    const filesFolderSvg = [
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100%' height='100%' aria-hidden='true'>",
+        "  <defs>",
+        "    <filter id='files-folder-shadow' x='-10%' y='-10%' width='130%' height='130%'>",
+        "      <feDropShadow dx='0' dy='2' stdDeviation='1.5' flood-color='#000000' flood-opacity='0.15'/>",
+        "    </filter>",
+        "  </defs>",
+        "  <g filter='url(#files-folder-shadow)'>",
+        "    <path d='M 12 24 C 12 20, 15 17, 19 17 L 36 17 C 41 17, 43 20, 46 24 L 51 31 L 81 31 C 85 31, 88 34, 88 38 L 88 45 L 12 45 Z' fill='#E03E15'/>",
+        "    <path d='M 12 36 C 12 32, 15 29, 19 29 L 81 29 C 85 29, 88 32, 88 36 L 88 76 C 88 80, 85 83, 81 83 L 19 83 C 15 83, 12 80, 12 76 Z' fill='#F2783B'/>",
+        "  </g>",
+        "</svg>"
+    ].join("");
+
+    const filesIconSvg = [
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100%' height='100%' aria-hidden='true'>",
+        "  <defs>",
+        "    <filter id='files-app-icon-shadow' x='-20%' y='-20%' width='140%' height='140%'>",
+        "      <feDropShadow dx='0' dy='2' stdDeviation='1.5' flood-color='#000000' flood-opacity='0.2'/>",
+        "    </filter>",
+        "  </defs>",
+        "  <g filter='url(#files-app-icon-shadow)'>",
+        "    <path d='M 12 24 C 12 20, 15 17, 19 17 L 36 17 C 41 17, 43 20, 46 24 L 51 31 L 81 31 C 85 31, 88 34, 88 38 L 88 45 L 12 45 Z' fill='#E04E1D'/>",
+        "    <path d='M 12 34 C 12 30, 15 27, 19 27 L 81 27 C 85 27, 88 30, 88 34 L 88 76 C 88 80, 85 83, 81 83 L 19 83 C 15 83, 12 80, 12 76 Z' fill='#8E8E8E'/>",
+        "    <rect x='38' y='44' width='24' height='6' rx='2' fill='#FFFFFF'/>",
+        "  </g>",
+        "</svg>"
+    ].join("");
+
     const projectSidebarIcons = {
         apar: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' d='M5 4.5h9l5 5V19.5H5z'/><path fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' d='M14 4.5v5h5'/><path fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' d='M8 12h8M8 15h8'/></svg>",
         recruitment: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' d='M7 4.5h9l3 3V19.5H7z'/><path fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' d='M16 4.5v3h3'/><path fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' d='M10 12h6M10 15h6M10 9h2'/></svg>",
@@ -7082,8 +7758,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     ];
 
     const apps = [
-        { id: "terminal", label: "Terminal", title: "Terminal", icon: ">_", iconClass: "dock-item__icon--mono", iconBg: "linear-gradient(135deg, #5b5b5b, #313131)", kind: "terminal", width: 720, height: 540, top: 28, left: 56 },
+        { id: "terminal", label: "Terminal", title: "Terminal", iconSvg: terminalIconSvg, kind: "terminal", width: 720, height: 540, top: 28, left: 56 },
         { id: "projects", label: "My Projects", title: "Firefox Browser", iconBg: "linear-gradient(135deg, #3a2244, #4d2850)", iconImage: "assets/firefox_logo.png", kind: "browser", page: "projects", width: 960, height: 640, top: 42, left: 110 },
+        { id: "files", label: "Files", title: "Files", iconSvg: filesIconSvg, iconBg: "linear-gradient(135deg, #ffb347, #ea6c21)", kind: "files", width: 960, height: 640, top: 56, left: 132 },
         { id: "rhythmbox", label: "Rhythmbox", title: "Rhythmbox", iconSvg: rhythmboxIconSvg, iconBg: "linear-gradient(135deg, #ffae4b, #f46d16)", kind: "music", width: 1160, height: 760, top: 34, left: 82 },
         { id: "text-editor", label: "Text Editor", title: "Text Editor", iconSvg: textEditorIconSvg, iconBg: "linear-gradient(135deg, #3d84f7, #203a8f)", kind: "editor", width: 980, height: 640, top: 54, left: 160 },
         { id: "mines", label: "Mines", title: "Mines", iconSvg: minesIconSvg, iconBg: "linear-gradient(135deg, #6a6f74, #404449)", kind: "mines", width: 980, height: 660, top: 44, left: 120 },
@@ -7114,6 +7791,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
     let rhythmboxTrackLibrary = [];
     let rhythmboxTrackLibraryPromise = null;
+    let pendingRhythmboxTrackFile = null;
 
     function escapeRhythmboxHtml(value) {
         return String(value ?? "").replace(/[&<>"']/g, (character) => {
@@ -8030,7 +8708,11 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             playRhythmboxTrack(state, track.id);
             return;
         }
-        renderRhythmboxLibrary(state);
+        if (options.render !== false) {
+            renderRhythmboxLibrary(state);
+        } else {
+            syncRhythmboxNowPlaying(state);
+        }
     }
 
     function playRhythmboxTrack(state, trackId) {
@@ -8116,6 +8798,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             selectedTrackId: null,
             currentTrackId: null,
             isPlaying: false,
+            playQueue: [],
             visibleTracks: [],
             libraryLoading: true,
             messageTimer: null,
@@ -8161,6 +8844,13 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 syncRhythmboxNowPlaying(state);
             });
             state.audio.addEventListener("ended", () => {
+                if (state.playQueue && state.playQueue.length) {
+                    const nextQueuedTrackId = state.playQueue.shift();
+                    if (nextQueuedTrackId) {
+                        playRhythmboxTrack(state, nextQueuedTrackId);
+                        return;
+                    }
+                }
                 playRhythmboxRelativeTrack(state, 1);
             });
             state.audio.addEventListener("error", () => {
@@ -8203,11 +8893,12 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             state.tableBody.addEventListener("click", (event) => {
                 const row = event.target.closest("[data-rhythmbox-track]");
                 if (!row || !state.tableBody.contains(row)) return;
-                setRhythmboxSelectedTrack(state, row.getAttribute("data-rhythmbox-track"));
+                setRhythmboxSelectedTrack(state, row.getAttribute("data-rhythmbox-track"), { render: false });
             });
             state.tableBody.addEventListener("dblclick", (event) => {
                 const row = event.target.closest("[data-rhythmbox-track]");
                 if (!row || !state.tableBody.contains(row)) return;
+                event.preventDefault();
                 playRhythmboxTrack(state, row.getAttribute("data-rhythmbox-track"));
             });
         }
@@ -8275,6 +8966,24 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             state.selectedTrackId = loadedTracks.length ? loadedTracks[0].id : null;
             renderRhythmboxLibrary(state);
             hydrateRhythmboxTrackDurations(state);
+            if (pendingRhythmboxTrackFile) {
+                const pendingTrack = findRhythmboxTrackByFile(pendingRhythmboxTrackFile);
+                pendingRhythmboxTrackFile = null;
+                if (pendingTrack) {
+                    if (!state.currentTrackId || !state.isPlaying) {
+                        playRhythmboxTrack(state, pendingTrack.id);
+                    } else if (state.currentTrackId !== pendingTrack.id) {
+                        state.playQueue = state.playQueue || [];
+                        if (!state.playQueue.includes(pendingTrack.id)) {
+                            state.playQueue.push(pendingTrack.id);
+                        }
+                        state.selectedTrackId = pendingTrack.id;
+                        syncRhythmboxNowPlaying(state);
+                        renderRhythmboxLibrary(state);
+                        showRhythmboxMessage(state, "Queued \"" + pendingTrack.title + "\"");
+                    }
+                }
+            }
             if (state.messageEl) {
                 state.messageEl.textContent = "";
             }
@@ -8295,7 +9004,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
     const overviewItems = [
         { id: "calculator", label: "Calculator", meta: "Basic math", icon: "🧮", iconBg: "linear-gradient(135deg, #ffb84d, #ff6a3d)", action: () => openApp("calculator") },
-        { id: "terminal", label: "Terminal", meta: "Portfolio commands", icon: ">_", iconClass: "dock-item__icon--mono", iconBg: "linear-gradient(135deg, #5b5b5b, #313131)", action: () => openApp("terminal") },
+        { id: "terminal", label: "Terminal", meta: "Portfolio commands", iconSvg: terminalIconSvg, action: () => openApp("terminal") },
+        { id: "files", label: "Files", meta: "GNOME file manager", iconSvg: filesIconSvg, iconBg: "linear-gradient(135deg, #ffb347, #ea6c21)", action: () => openApp("files") },
         { id: "rhythmbox", label: "Rhythmbox", meta: "Music library", iconSvg: rhythmboxIconSvg, iconBg: "linear-gradient(135deg, #ffae4b, #f46d16)", action: () => openApp("rhythmbox") },
         { id: "text-editor", label: "Text Editor", meta: "Gedit-style notes", iconSvg: textEditorIconSvg, iconBg: "linear-gradient(135deg, #3d84f7, #203a8f)", action: () => openApp("text-editor") },
         { id: "mines", label: "Mines", meta: "Logic puzzle", iconSvg: minesIconSvg, iconBg: "linear-gradient(135deg, #6a6f74, #404449)", action: () => openApp("mines") },
@@ -8385,7 +9095,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
     const windowRegistry = new Map();
     const favoriteStorageKey = "portfolio.favoriteApps";
-    const defaultFavoriteAppIds = ["terminal", "projects", "contact"];
+    const defaultFavoriteAppIds = ["terminal", "files", "projects", "contact"];
     const favoriteMenu = document.getElementById("favorites-menu");
     let favoritesMenuState = {
         open: false,
@@ -8557,17 +9267,118 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         syncDockState();
     }
 
+    function getAppDockKey(app) {
+        if (!app) return null;
+        return app.dockGroup || app.id || null;
+    }
+
+    function isDockRecordRunning(record) {
+        return Boolean(record && record.window && !record.window.classList.contains("is-hidden"));
+    }
+
+    function getDockEntryForRecord(record) {
+        if (!record || !record.app || !isDockRecordRunning(record)) return null;
+        return {
+            key: getAppDockKey(record.app),
+            appId: record.app.id,
+            app: record.app,
+            record: record,
+            favorite: isAppFavorited(record.app.id)
+        };
+    }
+
+    function getDockEntryList() {
+        const entries = new Map();
+
+        favoriteAppIds.forEach((appId) => {
+            const app = apps.find((item) => item.id === appId);
+            if (!app) return;
+            const key = getAppDockKey(app);
+            if (!key || entries.has(key)) return;
+            const record = windowRegistry.get(app.id) || null;
+            entries.set(key, {
+                key,
+                appId: app.id,
+                app,
+                record: isDockRecordRunning(record) ? record : null,
+                favorite: true
+            });
+        });
+
+        windowRegistry.forEach((record) => {
+            const entry = getDockEntryForRecord(record);
+            if (!entry || !entry.key) return;
+            const existing = entries.get(entry.key);
+            if (existing) {
+                if (!existing.record || (record.window && record.window.classList.contains("is-focused"))) {
+                    existing.record = record;
+                    existing.appId = record.app.id;
+                    existing.app = record.app;
+                }
+                return;
+            }
+            entries.set(entry.key, entry);
+        });
+
+        return Array.from(entries.values());
+    }
+
+    function openDockEntry(appId) {
+        if (!appId) return;
+
+        const app = apps.find((item) => item.id === appId);
+        if (app) {
+            openApp(app.id);
+            return;
+        }
+
+        const record = windowRegistry.get(appId);
+        if (!record || !record.window) return;
+
+        record.window.classList.remove("is-hidden", "is-minimized");
+        bringToFront(record.window, record.app && record.app.id ? record.app.id : appId);
+
+        if (record.app && record.app.kind === "terminal") {
+            focusTerminalInput(record.window);
+        } else if (record.app && record.app.kind === "music") {
+            const searchInput = record.window.querySelector("[data-rhythmbox-search]");
+            if (searchInput) {
+                searchInput.focus();
+            }
+        } else if (record.app && record.app.kind === "editor") {
+            const textarea = record.window.querySelector(".gedit-textarea");
+            if (textarea) {
+                textarea.focus();
+            }
+        } else if (record.app && record.app.kind === "files") {
+            const currentLocation = record.window.querySelector("[data-files-location].is-active");
+            if (currentLocation) {
+                currentLocation.focus();
+            }
+        } else if (record.app && record.app.kind === "mail") {
+            const editor = record.window.querySelector("[data-mail-editor]");
+            if (editor) {
+                editor.focus();
+            }
+        }
+
+        syncDockState();
+    }
+
     function syncDockState() {
         if (!dockApps) return;
+
+        buildDock();
 
         dockApps.querySelectorAll(".dock-item").forEach((item) => {
             const appId = item.getAttribute("data-app-id");
             const record = appId ? windowRegistry.get(appId) : null;
-            const isOpen = Boolean(record && record.window && !record.window.classList.contains("is-hidden"));
-            item.classList.toggle("is-active", isOpen && activeWindowId === appId);
+            const isRunning = Boolean(record && record.window && !record.window.classList.contains("is-hidden"));
+            item.classList.toggle("is-running", isRunning);
+            item.classList.toggle("is-active", isRunning && activeWindowId === appId);
             const button = item.querySelector(".dock-item__button");
             if (button) {
-                button.setAttribute("aria-pressed", isOpen ? "true" : "false");
+                button.setAttribute("aria-pressed", isRunning ? "true" : "false");
             }
         });
     }
@@ -9717,7 +10528,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     }
 
     function getEditorDocuments() {
-        return [
+        const baseDocuments = [
             { id: "projects.txt", title: "projects.txt", content: stripHtml(fileSystem["projects.txt"]) },
             { id: "experience.txt", title: "experience.txt", content: stripHtml(fileSystem["experience.txt"]) },
             { id: "skills.txt", title: "skills.txt", content: stripHtml(fileSystem["skills.txt"]) },
@@ -9725,10 +10536,60 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             { id: "contact.txt", title: "contact.txt", content: stripHtml(fileSystem["contact.txt"]) },
             { id: "education.txt", title: "education.txt", content: stripHtml(fileSystem["education.txt"]) }
         ];
+        const merged = new Map(baseDocuments.map((doc) => [doc.id, doc]));
+        Array.from(customEditorDocuments.values()).forEach((doc) => {
+            merged.set(doc.id, {
+                id: doc.id,
+                title: doc.title,
+                content: doc.content
+            });
+        });
+
+        return Array.from(merged.values());
     }
 
     function getEditorDocument(docId) {
         return getEditorDocuments().find((doc) => doc.id === docId) || getEditorDocuments()[0];
+    }
+
+    function upsertCustomEditorDocument(doc) {
+        if (!doc || !doc.id) return null;
+        customEditorDocuments.set(doc.id, {
+            id: doc.id,
+            title: doc.title || doc.id,
+            content: doc.content || ""
+        });
+        return customEditorDocuments.get(doc.id);
+    }
+
+    function renameOpenEditorDocumentTabs(docId, nextTitle) {
+        windowRegistry.forEach((record) => {
+            const shell = record.window && record.window.querySelector("[data-editor-shell]");
+            if (!shell || !shell.__editorState) return;
+            const state = shell.__editorState;
+            let changed = false;
+            state.tabs.forEach((tab) => {
+                if (tab.sourceId === docId) {
+                    tab.title = nextTitle;
+                    changed = true;
+                }
+            });
+            if (changed) {
+                renderEditorTabs(shell);
+                syncEditorView(shell);
+            }
+        });
+    }
+
+    function syncEditorTabToSource(tab) {
+        if (!tab || !tab.sourceId) return;
+        const source = customEditorDocuments.get(tab.sourceId);
+        if (!source) return;
+        customEditorDocuments.set(tab.sourceId, {
+            id: source.id,
+            title: tab.title,
+            content: tab.content
+        });
     }
 
     function createEditorWindow() {
@@ -10044,6 +10905,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 const activeTab = getActiveEditorTab(state);
                 if (!activeTab) return;
                 activeTab.dirty = false;
+                syncEditorTabToSource(activeTab);
                 syncEditorStatus(container);
                 renderEditorTabs(container);
             });
@@ -10055,6 +10917,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 if (!activeTab) return;
                 activeTab.content = state.textarea.value;
                 activeTab.dirty = true;
+                syncEditorTabToSource(activeTab);
                 renderEditorLineNumbers(container);
                 syncEditorStatus(container);
             });
@@ -10081,6 +10944,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                     if (activeTab) {
                         activeTab.content = state.textarea.value;
                         activeTab.dirty = true;
+                        syncEditorTabToSource(activeTab);
                     }
                     renderEditorLineNumbers(container);
                     syncEditorStatus(container);
@@ -10089,6 +10953,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                     const activeTab = getActiveEditorTab(state);
                     if (activeTab) {
                         activeTab.dirty = false;
+                        syncEditorTabToSource(activeTab);
                         syncEditorStatus(container);
                     }
                 }
@@ -10101,6 +10966,1190 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 toggleEditorMenu(container, false);
             }
         });
+    }
+
+    const filesUiIcons = {
+        home: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='m4.5 11.2 7.5-6 7.5 6'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M7.2 9.5v8.2h9.6V9.5'/></svg>",
+        recent: "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.2' fill='none' stroke='currentColor' stroke-width='1.8'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M12 8.2v4.1l2.9 1.8'/></svg>",
+        starred: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='m12 4.9 2.1 4.26 4.7.68-3.4 3.3.8 4.65L12 15.6l-4.2 2.19.8-4.65-3.4-3.3 4.7-.68z'/></svg>",
+        trash: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M6.8 7.2h10.4l-.8 11H7.6z'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' d='M9.3 7.2V5.7h5.4v1.5M5.4 7.2h13.2'/><path fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' d='M10.1 10.1v5.4M13.9 10.1v5.4'/></svg>",
+        documents: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M6 4.8h8l4 4v10.4H6z'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M14 4.8v4h4'/><path fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' d='M8.6 12h6.8M8.6 15.2h6.8'/></svg>",
+        music: "<svg width='800px' height='800px' viewBox='0 0 16 16' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><path fill='#444' d='M4 3v9.4c-0.4-0.2-0.9-0.4-1.5-0.4-1.4 0-2.5 0.9-2.5 2s1.1 2 2.5 2 2.5-0.9 2.5-2v-7.3l7-2.3v5.1c-0.4-0.3-0.9-0.5-1.5-0.5-1.4 0-2.5 0.9-2.5 2s1.1 2 2.5 2 2.5-0.9 2.5-2v-11l-9 3z'></path></svg>",
+        pictures: "<svg viewBox='0 0 24 24' aria-hidden='true'><rect x='4.7' y='5.3' width='14.6' height='13.4' rx='2.1' fill='none' stroke='currentColor' stroke-width='1.8'/><circle cx='10' cy='10.1' r='1.45' fill='currentColor'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='m8.2 16.1 3.3-3.3 2.2 2.1 1.9-1.9 2 3.1'/></svg>",
+        videos: "<svg viewBox='0 0 24 24' aria-hidden='true'><rect x='4.8' y='6' width='14.4' height='12' rx='2' fill='none' stroke='currentColor' stroke-width='1.8'/><path fill='currentColor' d='m11 9 4.2 3-4.2 3z'/></svg>",
+        downloads: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M12 5.2v8.3'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='m8.8 10.9 3.2 3.3 3.2-3.3'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' d='M5.7 18.2h12.6'/></svg>",
+        desktop: "<svg viewBox='0 0 24 24' aria-hidden='true'><rect x='4.7' y='6' width='14.6' height='10.5' rx='1.9' fill='none' stroke='currentColor' stroke-width='1.8'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' d='M9.7 19h4.6M8.3 16.5h7.4'/></svg>",
+        public: "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='8' r='2.55' fill='none' stroke='currentColor' stroke-width='1.8'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' d='M6.5 17.8a5.5 5.5 0 0 1 11 0'/></svg>",
+        templates: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M7 5.3h10v13.4H7z'/><path fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' d='M9.3 9h5.4M9.3 12h5.4M9.3 15h3.5'/></svg>",
+        folder: filesFolderSvg,
+        text: "<svg viewBox='0 0 72 72' aria-hidden='true'><rect x='16' y='10' width='40' height='52' rx='8' fill='#f6f7fb'/><path fill='#dfe5f2' d='M42 10h14v14z'/><path fill='#5b78d7' d='M27 28h19v3H27zm0 9h19v3H27zm0 9h14v3H27z'/><path fill='#9bb1f5' d='M42 10v14h14z'/></svg>",
+        pdf: "<svg viewBox='0 0 72 72' aria-hidden='true'><rect x='16' y='10' width='40' height='52' rx='8' fill='#f7f1f1'/><path fill='#d84c4c' d='M42 10h14v14z'/><path fill='#d63c3c' d='M24 42h24v10H24z'/><text x='36' y='50' fill='white' font-size='11' font-family='Ubuntu, sans-serif' font-weight='700' text-anchor='middle'>PDF</text></svg>",
+        audio: "<svg viewBox='0 0 72 72' aria-hidden='true'><rect x='9' y='9' width='54' height='54' rx='14' fill='url(#files-audio-fill)'/><defs><linearGradient id='files-audio-fill' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='#ffb65b'/><stop offset='100%' stop-color='#f16d27'/></linearGradient></defs><path fill='white' d='M43 18v22.5a6.5 6.5 0 1 1-5-6.33V24.2l14-3.4v19.7a6.5 6.5 0 1 1-5-6.33V18.95z' opacity='0.94'/></svg>",
+        archive: "<svg viewBox='0 0 72 72' aria-hidden='true'><rect x='14' y='14' width='44' height='44' rx='10' fill='#ebe0ff'/><path fill='#8a68d8' d='M25 18h22v8H25z'/><path fill='#8a68d8' d='M25 30h22v24H25z'/><path fill='#fff' opacity='0.86' d='M33 22h6v2h-6zm0 10h6v14h-6z'/></svg>",
+        empty: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M6 7h12l-1.1 11H7.1z'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' d='M9 4.8h6M12 10.4v3.2'/><circle cx='12' cy='15.9' r='0.9' fill='currentColor'/></svg>",
+        back: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round' d='m14.8 6.5-5.6 5.5 5.6 5.5'/></svg>",
+        forward: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round' d='m9.2 6.5 5.6 5.5-5.6 5.5'/></svg>",
+        up: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round' d='m7.2 13.8 4.8-4.8 4.8 4.8'/></svg>",
+        search: "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='10.7' cy='10.7' r='5.7' fill='none' stroke='currentColor' stroke-width='1.8'/><path fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' d='m15 15 4 4'/></svg>",
+        grid: "<svg viewBox='0 0 24 24' aria-hidden='true'><rect x='5' y='5' width='5.5' height='5.5' rx='1.2' fill='currentColor'/><rect x='13.5' y='5' width='5.5' height='5.5' rx='1.2' fill='currentColor'/><rect x='5' y='13.5' width='5.5' height='5.5' rx='1.2' fill='currentColor'/><rect x='13.5' y='13.5' width='5.5' height='5.5' rx='1.2' fill='currentColor'/></svg>"
+    };
+
+    function createFilesWindow() {
+        return [
+            "<div class='files-shell' data-files-shell>",
+            "  <header class='files-toolbar' data-files-drag>",
+            "    <div class='files-toolbar__left'>",
+            "      <div class='files-toolbar__app'><span class='files-toolbar__app-icon'>" + filesIconSvg + "</span><span>Files</span></div>",
+            "      <div class='files-toolbar__nav'>",
+            "        <button class='files-toolbar__button' type='button' data-files-action='back' aria-label='Back'>" + filesUiIcons.back + "</button>",
+            "        <button class='files-toolbar__button' type='button' data-files-action='forward' aria-label='Forward'>" + filesUiIcons.forward + "</button>",
+            "        <button class='files-toolbar__button' type='button' data-files-action='up' aria-label='Up'>" + filesUiIcons.up + "</button>",
+            "      </div>",
+            "    </div>",
+            "    <div class='files-toolbar__center'>",
+            "      <nav class='files-breadcrumb' aria-label='Location breadcrumb' data-files-breadcrumb></nav>",
+            "    </div>",
+            "    <div class='files-toolbar__right'>",
+            "      <div class='files-toolbar__search-wrap'>",
+            "        <button class='files-toolbar__button' type='button' data-files-action='search' aria-label='Search'>" + filesUiIcons.search + "</button>",
+            "        <input class='files-toolbar__search' type='search' data-files-search hidden placeholder='Search this folder' aria-label='Search this folder' />",
+            "      </div>",
+            "      <div class='files-toolbar__window-controls'>",
+            "        <button class='gedit-window-control' type='button' data-window-action='minimize' aria-label='Minimize'>−</button>",
+            "        <button class='gedit-window-control' type='button' data-window-action='maximize' aria-label='Maximize'>□</button>",
+            "        <button class='gedit-window-control gedit-window-control--close' type='button' data-window-action='close' aria-label='Close'>×</button>",
+            "      </div>",
+            "    </div>",
+            "  </header>",
+            "  <div class='files-workspace'>",
+            "    <aside class='files-sidebar' data-files-sidebar></aside>",
+            "    <section class='files-content'>",
+            "      <div class='files-content__meta'>",
+            "        <h2 class='files-content__title' data-files-title>Home</h2>",
+            "        <span class='files-content__summary' data-files-summary>9 items</span>",
+            "      </div>",
+            "      <div class='files-rename-layer' data-files-rename-layer></div>",
+            "      <div class='files-grid' data-files-grid></div>",
+            "    </section>",
+            "  </div>",
+            "  <div class='files-context-menu' data-files-context-menu hidden role='menu' aria-label='Files menu'>",
+            "    <button class='files-context-menu__item' type='button' data-files-create='folder' role='menuitem'>",
+            "      <span class='files-context-menu__item-icon'>" + filesUiIcons.folder + "</span>",
+            "      <span>New Folder</span>",
+            "    </button>",
+            "    <button class='files-context-menu__item' type='button' data-files-create='text' role='menuitem'>",
+            "      <span class='files-context-menu__item-icon'>" + filesUiIcons.text + "</span>",
+            "      <span>New Text File</span>",
+            "    </button>",
+            "    <div class='files-context-menu__divider' data-files-context-divider></div>",
+            "    <button class='files-context-menu__item' type='button' data-files-rename hidden role='menuitem'>",
+            "      <span class='files-context-menu__item-icon'>" + filesUiIcons.text + "</span>",
+            "      <span>Rename</span>",
+            "    </button>",
+            "  </div>",
+            "  <footer class='files-statusbar'>",
+            "    <span data-files-status-current>Home</span>",
+            "    <span class='files-statusbar__selection' data-files-status-selection>Ready</span>",
+            "  </footer>",
+            "</div>"
+        ].join("");
+    }
+
+    function escapeFilesHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+    }
+
+    function createFilesDocumentLauncher(docId) {
+        const doc = getEditorDocument(docId);
+        return {
+            id: "files-doc-" + doc.id,
+            label: doc.title,
+            kind: "document",
+            documentId: doc.id,
+            meta: "Text document"
+        };
+    }
+
+    function createMusicFolderEntry(fileName, index) {
+        return {
+            id: "files-music-track-" + String(index + 1).padStart(2, "0"),
+            label: fileName,
+            kind: "audio",
+            meta: "Audio file",
+            iconSvg: rhythmboxIconSvg
+        };
+    }
+
+    function createMusicFolderEntries(fileNames = rhythmboxEmbeddedMusicFiles) {
+        return fileNames.map((fileName, index) => createMusicFolderEntry(fileName, index));
+    }
+
+    function normalizeRhythmboxTrackFile(fileName) {
+        return normalizeRhythmboxFileName(fileName);
+    }
+
+    function findRhythmboxTrackByFile(fileName) {
+        const normalized = normalizeRhythmboxTrackFile(fileName);
+        if (!normalized) return null;
+        return rhythmboxTrackLibrary.find((track) => normalizeRhythmboxTrackFile(track.file) === normalized) || null;
+    }
+
+    function openRhythmboxTrackFromFile(fileName) {
+        const normalized = normalizeRhythmboxTrackFile(fileName);
+        if (!normalized) return false;
+
+        pendingRhythmboxTrackFile = normalized;
+        openApp("rhythmbox");
+
+        const record = windowRegistry.get("rhythmbox");
+        if (!record) return true;
+        const shell = record.window.querySelector("[data-rhythmbox-app]");
+        const state = shell && shell.__rhythmboxState ? shell.__rhythmboxState : null;
+        if (!state) return true;
+
+        const track = findRhythmboxTrackByFile(normalized);
+        if (!track) return true;
+
+        if (!state.currentTrackId || !state.isPlaying) {
+            playRhythmboxTrack(state, track.id);
+            pendingRhythmboxTrackFile = null;
+        } else if (state.currentTrackId !== track.id) {
+            state.playQueue = state.playQueue || [];
+            if (!state.playQueue.includes(track.id)) {
+                state.playQueue.push(track.id);
+            }
+            state.selectedTrackId = track.id;
+            syncRhythmboxNowPlaying(state);
+            renderRhythmboxLibrary(state);
+            showRhythmboxMessage(state, "Queued \"" + track.title + "\"");
+            pendingRhythmboxTrackFile = null;
+        }
+
+        return true;
+    }
+
+    function createFilesLocationTemplate() {
+        const docs = [
+            createFilesDocumentLauncher("projects.txt"),
+            createFilesDocumentLauncher("experience.txt"),
+            createFilesDocumentLauncher("skills.txt"),
+            createFilesDocumentLauncher("about.txt"),
+            createFilesDocumentLauncher("contact.txt"),
+            createFilesDocumentLauncher("education.txt")
+        ];
+
+        return {
+            home: {
+                id: "home",
+                label: "Home",
+                parentId: null,
+                sidebarSection: "places",
+                emptyMessage: "",
+                items: [
+                    { id: "desktop", label: "Desktop", kind: "folder", openLocation: "desktop", meta: "Launcher shortcuts" },
+                    { id: "documents", label: "Documents", kind: "folder", openLocation: "documents", meta: docs.length + " files" },
+                    { id: "downloads", label: "Downloads", kind: "folder", openLocation: "downloads", meta: "4 items" },
+                    { id: "music", label: "Music", kind: "folder", openLocation: "music", meta: "Audio player" },
+                    { id: "pictures", label: "Pictures", kind: "folder", openLocation: "pictures", meta: "Project screenshots" },
+                    { id: "public", label: "Public", kind: "folder", openLocation: "public", meta: "Share links" },
+                    { id: "snap", label: "snap", kind: "folder", openLocation: "snap", meta: "App launchers" },
+                    { id: "templates", label: "Templates", kind: "folder", openLocation: "templates", meta: "Starter notes" },
+                    { id: "videos", label: "Videos", kind: "folder", openLocation: "videos", meta: "No videos yet" }
+                ]
+            },
+            recent: {
+                id: "recent",
+                label: "Recent",
+                parentId: null,
+                sidebarSection: "places",
+                emptyMessage: "Nothing recent yet.",
+                items: [
+                    createFilesDocumentLauncher("projects.txt"),
+                    createFilesDocumentLauncher("experience.txt"),
+                    { id: "files-recent-apar", label: "apar.png", kind: "image", src: "assets/apar.png", meta: "Image preview" },
+                    { id: "files-recent-resume", label: "resume.pdf", kind: "pdf", meta: "PDF document" }
+                ]
+            },
+            starred: {
+                id: "starred",
+                label: "Starred",
+                parentId: null,
+                sidebarSection: "places",
+                emptyMessage: "No starred items.",
+                items: [
+                    createFilesDocumentLauncher("about.txt"),
+                    { id: "files-starred-resume", label: "resume.pdf", kind: "pdf", meta: "Pinned document" },
+                    { id: "files-starred-wallpaper", label: "wallpaper.png", kind: "image", src: "assets/wallpaper.png", meta: "Desktop wallpaper" }
+                ]
+            },
+            trash: {
+                id: "trash",
+                label: "Trash",
+                parentId: null,
+                sidebarSection: "places",
+                emptyMessage: "Trash is empty.",
+                items: []
+            },
+            documents: {
+                id: "documents",
+                label: "Documents",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "",
+                items: docs
+            },
+            music: {
+                id: "music",
+                label: "Music",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "",
+                items: createMusicFolderEntries()
+            },
+            pictures: {
+                id: "pictures",
+                label: "Pictures",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "",
+                items: [
+                    { id: "files-picture-apar", label: "apar.png", kind: "image", src: "assets/apar.png", meta: "APAR project" },
+                    { id: "files-picture-recruitment", label: "recruitment.png", kind: "image", src: "assets/recruitment.png", meta: "Recruitment portal" },
+                    { id: "files-picture-device", label: "device-reg.png", kind: "image", src: "assets/device-reg.png", meta: "Device registration" },
+                    { id: "files-picture-manpower", label: "manpower.png", kind: "image", src: "assets/manpower.png", meta: "Manpower portal" },
+                    { id: "files-picture-buspass", label: "buspass.png", kind: "image", src: "assets/buspass.png", meta: "Bus pass portal" },
+                    { id: "files-picture-wallpaper", label: "wallpaper.png", kind: "image", src: "assets/wallpaper.png", meta: "Desktop wallpaper" }
+                ]
+            },
+            videos: {
+                id: "videos",
+                label: "Videos",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "No video files inside this folder yet.",
+                items: []
+            },
+            downloads: {
+                id: "downloads",
+                label: "Downloads",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "",
+                items: [
+                    { id: "files-download-resume", label: "resume.pdf", kind: "pdf", meta: "Resume export" },
+                    { id: "files-download-boot", label: "boot.gif", kind: "image", src: "assets/boot.gif", meta: "Boot animation" },
+                    { id: "files-download-bios", label: "bios_boot.gif", kind: "image", src: "assets/bios_boot.gif", meta: "BIOS splash" },
+                    { id: "files-download-sound", label: "ubuntu-start-sound.mp3", kind: "audio", meta: "Startup sound" }
+                ]
+            },
+            desktop: {
+                id: "desktop",
+                label: "Desktop",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "",
+                items: [
+                    { id: "files-desktop-firefox", label: "Firefox Portfolio", kind: "app", appId: "projects", meta: "Open browser", iconImage: "assets/firefox_logo.png" },
+                    { id: "files-desktop-editor", label: "Text Editor", kind: "app", appId: "text-editor", meta: "Open gedit", iconSvg: textEditorIconSvg },
+                    { id: "files-desktop-terminal", label: "Terminal", kind: "app", appId: "terminal", meta: "Portfolio shell", icon: ">_" },
+                    { id: "files-desktop-resume", label: "resume.pdf", kind: "pdf", meta: "Pinned document" }
+                ]
+            },
+            public: {
+                id: "public",
+                label: "Public",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "",
+                items: [
+                    { id: "files-public-contact", label: "contact.txt", kind: "document", documentId: "contact.txt", meta: "Contact links" },
+                    { id: "files-public-resume", label: "resume.pdf", kind: "pdf", meta: "Shareable resume" }
+                ]
+            },
+            snap: {
+                id: "snap",
+                label: "snap",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "",
+                items: [
+                    { id: "files-snap-terminal", label: "terminal.desktop", kind: "app", appId: "terminal", meta: "Launcher" },
+                    { id: "files-snap-files", label: "files.desktop", kind: "app", appId: "files", meta: "Launcher" },
+                    { id: "files-snap-firefox", label: "firefox.desktop", kind: "app", appId: "projects", meta: "Launcher", iconImage: "assets/firefox_logo.png" }
+                ]
+            },
+            templates: {
+                id: "templates",
+                label: "Templates",
+                parentId: "home",
+                sidebarSection: "folders",
+                emptyMessage: "",
+                items: [
+                    { id: "files-template-project", label: "project-note.txt", kind: "document", documentId: "projects.txt", meta: "Starter note" },
+                    { id: "files-template-about", label: "about-template.txt", kind: "document", documentId: "about.txt", meta: "Starter note" }
+                ]
+            }
+        };
+    }
+
+    const filesSidebarOrder = {
+        places: ["home", "recent", "starred", "trash"],
+        folders: ["documents", "music", "pictures", "videos", "downloads"]
+    };
+
+    function getFilesState(container) {
+        if (!container.__filesState) {
+            const locationTemplate = createFilesLocationTemplate();
+            container.__filesState = {
+                currentLocation: "home",
+                history: ["home"],
+                historyIndex: 0,
+                selectedMessage: "Ready",
+                locations: JSON.parse(JSON.stringify(locationTemplate)),
+                nextFolderId: 1,
+                nextFileId: 1,
+                contextMenuOpen: false,
+                searchOpen: false,
+                searchQuery: "",
+                contextTarget: null,
+                renameDialogOpen: false,
+                renameDialogTarget: null
+            };
+        }
+        return container.__filesState;
+    }
+
+    function getFilesLocations(container) {
+        const state = getFilesState(container);
+        return state.locations || {};
+    }
+
+    function getFilesCurrentLocation(container) {
+        const state = getFilesState(container);
+        const locations = getFilesLocations(container);
+        return locations[state.currentLocation] || locations.home;
+    }
+
+    function getUniqueFilesLabel(items, baseLabel, extension = "") {
+        const names = new Set((items || []).map((item) => item.label));
+        const initial = baseLabel + extension;
+        if (!names.has(initial)) {
+            return initial;
+        }
+
+        let index = 2;
+        let candidate = initial;
+        while (names.has(candidate)) {
+            candidate = baseLabel + " (" + index + ")" + extension;
+            index += 1;
+        }
+        return candidate;
+    }
+
+    function isWritableFilesLocation(location) {
+        return Boolean(location && (location.id === "home" || location.sidebarSection === "folders"));
+    }
+
+    function syncFilesDerivedMetadata(container) {
+        const locations = getFilesLocations(container);
+        const home = locations.home;
+        const documents = locations.documents;
+        const music = locations.music;
+        if (!home || !documents) return;
+
+        const docCard = Array.isArray(home.items) ? home.items.find((item) => item.id === "documents") : null;
+        const musicCard = Array.isArray(home.items) ? home.items.find((item) => item.id === "music") : null;
+        if (!docCard) return;
+
+        const count = Array.isArray(documents.items) ? documents.items.length : 0;
+        docCard.meta = count + " file" + (count === 1 ? "" : "s");
+
+        if (musicCard) {
+            const musicCount = Array.isArray(music && music.items) ? music.items.length : 0;
+            musicCard.meta = musicCount + " item" + (musicCount === 1 ? "" : "s");
+        }
+    }
+
+    async function refreshFilesMusicFolder(container) {
+        const state = getFilesState(container);
+        if (state.musicRefreshPromise) {
+            return state.musicRefreshPromise;
+        }
+
+        state.musicRefreshPromise = (async () => {
+            const locations = getFilesLocations(container);
+            const musicLocation = locations.music;
+            if (!musicLocation) return;
+
+            const fileNames = await listRhythmboxMusicFiles();
+            const nextItems = createMusicFolderEntries(fileNames);
+            musicLocation.items = nextItems;
+
+            if (state.currentLocation === "music") {
+                syncFilesWindow(container);
+            } else {
+                syncFilesDerivedMetadata(container);
+            }
+        })().finally(() => {
+            state.musicRefreshPromise = null;
+        });
+
+        return state.musicRefreshPromise;
+    }
+
+    function createFilesFolderEntry(container) {
+        const state = getFilesState(container);
+        const locations = getFilesLocations(container);
+        const current = getFilesCurrentLocation(container);
+        if (!isWritableFilesLocation(current)) {
+            state.selectedMessage = "Create folders inside a writable folder";
+            syncFilesWindow(container);
+            return null;
+        }
+        const folderIndex = state.nextFolderId++;
+        const nextId = "files-folder-created-" + folderIndex;
+        const folderLabel = getUniqueFilesLabel(current.items, "New Folder");
+        const newLocationId = "user-folder-" + folderIndex;
+        const folderLocation = {
+            id: newLocationId,
+            label: folderLabel,
+            parentId: current.id,
+            sidebarSection: "folders",
+            emptyMessage: "This folder is empty.",
+            items: []
+        };
+
+        locations[newLocationId] = folderLocation;
+        current.items = Array.isArray(current.items) ? current.items : [];
+        current.items.push({
+            id: nextId,
+            label: folderLabel,
+            kind: "folder",
+            openLocation: newLocationId,
+            meta: "Folder"
+        });
+
+        syncFilesDerivedMetadata(container);
+        state.selectedMessage = "Created " + folderLabel;
+        syncFilesWindow(container);
+        openFilesRenameDialog(container, {
+            id: nextId,
+            label: folderLabel,
+            kind: "folder",
+            openLocation: newLocationId
+        });
+        return folderLocation;
+    }
+
+    function createFilesTextEntry(container) {
+        const state = getFilesState(container);
+        const current = getFilesCurrentLocation(container);
+        if (!isWritableFilesLocation(current)) {
+            state.selectedMessage = "Create text files inside a writable folder";
+            syncFilesWindow(container);
+            return null;
+        }
+        const fileIndex = state.nextFileId++;
+        const docId = "user-text-" + fileIndex;
+        const fileLabel = getUniqueFilesLabel(current.items, "New Document", ".txt");
+
+        upsertCustomEditorDocument({
+            id: docId,
+            title: fileLabel,
+            content: ""
+        });
+
+        current.items = Array.isArray(current.items) ? current.items : [];
+        current.items.push({
+            id: "files-text-created-" + fileIndex,
+            label: fileLabel,
+            kind: "document",
+            documentId: docId,
+            meta: "Text document"
+        });
+
+        syncFilesDerivedMetadata(container);
+        state.selectedMessage = "Created " + fileLabel;
+        syncFilesWindow(container);
+        openFilesRenameDialog(container, {
+            id: "files-text-created-" + fileIndex,
+            label: fileLabel,
+            kind: "document",
+            documentId: docId
+        });
+        openEditorDocumentApp(docId);
+        return docId;
+    }
+
+    function getFilesBreadcrumbTrail(locations, locationId) {
+        const trail = [];
+        let current = locations[locationId] || locations.home;
+        const guard = new Set();
+
+        while (current && !guard.has(current.id)) {
+            guard.add(current.id);
+            trail.unshift(current);
+            if (!current.parentId) break;
+            current = locations[current.parentId] || null;
+        }
+
+        if (!trail.length) {
+            trail.push(locations.home);
+        }
+
+        return trail;
+    }
+
+    function getFilesEntryById(container, entryId) {
+        const state = getFilesState(container);
+        const locations = getFilesLocations(container);
+        const current = locations[state.currentLocation] || locations.home;
+        return (current.items || []).find((item) => item.id === entryId) || null;
+    }
+
+    function renderFilesRenamePopover(entry) {
+        const title = entry.kind === "folder" ? "Rename Folder" : "Rename File";
+        return [
+            "<div class='files-rename-popover' data-files-rename-popover role='dialog' aria-label='" + escapeFilesHtml(title) + "'>",
+            "  <h3 class='files-rename-popover__title'>" + escapeFilesHtml(title) + "</h3>",
+            "  <input class='files-rename-popover__input' type='text' value='" + escapeFilesHtml(entry.label || "") + "' data-files-rename-input />",
+            "  <div class='files-rename-popover__actions'>",
+            "    <button class='files-rename-popover__button' type='button' data-files-rename-confirm>Rename</button>",
+            "  </div>",
+            "</div>"
+        ].join("");
+    }
+
+    function updateFilesEntryLabel(container, entryId, nextLabel) {
+        const state = getFilesState(container);
+        const locations = getFilesLocations(container);
+        const current = locations[state.currentLocation] || locations.home;
+        const entry = (current.items || []).find((item) => item.id === entryId);
+        if (!entry) return null;
+
+        entry.label = nextLabel;
+
+        if (entry.kind === "folder" && entry.openLocation && locations[entry.openLocation]) {
+            locations[entry.openLocation].label = nextLabel;
+        }
+
+        if (entry.kind === "document" && entry.documentId) {
+            const existingDoc = getEditorDocument(entry.documentId);
+            upsertCustomEditorDocument({
+                id: entry.documentId,
+                title: nextLabel,
+                content: existingDoc.content || ""
+            });
+            renameOpenEditorDocumentTabs(entry.documentId, nextLabel);
+        }
+
+        syncFilesDerivedMetadata(container);
+        state.selectedMessage = "Renamed to " + nextLabel;
+        syncFilesWindow(container);
+        return entry;
+    }
+
+    function getFilesRenameDialog(container) {
+        const layer = container.querySelector("[data-files-rename-layer]");
+        return layer ? layer.querySelector("[data-files-rename-popover]") : null;
+    }
+
+    function syncFilesRenameDialog(container) {
+        const state = getFilesState(container);
+        const target = state.renameDialogTarget;
+        const visible = Boolean(state.renameDialogOpen && target);
+        const layer = container.querySelector("[data-files-rename-layer]");
+        if (!layer) return;
+
+        if (!visible || !target) {
+            layer.innerHTML = "";
+            return;
+        }
+
+        layer.innerHTML = renderFilesRenamePopover(target);
+        const dialog = getFilesRenameDialog(container);
+        const input = dialog && dialog.querySelector("[data-files-rename-input]");
+        if (input) {
+            requestAnimationFrame(() => {
+                const latestState = getFilesState(container);
+                if (!latestState.renameDialogOpen || !latestState.renameDialogTarget) return;
+                input.focus();
+                input.select();
+            });
+        }
+    }
+
+    function closeFilesRenameDialog(container) {
+        const state = getFilesState(container);
+        if (!state.renameDialogOpen && !state.renameDialogTarget) {
+            return;
+        }
+        state.renameDialogOpen = false;
+        state.renameDialogTarget = null;
+        syncFilesWindow(container);
+    }
+
+    function openFilesRenameDialog(container, entryRef) {
+        const state = getFilesState(container);
+        const entry = typeof entryRef === "string" ? getFilesEntryById(container, entryRef) : entryRef;
+        if (!entry) return null;
+
+        state.renameDialogTarget = {
+            id: entry.id,
+            kind: entry.kind || "item",
+            label: entry.label || ""
+        };
+        state.renameDialogOpen = true;
+        syncFilesWindow(container);
+        syncFilesRenameDialog(container);
+        return entry;
+    }
+
+    function promptFilesRename(container, entryRef) {
+        return openFilesRenameDialog(container, entryRef);
+    }
+
+    function commitFilesRenameDialog(container) {
+        const state = getFilesState(container);
+        const target = state.renameDialogTarget;
+        const dialog = getFilesRenameDialog(container);
+        if (!target || !dialog) return null;
+
+        const input = dialog.querySelector("[data-files-rename-input]");
+        const normalized = String(input && input.value ? input.value : "").trim();
+        if (!normalized) {
+            return null;
+        }
+
+        const updated = updateFilesEntryLabel(container, target.id, normalized);
+        closeFilesRenameDialog(container);
+        return updated;
+    }
+
+    function renderFilesSidebar(container, locations, currentLocationId) {
+        const sidebar = container.querySelector("[data-files-sidebar]");
+        if (!sidebar) return;
+
+        const renderEntries = (ids) => ids.map((id) => {
+            const entry = locations[id];
+            if (!entry) return "";
+            return [
+                "<button class='files-sidebar__item" + (entry.id === currentLocationId ? " is-active" : "") + "' type='button' data-files-location='" + entry.id + "'>",
+                "  <span class='files-sidebar__icon'>" + (filesUiIcons[entry.id] || filesUiIcons.folder) + "</span>",
+                "  <span>" + escapeFilesHtml(entry.label) + "</span>",
+                "</button>"
+            ].join("");
+        }).join("");
+
+        sidebar.innerHTML = [
+            "<div class='files-sidebar__section'>",
+            renderEntries(filesSidebarOrder.places),
+            "</div>",
+            "<div class='files-sidebar__divider' aria-hidden='true'></div>",
+            "<div class='files-sidebar__section'>",
+            renderEntries(filesSidebarOrder.folders),
+            "</div>"
+        ].join("");
+    }
+
+    function renderFilesEntryThumb(entry) {
+        if (entry.iconImage) {
+            return "<img src='" + entry.iconImage + "' alt='' />";
+        }
+        if (entry.iconSvg) {
+            return entry.iconSvg;
+        }
+        if (entry.kind === "image" && entry.src) {
+            return "<img src='" + entry.src + "' alt='' />";
+        }
+        if (entry.kind === "document") {
+            return filesUiIcons.text;
+        }
+        if (entry.kind === "pdf") {
+            return filesUiIcons.pdf;
+        }
+        if (entry.kind === "audio") {
+            return filesUiIcons.audio;
+        }
+        if (entry.kind === "folder") {
+            return filesUiIcons.folder;
+        }
+        if (entry.icon) {
+            return "<span style='display:grid;place-items:center;width:100%;height:100%;font-weight:700;font-size:1.4rem;color:#f7f7fb;background:linear-gradient(135deg,#5b5b5b,#313131);border-radius:1.1rem'>" + escapeFilesHtml(entry.icon) + "</span>";
+        }
+        return filesUiIcons.archive;
+    }
+
+    function getFilesSearchResults(location, query) {
+        const items = Array.isArray(location && location.items) ? location.items : [];
+        const normalized = String(query || "").trim().toLowerCase();
+        if (!normalized) {
+            return items;
+        }
+
+        return items.filter((entry) => {
+            const haystack = [
+                entry.label,
+                entry.meta,
+                entry.kind,
+                entry.documentId,
+                entry.openLocation
+            ].filter(Boolean).join(" ").toLowerCase();
+            return haystack.includes(normalized);
+        });
+    }
+
+    function syncFilesWindow(container) {
+        const state = getFilesState(container);
+        const locations = getFilesLocations(container);
+        syncFilesDerivedMetadata(container);
+        const location = locations[state.currentLocation] || locations.home;
+        const items = getFilesSearchResults(location, state.searchQuery);
+
+        renderFilesSidebar(container, locations, location.id);
+
+        const title = container.querySelector("[data-files-title]");
+        const summary = container.querySelector("[data-files-summary]");
+        const statusCurrent = container.querySelector("[data-files-status-current]");
+        const statusSelection = container.querySelector("[data-files-status-selection]");
+        const grid = container.querySelector("[data-files-grid]");
+        const breadcrumbTrail = container.querySelector("[data-files-breadcrumb]");
+        const searchInput = container.querySelector("[data-files-search]");
+        const backButton = container.querySelector("[data-files-action='back']");
+        const forwardButton = container.querySelector("[data-files-action='forward']");
+        const upButton = container.querySelector("[data-files-action='up']");
+        const searchButton = container.querySelector("[data-files-action='search']");
+
+        if (title) {
+            title.textContent = location.label;
+        }
+        if (summary) {
+            summary.textContent = items.length ? items.length + " item" + (items.length === 1 ? "" : "s") : "Empty folder";
+        }
+        if (statusCurrent) {
+            statusCurrent.textContent = location.label;
+        }
+        if (statusSelection) {
+            statusSelection.textContent = state.selectedMessage || "Ready";
+        }
+        if (backButton) {
+            backButton.disabled = state.historyIndex <= 0;
+        }
+        if (forwardButton) {
+            forwardButton.disabled = state.historyIndex >= state.history.length - 1;
+        }
+        if (upButton) {
+            upButton.disabled = !location.parentId;
+        }
+        if (searchButton) {
+            searchButton.classList.toggle("is-active", Boolean(state.searchOpen || state.searchQuery));
+        }
+        if (searchInput) {
+            searchInput.hidden = !state.searchOpen;
+            if (state.searchOpen && document.activeElement !== searchInput) {
+                searchInput.value = state.searchQuery || "";
+            }
+        }
+
+        if (breadcrumbTrail) {
+            const trail = getFilesBreadcrumbTrail(locations, location.id);
+            breadcrumbTrail.innerHTML = trail.map((crumb, index) => {
+                const isCurrent = index === trail.length - 1;
+                return [
+                    "<button class='files-breadcrumb__crumb" + (isCurrent ? " is-current" : "") + "' type='button' data-files-location='" + crumb.id + "' aria-current='" + (isCurrent ? "page" : "false") + "'>",
+                    index === 0 ? "<span class='files-breadcrumb__icon'>" + filesUiIcons.home + "</span>" : "",
+                    "<span>" + escapeFilesHtml(crumb.label) + "</span>",
+                    "</button>",
+                    isCurrent ? "" : "<span class='files-breadcrumb__separator' aria-hidden='true'>›</span>"
+                ].join("");
+            }).join("");
+        }
+
+        if (!grid) return;
+
+        if (!items.length) {
+            const emptyText = state.searchQuery ? "No matching items found." : (location.emptyMessage || "This folder is empty.");
+            grid.innerHTML = "<div class='files-empty'><div><div style='width:1.6rem;height:1.6rem;margin:0 auto 0.65rem;color:#8a7a9f'>" + filesUiIcons.empty + "</div><div>" + escapeFilesHtml(emptyText) + "</div></div></div>";
+            syncFilesRenameDialog(container);
+            return;
+        }
+
+        grid.innerHTML = items.map((entry) => {
+            return [
+                "<button class='files-entry' type='button' data-files-entry='" + entry.id + "'>",
+                "  <span class='files-entry__thumb'>" + renderFilesEntryThumb(entry) + "</span>",
+                "  <span class='files-entry__label'>" + escapeFilesHtml(entry.label) + "</span>",
+                "  <span class='files-entry__meta'>" + escapeFilesHtml(entry.meta || (entry.kind === 'folder' ? 'Folder' : 'File')) + "</span>",
+                "</button>"
+            ].join("");
+        }).join("");
+
+        syncFilesRenameDialog(container);
+    }
+
+    function openFilesLocation(container, locationId, options = {}) {
+        const state = getFilesState(container);
+        const locations = getFilesLocations(container);
+        const nextLocation = locations[locationId] ? locationId : "home";
+        const shouldPushHistory = options.pushHistory !== false;
+        const nextLabel = locations[nextLocation] ? locations[nextLocation].label : "Ready";
+
+        closeFilesContextMenu(container);
+        state.currentLocation = nextLocation;
+        state.selectedMessage = options.selectedMessage || nextLabel;
+
+        if (shouldPushHistory) {
+            state.history = state.history.slice(0, state.historyIndex + 1);
+            state.history.push(nextLocation);
+            state.historyIndex = state.history.length - 1;
+        }
+
+        syncFilesWindow(container);
+        if (nextLocation === "music") {
+            void refreshFilesMusicFolder(container);
+        }
+    }
+
+    function moveFilesHistory(container, delta) {
+        const state = getFilesState(container);
+        closeFilesContextMenu(container);
+        const nextIndex = state.historyIndex + delta;
+        if (nextIndex < 0 || nextIndex >= state.history.length) return;
+        state.historyIndex = nextIndex;
+        state.currentLocation = state.history[nextIndex];
+        state.selectedMessage = "Ready";
+        syncFilesWindow(container);
+    }
+
+    function openEditorDocumentApp(docId) {
+        openApp("text-editor");
+        const record = windowRegistry.get("text-editor");
+        if (!record) return;
+
+        const body = record.window.querySelector(".window-body--editor");
+        if (body) {
+            openEditorDocument(body, docId);
+            toggleEditorMenu(body, false);
+            const textarea = body.querySelector(".gedit-textarea");
+            if (textarea) {
+                textarea.focus();
+            }
+        }
+
+        bringToFront(record.window, "text-editor");
+    }
+
+    function openFilesEntry(container, entryId) {
+        const state = getFilesState(container);
+        const locations = getFilesLocations(container);
+        const location = locations[state.currentLocation] || locations.home;
+        const entry = (location.items || []).find((item) => item.id === entryId);
+        if (!entry) return;
+
+        closeFilesContextMenu(container);
+        state.selectedMessage = entry.label + (entry.meta ? " • " + entry.meta : "");
+
+        if (entry.kind === "folder" && entry.openLocation) {
+            openFilesLocation(container, entry.openLocation, { pushHistory: true, selectedMessage: "Opened " + entry.label });
+            return;
+        }
+        if (entry.kind === "document" && entry.documentId) {
+            syncFilesWindow(container);
+            openEditorDocumentApp(entry.documentId);
+            return;
+        }
+        if (entry.kind === "image" && entry.src) {
+            syncFilesWindow(container);
+            openProjectLightbox(entry.src, entry.label);
+            return;
+        }
+        if (entry.kind === "pdf") {
+            syncFilesWindow(container);
+            openApp("resume");
+            return;
+        }
+        if (entry.kind === "audio") {
+            syncFilesWindow(container);
+            openRhythmboxTrackFromFile(entry.label);
+            return;
+        }
+        if (entry.kind === "app" && entry.appId) {
+            syncFilesWindow(container);
+            openApp(entry.appId);
+            return;
+        }
+
+        syncFilesWindow(container);
+    }
+
+    function selectFilesEntry(container, entryId) {
+        const state = getFilesState(container);
+        const locations = getFilesLocations(container);
+        const location = locations[state.currentLocation] || locations.home;
+        const entry = (location.items || []).find((item) => item.id === entryId);
+        if (!entry) return;
+
+        state.selectedMessage = entry.label + (entry.meta ? " • " + entry.meta : "");
+        const statusSelection = container.querySelector("[data-files-status-selection]");
+        if (statusSelection) {
+            statusSelection.textContent = state.selectedMessage;
+        }
+    }
+
+    function closeFilesContextMenu(container) {
+        const state = getFilesState(container);
+        const menu = container.querySelector("[data-files-context-menu]");
+        state.contextMenuOpen = false;
+        state.contextTarget = null;
+        if (menu) {
+            menu.hidden = true;
+            menu.style.left = "";
+            menu.style.top = "";
+            menu.style.visibility = "";
+        }
+    }
+
+    function openFilesSearch(container) {
+        const state = getFilesState(container);
+        state.searchOpen = true;
+        syncFilesWindow(container);
+        const input = container.querySelector("[data-files-search]");
+        if (input) {
+            input.focus();
+            input.select();
+        }
+    }
+
+    function closeFilesSearch(container, keepResults = false) {
+        const state = getFilesState(container);
+        state.searchOpen = false;
+        if (!keepResults) {
+            state.searchQuery = "";
+        }
+        syncFilesWindow(container);
+    }
+
+    function openFilesContextMenu(container, clientX, clientY) {
+        const state = getFilesState(container);
+        const menu = container.querySelector("[data-files-context-menu]");
+        if (!menu) return;
+
+        menu.hidden = false;
+        menu.style.visibility = "hidden";
+        menu.style.left = "0px";
+        menu.style.top = "0px";
+
+        const shell = container.querySelector("[data-files-shell]") || container;
+        const shellRect = shell.getBoundingClientRect();
+        const menuRect = menu.getBoundingClientRect();
+        const padding = 10;
+        const relativeX = clientX - shellRect.left;
+        const relativeY = clientY - shellRect.top;
+        const maxLeft = Math.max(padding, shellRect.width - menuRect.width - padding);
+        const maxTop = Math.max(padding, shellRect.height - menuRect.height - padding);
+        const left = Math.min(Math.max(padding, relativeX), maxLeft);
+        const top = Math.min(Math.max(padding, relativeY), maxTop);
+
+        menu.style.left = left + "px";
+        menu.style.top = top + "px";
+        menu.style.visibility = "visible";
+        const writable = isWritableFilesLocation(getFilesCurrentLocation(container));
+        const target = state.contextTarget || { type: "background" };
+        const isEntryTarget = target.type === "entry" && Boolean(target.entryId);
+        const createButtons = menu.querySelectorAll("[data-files-create]");
+        const renameButton = menu.querySelector("[data-files-rename]");
+        const divider = menu.querySelector("[data-files-context-divider]");
+
+        createButtons.forEach((button) => {
+            button.hidden = isEntryTarget;
+            button.disabled = !writable;
+        });
+        if (renameButton) {
+            renameButton.hidden = !isEntryTarget;
+            renameButton.disabled = !isEntryTarget;
+        }
+        if (divider) {
+            divider.hidden = isEntryTarget;
+        }
+        state.contextMenuOpen = true;
+    }
+
+    function bootFiles(container) {
+        if (!container) return;
+
+        if (container.dataset.ready === "true") {
+            syncFilesWindow(container);
+            return;
+        }
+
+        container.dataset.ready = "true";
+        syncFilesWindow(container);
+        void refreshFilesMusicFolder(container);
+
+        container.addEventListener("contextmenu", (event) => {
+            const entryButton = event.target.closest("[data-files-entry]");
+            const shell = event.target.closest("[data-files-shell]");
+            if (!shell) return;
+            event.preventDefault();
+            const state = getFilesState(container);
+            if (entryButton) {
+                state.contextTarget = {
+                    type: "entry",
+                    entryId: entryButton.getAttribute("data-files-entry")
+                };
+            } else {
+                state.contextTarget = { type: "background" };
+            }
+            openFilesContextMenu(container, event.clientX, event.clientY);
+        });
+
+        container.addEventListener("click", (event) => {
+            if (event.target.closest("[data-files-rename-popover]")) {
+                const renameConfirm = event.target.closest("[data-files-rename-confirm]");
+                if (renameConfirm) {
+                    event.preventDefault();
+                    commitFilesRenameDialog(container);
+                }
+                return;
+            }
+
+            const renameButton = event.target.closest("[data-files-rename]");
+            if (renameButton) {
+                const state = getFilesState(container);
+                const target = state.contextTarget;
+                closeFilesContextMenu(container);
+                if (target && target.type === "entry" && target.entryId) {
+                    openFilesRenameDialog(container, target.entryId);
+                }
+                return;
+            }
+
+            const createButton = event.target.closest("[data-files-create]");
+            if (createButton) {
+                const action = createButton.getAttribute("data-files-create");
+                closeFilesContextMenu(container);
+                if (action === "folder") {
+                    createFilesFolderEntry(container);
+                } else if (action === "text") {
+                    createFilesTextEntry(container);
+                }
+                return;
+            }
+
+            const searchButton = event.target.closest("[data-files-action='search']");
+            if (searchButton) {
+                openFilesSearch(container);
+                return;
+            }
+
+            const actionButton = event.target.closest("[data-files-action]");
+            if (actionButton) {
+                const action = actionButton.getAttribute("data-files-action");
+                if (action === "back") {
+                    moveFilesHistory(container, -1);
+                } else if (action === "forward") {
+                    moveFilesHistory(container, 1);
+                } else if (action === "up") {
+                    const locations = getFilesLocations(container);
+                    const state = getFilesState(container);
+                    const current = locations[state.currentLocation] || locations.home;
+                    if (current.parentId) {
+                        openFilesLocation(container, current.parentId, { pushHistory: true, selectedMessage: "Moved to " + locations[current.parentId].label });
+                    }
+                }
+                return;
+            }
+
+            const locationButton = event.target.closest("[data-files-location]");
+            if (locationButton) {
+                openFilesLocation(container, locationButton.getAttribute("data-files-location"), { pushHistory: true });
+                return;
+            }
+
+            const entryButton = event.target.closest("[data-files-entry]");
+            if (entryButton) {
+                selectFilesEntry(container, entryButton.getAttribute("data-files-entry"));
+                return;
+            }
+
+            closeFilesContextMenu(container);
+        });
+
+        container.addEventListener("dblclick", (event) => {
+            const entryButton = event.target.closest("[data-files-entry]");
+            if (!entryButton) return;
+            openFilesEntry(container, entryButton.getAttribute("data-files-entry"));
+        });
+
+        document.addEventListener("pointerdown", (event) => {
+            if (!container.isConnected) return;
+            const menu = container.querySelector("[data-files-context-menu]");
+            if (menu && menu.hidden) return;
+            if (!event.target.closest("[data-files-context-menu]") && !event.target.closest("[data-files-shell]")) {
+                closeFilesContextMenu(container);
+            }
+        });
+
+        document.addEventListener("pointerdown", (event) => {
+            if (!container.isConnected) return;
+            const state = getFilesState(container);
+            if (!state.renameDialogOpen) return;
+            if (!event.target.closest("[data-files-rename-popover]")) {
+                closeFilesRenameDialog(container);
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (!container.isConnected) return;
+            if (event.key === "Escape") {
+                if (getFilesState(container).searchOpen) {
+                    closeFilesSearch(container, true);
+                }
+                closeFilesContextMenu(container);
+                closeFilesRenameDialog(container);
+            }
+        });
+
+        container.addEventListener("keydown", (event) => {
+            if (!event.target.closest("[data-files-rename-input]")) return;
+            if (event.key === "Enter") {
+                event.preventDefault();
+                commitFilesRenameDialog(container);
+            } else if (event.key === "Escape") {
+                event.preventDefault();
+                closeFilesRenameDialog(container);
+            }
+        });
+
+        container.addEventListener("input", (event) => {
+            const searchInput = event.target.closest("[data-files-search]");
+            if (!searchInput) return;
+            const state = getFilesState(container);
+            state.searchQuery = searchInput.value || "";
+            state.selectedMessage = state.searchQuery
+                ? "Searching for \"" + state.searchQuery + "\""
+                : "Ready";
+            syncFilesWindow(container);
+            const focusedInput = container.querySelector("[data-files-search]");
+            if (focusedInput) {
+                focusedInput.focus();
+                focusedInput.setSelectionRange(focusedInput.value.length, focusedInput.value.length);
+            }
+        });
+
+        container.addEventListener("blur", (event) => {
+            if (event.target.closest("[data-files-search]")) {
+                const state = getFilesState(container);
+                if (!state.searchQuery) {
+                    closeFilesSearch(container);
+                }
+            }
+        }, true);
     }
 
     function createResumeWindow() {
@@ -12688,6 +14737,12 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             return;
         }
 
+        if (app.kind === "files") {
+            body.innerHTML = createFilesWindow();
+            bootFiles(body);
+            return;
+        }
+
         if (app.kind === "mail") {
             body.innerHTML = createThunderbirdWindow();
             bootThunderbird(body);
@@ -12782,6 +14837,13 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             body.innerHTML = createEditorWindow();
             headerRoot = body;
             dragHandle = body.querySelector("[data-editor-drag]") || body;
+        } else if (app.kind === "files") {
+            windowEl.classList.add("desktop-window--files");
+            windowEl.innerHTML = "<div class='window-body window-body--files'></div>";
+            body = windowEl.querySelector(".window-body--files");
+            body.innerHTML = createFilesWindow();
+            headerRoot = body;
+            dragHandle = body.querySelector("[data-files-drag]") || body;
         } else if (app.kind === "resume") {
             windowEl.classList.add("desktop-window--resume");
             windowEl.innerHTML = createStandardWindowShell(app.title, "window-body--resume", createResumeWindow());
@@ -12830,6 +14892,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             bootSudoku(body, app.id);
         } else if (app.kind === "editor") {
             bootEditor(body);
+        } else if (app.kind === "files") {
+            bootFiles(body);
         } else if (app.kind === "resume") {
             // PDF viewer has no boot state beyond wiring the shell.
         } else if (app.kind === "mail") {
@@ -12840,6 +14904,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
         if (app.kind === "editor") {
             dragHandle = body.querySelector("[data-editor-drag]") || dragHandle;
+        } else if (app.kind === "files") {
+            dragHandle = body.querySelector("[data-files-drag]") || dragHandle;
         } else if (app.kind === "resume") {
             dragHandle = body.querySelector("[data-resume-drag]") || dragHandle;
         } else if (app.kind === "browser") {
@@ -12924,6 +14990,15 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                     if (action === "maximize") toggleMaximize(app.id);
                 });
             });
+        } else if (app.kind === "files") {
+            body.querySelectorAll("[data-window-action]").forEach((button) => {
+                const action = button.getAttribute("data-window-action");
+                button.addEventListener("click", () => {
+                    if (action === "close") hideWindow(app.id, false);
+                    if (action === "minimize") hideWindow(app.id, true);
+                    if (action === "maximize") toggleMaximize(app.id);
+                });
+            });
         } else if (app.kind === "resume") {
             body.querySelectorAll("[data-window-action]").forEach((button) => {
                 const action = button.getAttribute("data-window-action");
@@ -12992,6 +15067,11 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 const textarea = record.window.querySelector(".gedit-textarea");
                 if (textarea) {
                     textarea.focus();
+                }
+            } else if (app.kind === "files") {
+                const currentLocation = record.window.querySelector("[data-files-location].is-active");
+                if (currentLocation) {
+                    currentLocation.focus();
                 }
             } else if (app.kind === "mail") {
                 const editor = record.window.querySelector("[data-mail-editor]");
@@ -13726,10 +15806,17 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         if (!dockApps) return;
 
         dockApps.innerHTML = "";
-        apps.filter((app) => isAppFavorited(app.id)).forEach((app) => {
+        const dockEntries = getDockEntryList();
+
+        dockEntries.forEach((entry) => {
+            const app = entry.app;
+            if (!app) return;
             const item = document.createElement("div");
             item.className = "dock-item";
-            item.setAttribute("data-app-id", app.id);
+            item.setAttribute("data-app-id", entry.appId);
+            if (entry.favorite) {
+                item.classList.add("is-pinned");
+            }
             const button = document.createElement("button");
             button.className = "dock-item__button";
             button.type = "button";
@@ -13756,7 +15843,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             tooltip.textContent = app.label;
 
             button.appendChild(icon);
-            button.addEventListener("click", () => openApp(app.id));
+            button.addEventListener("click", () => openDockEntry(entry.appId));
             button.addEventListener("contextmenu", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
