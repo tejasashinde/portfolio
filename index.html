@@ -755,7 +755,7 @@ a {
 }
 
 .boot-screen[data-phase="boot"] {
-    background: #280423;
+    background: #260221;
 }
 
 .boot-screen__stage {
@@ -8356,7 +8356,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     let bootSequenceStarted = false;
     let lockOpen = false;
     const lockPasswordValue = "tejas";
-    const bootBiosDurationMs = 2000;
+    const bootBiosFallbackDurationMs = 2000;
     const bootBlackPauseMs = 300;
     const bootGifDurationMs = 3000;
     const transitionlessClass = "is-transitionless";
@@ -8372,6 +8372,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     let projectLightboxSource = "";
     let projectLightboxCaption = "";
     let restartTriggerTimer = null;
+    let bootSequenceToken = 0;
     let overviewPreviewState = null;
     let overviewRestoreTimer = null;
     let pendingOverviewSnapshot = null;
@@ -8380,6 +8381,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     const startupSoundStorageKey = "portfolio.startupSoundPlayed";
     let startupSoundPlayed = window.sessionStorage.getItem(startupSoundStorageKey) === "1";
     let startupSoundAudio = null;
+    const animatedImageDurationCache = new Map();
 
     const windowRegistry = new Map();
     const favoriteStorageKey = "portfolio.favoriteApps";
@@ -13264,6 +13266,71 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         }
     }
 
+    function waitForImageLoad(imageElement) {
+        if (!imageElement) return Promise.resolve();
+        if (imageElement.complete && imageElement.naturalWidth > 0) {
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve) => {
+            const handleComplete = () => {
+                imageElement.removeEventListener("load", handleComplete);
+                imageElement.removeEventListener("error", handleComplete);
+                resolve();
+            };
+
+            imageElement.addEventListener("load", handleComplete, { once: true });
+            imageElement.addEventListener("error", handleComplete, { once: true });
+        });
+    }
+
+    function getAnimatedImageDurationMs(source, fallbackMs) {
+        const cachedDuration = animatedImageDurationCache.get(source);
+        if (cachedDuration) {
+            return cachedDuration;
+        }
+
+        const durationPromise = (async () => {
+            if (!window.ImageDecoder || !window.fetch) {
+                return fallbackMs;
+            }
+
+            try {
+                const response = await fetch(source, { cache: "no-store" });
+                if (!response.ok) {
+                    return fallbackMs;
+                }
+
+                const blob = await response.blob();
+                const decoder = new ImageDecoder({ data: blob, type: blob.type || "image/gif" });
+                await decoder.tracks.ready;
+
+                const track = decoder.tracks.selectedTrack;
+                const frameCount = Math.max(1, track?.frameCount || 1);
+                let totalDurationMs = 0;
+
+                for (let frameIndex = 0; frameIndex < frameCount; frameIndex += 1) {
+                    const { image } = await decoder.decode({ frameIndex });
+                    totalDurationMs += Math.max(0, Math.round((image.duration || 0) / 1000));
+                    if (typeof image.close === "function") {
+                        image.close();
+                    }
+                }
+
+                if (typeof decoder.close === "function") {
+                    decoder.close();
+                }
+
+                return totalDurationMs > 0 ? totalDurationMs : fallbackMs;
+            } catch (error) {
+                return fallbackMs;
+            }
+        })();
+
+        animatedImageDurationCache.set(source, durationPromise);
+        return durationPromise;
+    }
+
     function setBootPhase(phase) {
         if (bootScreen) {
             bootScreen.dataset.phase = phase;
@@ -13377,6 +13444,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     }
 
     function beginBootSequence() {
+        const currentBootToken = ++bootSequenceToken;
+        const biosBootSource = "assets/bios_boot.gif";
+
         clearBootTimers();
         setBootScreenOpen(true, { immediate: true });
         setBootPhase("bios");
@@ -13384,7 +13454,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             bootScreenImage.classList.add("is-visible");
             bootScreenImage.onload = null;
             bootScreenImage.onerror = null;
-            bootScreenImage.src = "assets/bios_boot.gif?v=" + Date.now();
+            bootScreenImage.src = biosBootSource + "?v=" + Date.now();
         }
 
         const launchBootGif = () => {
@@ -13395,7 +13465,13 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             }
         };
 
-        bootBlackTimer = window.setTimeout(launchBootGif, bootBiosDurationMs);
+        void Promise.all([
+            waitForImageLoad(bootScreenImage),
+            getAnimatedImageDurationMs(biosBootSource, bootBiosFallbackDurationMs)
+        ]).then(([, biosDurationMs]) => {
+            if (currentBootToken !== bootSequenceToken || !bootOpen) return;
+            bootBlackTimer = window.setTimeout(launchBootGif, biosDurationMs);
+        });
     }
 
     function markStartupSoundPlayed() {
