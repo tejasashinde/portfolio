@@ -821,6 +821,112 @@ a {
     pointer-events: auto;
 }
 
+.lock-screen__power {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+    cursor: pointer;
+    transition: background 140ms ease, transform 140ms ease;
+}
+
+.lock-screen__power:hover,
+.lock-screen__power:focus-visible {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.lock-screen__power svg {
+    width: 1.05rem;
+    height: 1.05rem;
+    display: block;
+}
+
+.lock-screen__power-wrap {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+}
+
+.lock-screen__power-menu {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 0;
+    width: min(16rem, calc(100vw - 1.4rem));
+    padding: 0.55rem;
+    border-radius: 0.95rem;
+    background: rgba(26, 18, 29, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
+    opacity: 0;
+    transform: translateY(-0.25rem) scale(0.98);
+    pointer-events: none;
+    transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.lock-screen__power-menu::before {
+    content: "";
+    position: absolute;
+    top: -0.42rem;
+    right: 0.85rem;
+    width: 0.84rem;
+    height: 0.84rem;
+    transform: rotate(45deg);
+    background: rgba(26, 18, 29, 0.96);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lock-screen__power-menu.is-open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.lock-screen__power-menu-item {
+    width: 100%;
+    min-height: 2.45rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.45rem 0.55rem;
+    border: 0;
+    border-radius: 0.55rem;
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.lock-screen__power-menu-item:hover,
+.lock-screen__power-menu-item:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+}
+
+.lock-screen__power-menu-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex: 0 0 auto;
+}
+
+.lock-screen__power-menu-label {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.96rem;
+}
+
 .lock-screen__panel {
     display: grid;
     justify-items: center;
@@ -864,6 +970,7 @@ a {
 
 .lock-screen__corner-callout {
     position: absolute;
+    left: 1.25rem;
     right: 1.25rem;
     bottom: 1.25rem;
     display: flex;
@@ -872,9 +979,21 @@ a {
     pointer-events: none;
 }
 
+.lock-screen__corner-brand {
+    color: rgba(255, 255, 255, 0.82);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
 .lock-screen__corner-note {
     max-width: min(24rem, calc(100vw - 8rem));
     margin: 0;
+    margin-left: auto;
     color: rgba(255, 255, 255, 0.9);
     font-size: 0.74rem;
     line-height: 1.1;
@@ -1077,10 +1196,9 @@ a {
 
     .files-rename-popover {
         position: absolute;
-        top: 0.85rem;
-        left: 50%;
+        top: 0;
+        left: 0;
         width: min(16rem, calc(100vw - 2rem));
-        transform: translateX(-50%);
         border-radius: 1rem;
         background: #1e1d22;
         color: #ffffff;
@@ -1094,7 +1212,7 @@ a {
         content: "";
         position: absolute;
         top: -0.48rem;
-        left: 50%;
+        left: var(--files-rename-pointer-left, 50%);
         width: 0.95rem;
         height: 0.95rem;
         transform: translateX(-50%) rotate(45deg);
@@ -3924,7 +4042,7 @@ a {
     align-items: stretch;
     gap: 0.2rem;
     min-width: 0;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     overflow: hidden;
 }
 
@@ -3933,9 +4051,8 @@ a {
 }
 
 .browser-tabbar__spacer {
-    flex: 0 0 0;
+    flex: 1 1 auto;
     min-width: 0;
-    width: 0;
 }
 
 .browser-tab {
@@ -5117,6 +5234,29 @@ a {
     height: 1.4rem;
 }
 
+.projects-link__icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.project-sidebar-icon__image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: inherit;
+    overflow: hidden;
+}
+
+.project-sidebar-icon__image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
 .projects-link__label {
     min-width: 0;
     line-height: 1.2;
@@ -5176,6 +5316,51 @@ a {
     font-size: 1.05rem;
     line-height: 1.55;
     max-width: 54rem;
+}
+
+.projects-main__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.9rem;
+}
+
+.projects-app-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.82rem 1rem;
+    border-radius: 0.95rem;
+    border: 1px solid rgba(207, 161, 255, 0.18);
+    background: rgba(207, 161, 255, 0.1);
+    color: #e5d0ff;
+    font-size: 0.94rem;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.projects-app-link:hover,
+.projects-app-link:focus-visible {
+    transform: translateY(-1px);
+    border-color: rgba(207, 161, 255, 0.3);
+    background: rgba(207, 161, 255, 0.16);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
+    outline: none;
+}
+
+.projects-app-link__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #5e46dd;
+    font-size: 0.82rem;
+    font-weight: 900;
+    flex: 0 0 auto;
 }
 
 .projects-tags {
@@ -5617,6 +5802,27 @@ body.has-project-lightbox {
     border-radius: 1rem;
     background: linear-gradient(180deg, rgba(24, 28, 40, 0.84), rgba(20, 22, 31, 0.96));
     border: 1px solid rgba(255, 255, 255, 0.07);
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+}
+
+.about-summary__avatar {
+    width: 4.2rem;
+    height: 4.2rem;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+    flex: 0 0 auto;
+}
+
+.about-summary__avatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
 }
 
 .about-summary__rows {
@@ -5658,6 +5864,53 @@ body.has-project-lightbox {
     color: #46e08e;
 }
 
+.about-summary__value--contacts {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: nowrap;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.about-summary__contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
+    color: rgba(231, 234, 242, 0.88);
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    white-space: nowrap;
+    word-break: break-word;
+    transition: color 140ms ease, transform 140ms ease;
+}
+
+.about-summary__contact-link:hover,
+.about-summary__contact-link:focus-visible {
+    color: #ffffff;
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.about-summary__contact-icon {
+    width: 1rem;
+    height: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.about-summary__contact-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
 .about-skills {
     display: grid;
     gap: 1rem;
@@ -5691,7 +5944,8 @@ body.has-project-lightbox {
 
 .about-skills__lead {
     margin: 0;
-    max-width: 62ch;
+    width: 100%;
+    max-width: none;
     color: rgba(231, 234, 242, 0.74);
     line-height: 1.65;
 }
@@ -7443,6 +7697,21 @@ body.has-project-lightbox {
     </section>
 
     <section class="lock-screen" id="lock-screen" aria-hidden="true">
+        <div class="lock-screen__power-wrap">
+            <button class="lock-screen__power" type="button" data-lock-action="toggle-power-menu" aria-label="Power options" aria-haspopup="menu" aria-controls="lock-screen-power-menu" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M11 2h2v10h-2zM12 21a8.5 8.5 0 0 1-4.95-15.4l1.15 1.64A6.5 6.5 0 1 0 18.8 12a6.47 6.47 0 0 0-2.67-5.25l1.12-1.67A8.5 8.5 0 0 1 12 21z"/>
+                </svg>
+            </button>
+            <div class="lock-screen__power-menu" id="lock-screen-power-menu" data-lock-power-menu role="menu" aria-hidden="true">
+                <button class="lock-screen__power-menu-item" type="button" data-system-action="power-off">
+                    <svg class="lock-screen__power-menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M11 2h2v10h-2zM12 21a8.5 8.5 0 0 1-4.95-15.4l1.15 1.64A6.5 6.5 0 1 0 18.8 12a6.47 6.47 0 0 0-2.67-5.25l1.12-1.67A8.5 8.5 0 0 1 12 21z"/>
+                    </svg>
+                    <span class="lock-screen__power-menu-label">Restart</span>
+                </button>
+            </div>
+        </div>
         <div class="lock-screen__panel">
             <div class="lock-screen__avatar" aria-hidden="true">
                 <svg viewBox="0 0 24 24" role="img" aria-label="User icon">
@@ -7466,6 +7735,7 @@ body.has-project-lightbox {
             <p class="lock-screen__help" id="lock-screen-help" aria-live="polite"></p>
         </div>
         <div class="lock-screen__corner-callout" aria-hidden="true">
+            <span class="lock-screen__corner-brand">Portfolio</span>
             <p class="lock-screen__corner-note">Login to explore the system and know more about me</p>
             <div class="lock-screen__corner-avatar">
                 <svg viewBox="0 0 24 24" role="img" aria-label="User icon" xmlns="http://www.w3.org/2000/svg">
@@ -7511,6 +7781,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const bootScreen = document.getElementById("boot-screen");
     const bootScreenImage = document.getElementById("boot-screen-image");
     const lockScreen = document.getElementById("lock-screen");
+    const lockScreenPowerButton = lockScreen ? lockScreen.querySelector("[data-lock-action='toggle-power-menu']") : null;
+    const lockScreenPowerMenu = lockScreen ? lockScreen.querySelector("[data-lock-power-menu]") : null;
     const lockScreenPassword = document.getElementById("lock-screen-password");
     const lockScreenToggle = lockScreen ? lockScreen.querySelector(".lock-screen__toggle") : null;
     const lockScreenHelp = document.getElementById("lock-screen-help");
@@ -7591,6 +7863,10 @@ Dec 2018 – Dec 2019,
    <br/>
 5. Name of Project: <span style='color:white;'>Bus Pass Portal</span>
    Description: <span style='color:white;'>Web application for generating QR code-based bus passes for staff and managing daily attendance.</span>
+   <br/>
+6. Name of Project: <span style='color:white;'>RecycloBot</span>
+   Description: <span style='color:white;'>AI-powered recycling adviser that analyzes item descriptions or images and gives region-specific recycling guidance, classification, and environmental impact insight.</span>
+   App Link: <a target='__blank' href='https://huggingface.co/spaces/tejasashinde/recycloBot'>https://huggingface.co/spaces/tejasashinde/recycloBot</a>
         `.trim(),
         "contact.txt": `
   ===============================
@@ -7732,7 +8008,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             title: "RESEARCH SCIENTIST (COMPUTER) @ SAMEER",
             bullets: [
                 "Developed dynamic web-based applications including the QR code-based Bus Pass System and Manpower Requisition Portal using Laravel.",
-                "Contributed to APAR workflow automation by supporting employee submission, review processing, and structured record movement.",
+                "Redesigned and redeveloped the Online Recruitment Portal in Laravel",
                 "Built maintainable backend logic for internal systems that required secure data handling and reliable user flows."
             ]
         },
@@ -7741,9 +8017,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             icon: "💻",
             title: "RESEARCH SCIENTIST (COMPUTER) @ SAMEER",
             bullets: [
-                "Implemented CakePHP to design and develop the Online Candidate Registration and Application Management System.",
-                "Built the recruitment workflow covering registration, email verification, profile locking, document upload, and submission.",
-                "Streamlined employee performance appraisal management with the APAR system and improved internal data consistency."
+                "Implemented CakePHP to design and develop the Online Recruitment Portal.",
+                "Developed a Device Registration Portal enabling users to register device MAC addresses for internet access through the organization’s proxy tunnel.",
+                "Designed and developed a Manpower Request Portal to maintain online records of project-wise manpower requirements and allotments for departmental heads."
             ]
         },
         {
@@ -9065,14 +9341,13 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     let bootOpen = false;
     let bootSequenceStarted = false;
     let lockOpen = false;
+    let lockScreenPowerMenuOpen = false;
     const lockPasswordValue = "tejas";
     const bootBiosFallbackDurationMs = 2000;
-    const bootBlackPauseMs = 300;
-    const bootGifDurationMs = 3000;
+    const bootGifFallbackDurationMs = 3000;
     const transitionlessClass = "is-transitionless";
     let bootBlackTimer = null;
     let bootCompleteTimer = null;
-    let bootLockTimer = null;
     let unlockRevealTimer = null;
     let lockScreenFailedAttempts = 0;
     let restartModalOpen = false;
@@ -10437,7 +10712,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     }
 
     function createAboutWindow() {
-        const aboutParagraph = "I’m a PHP Developer with 4+ years of experience building scalable web applications using Laravel and CakePHP frameworks. Currently expanding into Python, focusing on AI-driven applications and practical real-world tools.";
+        const aboutParagraph = "Hello, I'm Tejas, a PHP Developer with 4+ years of experience building scalable web applications using Laravel and CakePHP frameworks. Currently expanding into Python, focusing on AI-driven applications and practical real-world tools.";
 
         return [
             "<div class='about-layout'>",
@@ -10448,10 +10723,23 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             "      <p class='about-intro__body'>" + aboutParagraph + "</p>",
             "    </div>",
             "    <aside class='about-summary'>",
+            "      <div class='about-summary__avatar' aria-hidden='true'>",
+            "        <img src='https://avatars.githubusercontent.com/u/63357341' alt='Tejas Shinde avatar' referrerpolicy='no-referrer' />",
+            "      </div>",
             "      <div class='about-summary__rows'>",
             "        <div class='about-summary__row'><span class='about-summary__icon'>📍</span><span class='about-summary__label'>Location</span><span class='about-summary__value'>India</span></div>",
             "        <div class='about-summary__row'><span class='about-summary__icon'>💼</span><span class='about-summary__label'>Experience</span><span class='about-summary__value'>4+ Years</span></div>",
             "        <div class='about-summary__row'><span class='about-summary__icon'>●</span><span class='about-summary__label'>Availability</span><span class='about-summary__value about-summary__value--success'>Open to Opportunities</span></div>",
+            "        <div class='about-summary__row about-summary__row--contacts'><span class='about-summary__icon'>📬</span><span class='about-summary__label'>Find Me Online</span><span class='about-summary__value about-summary__value--contacts'>",
+            "          <a class='about-summary__contact-link' href='https://github.com/tejasashinde' target='_blank' rel='noopener noreferrer' aria-label='GitHub profile'>",
+            "            <span class='about-summary__contact-icon' aria-hidden='true'>",
+            "              <svg viewBox='0 0 24 24' role='img' aria-hidden='true'><path fill='currentColor' d='M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.4 6.84 9.78.5.1.68-.22.68-.5v-1.74c-2.78.62-3.37-1.37-3.37-1.37-.46-1.21-1.12-1.54-1.12-1.54-.92-.65.07-.64.07-.64 1.02.08 1.55 1.07 1.55 1.07.9 1.58 2.36 1.12 2.93.86.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.28 9.28 0 0 1 12 7.79c.85 0 1.72.12 2.53.35 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.93v2.86c0 .29.18.61.69.5A10.18 10.18 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z'/></svg>",
+            "            </span>",
+            "          </a>",
+            "          <a class='about-summary__contact-link' href='https://huggingface.co/tejasashinde' target='_blank' rel='noopener noreferrer' aria-label='Hugging Face profile'>",
+            "            <span class='about-summary__contact-icon' aria-hidden='true'>🤗</span>",
+            "          </a>",
+            "        </span></div>",
             "      </div>",
             "    </aside>",
             "  </section>",
@@ -10476,7 +10764,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             "  <section class='about-highlights'>",
             aboutHighlights.map((item) => [
                 "<article class='about-highlights__item'>",
-                "  <div class='about-highlight__icon' aria-hidden='true'>" + ({ "Clean Code": "</>", "Problem Solver": "🧩", "AI Enthusiast": "🧠", "Continuous Learner": "📘" }[item.eyebrow] || "📘") + "</div>",
+                "  <div class='about-highlight__icon' aria-hidden='true'>" + ({ "Clean Code": "💻", "Problem Solver": "🧩", "AI Enthusiast": "🧠", "Continuous Learner": "📘" }[item.eyebrow] || "📘") + "</div>",
                 "  <div>",
                 "    <h4 class='about-highlight__title'>" + item.eyebrow + "</h4>",
                 "    <p class='about-highlight__text'>" + item.text + "</p>",
@@ -10581,6 +10869,31 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         });
     }
 
+    function ensureEditorTabSource(tab) {
+        if (!tab) return null;
+        if (tab.sourceId) return tab.sourceId;
+
+        const hasExtension = /\.[a-z0-9]+$/i.test(tab.title || "");
+        if (!hasExtension) {
+            tab.title = (tab.title || "Untitled Document") + ".txt";
+        }
+
+        tab.sourceId = "editor-session-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+        return tab.sourceId;
+    }
+
+    function persistEditorTab(tab) {
+        if (!tab) return null;
+        const sourceId = ensureEditorTabSource(tab);
+        upsertCustomEditorDocument({
+            id: sourceId,
+            title: tab.title,
+            content: tab.content
+        });
+        tab.dirty = false;
+        return sourceId;
+    }
+
     function syncEditorTabToSource(tab) {
         if (!tab || !tab.sourceId) return;
         const source = customEditorDocuments.get(tab.sourceId);
@@ -10604,7 +10917,6 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             "    <div class='window-title gedit-toolbar__title' data-editor-title>Text Editor</div>",
             "    <div class='gedit-toolbar__right'>",
             "      <button class='gedit-toolbar__action gedit-toolbar__action--save' type='button' data-editor-action='save'>Save</button>",
-            "      <button class='gedit-toolbar__action gedit-toolbar__action--menu' type='button' data-editor-action='menu' aria-label='Menu'>☰</button>",
             "    </div>",
             "    <div class='gedit-toolbar__window-controls'>",
             "      <button class='gedit-window-control' type='button' data-window-action='minimize' aria-label='Minimize'>−</button>",
@@ -10904,8 +11216,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             button.addEventListener("click", () => {
                 const activeTab = getActiveEditorTab(state);
                 if (!activeTab) return;
-                activeTab.dirty = false;
-                syncEditorTabToSource(activeTab);
+                persistEditorTab(activeTab);
                 syncEditorStatus(container);
                 renderEditorTabs(container);
             });
@@ -10917,7 +11228,6 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 if (!activeTab) return;
                 activeTab.content = state.textarea.value;
                 activeTab.dirty = true;
-                syncEditorTabToSource(activeTab);
                 renderEditorLineNumbers(container);
                 syncEditorStatus(container);
             });
@@ -10944,7 +11254,6 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                     if (activeTab) {
                         activeTab.content = state.textarea.value;
                         activeTab.dirty = true;
-                        syncEditorTabToSource(activeTab);
                     }
                     renderEditorLineNumbers(container);
                     syncEditorStatus(container);
@@ -10952,9 +11261,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                     event.preventDefault();
                     const activeTab = getActiveEditorTab(state);
                     if (activeTab) {
-                        activeTab.dirty = false;
-                        syncEditorTabToSource(activeTab);
+                        persistEditorTab(activeTab);
                         syncEditorStatus(container);
+                        renderEditorTabs(container);
                     }
                 }
             });
@@ -11318,7 +11627,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 searchQuery: "",
                 contextTarget: null,
                 renameDialogOpen: false,
-                renameDialogTarget: null
+                renameDialogTarget: null,
+                renameAnchorEntryId: null
             };
         }
         return container.__filesState;
@@ -11559,6 +11869,42 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         return layer ? layer.querySelector("[data-files-rename-popover]") : null;
     }
 
+    function positionFilesRenameDialog(container) {
+        const state = getFilesState(container);
+        const target = state.renameDialogTarget;
+        const dialog = getFilesRenameDialog(container);
+        const layer = container.querySelector("[data-files-rename-layer]");
+        if (!target || !dialog || !layer) return;
+
+        const anchorId = state.renameAnchorEntryId || target.id;
+        const anchor = anchorId ? container.querySelector("[data-files-entry='" + anchorId + "']") : null;
+        if (!anchor) {
+            dialog.style.left = "";
+            dialog.style.top = "";
+            dialog.style.setProperty("--files-rename-pointer-left", "50%");
+            return;
+        }
+
+        const layerRect = layer.getBoundingClientRect();
+        const anchorRect = anchor.getBoundingClientRect();
+        const dialogRect = dialog.getBoundingClientRect();
+        const padding = 10;
+        const gap = 14;
+        const maxLeft = Math.max(padding, layerRect.width - dialogRect.width - padding);
+        const maxTop = Math.max(padding, layerRect.height - dialogRect.height - padding);
+        const anchorCenter = anchorRect.left - layerRect.left + (anchorRect.width / 2);
+        let left = anchorCenter - (dialogRect.width / 2);
+        let top = anchorRect.bottom - layerRect.top + gap;
+
+        left = Math.min(Math.max(padding, left), maxLeft);
+        top = Math.min(Math.max(padding, top), maxTop);
+
+        const pointerLeft = Math.min(Math.max(22, anchorCenter - left), dialogRect.width - 22);
+        dialog.style.left = left + "px";
+        dialog.style.top = top + "px";
+        dialog.style.setProperty("--files-rename-pointer-left", pointerLeft + "px");
+    }
+
     function syncFilesRenameDialog(container) {
         const state = getFilesState(container);
         const target = state.renameDialogTarget;
@@ -11572,12 +11918,14 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         }
 
         layer.innerHTML = renderFilesRenamePopover(target);
+        positionFilesRenameDialog(container);
         const dialog = getFilesRenameDialog(container);
         const input = dialog && dialog.querySelector("[data-files-rename-input]");
         if (input) {
             requestAnimationFrame(() => {
                 const latestState = getFilesState(container);
                 if (!latestState.renameDialogOpen || !latestState.renameDialogTarget) return;
+                positionFilesRenameDialog(container);
                 input.focus();
                 input.select();
             });
@@ -11591,6 +11939,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         }
         state.renameDialogOpen = false;
         state.renameDialogTarget = null;
+        state.renameAnchorEntryId = null;
         syncFilesWindow(container);
     }
 
@@ -11604,6 +11953,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             kind: entry.kind || "item",
             label: entry.label || ""
         };
+        state.renameAnchorEntryId = entry.id;
         state.renameDialogOpen = true;
         syncFilesWindow(container);
         syncFilesRenameDialog(container);
@@ -12150,6 +12500,20 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 }
             }
         }, true);
+
+        const grid = container.querySelector("[data-files-grid]");
+        if (grid) {
+            grid.addEventListener("scroll", () => {
+                if (!getFilesState(container).renameDialogOpen) return;
+                positionFilesRenameDialog(container);
+            });
+        }
+
+        window.addEventListener("resize", () => {
+            if (!container.isConnected) return;
+            if (!getFilesState(container).renameDialogOpen) return;
+            positionFilesRenameDialog(container);
+        });
     }
 
     function createResumeWindow() {
@@ -13967,7 +14331,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             description: "Annual Performance Appraisal Report Management System",
             summary: "Developed a web-based APAR system using CakePHP and MySQL to digitize and streamline the annual employee performance appraisal process. The application enables employees to submit yearly performance reports through a structured reporting hierarchy, allowing Reporting Officers, Reviewing Officers, the Central Coordination Office, and Nodal Officers to process appraisal records efficiently.",
             stack: ["CakePHP", "MySQL"],
-            heroLabel: "Employee Dashboard",
+            heroLabel: "Employee Dashboard in APAR",
             heroCaption: "My APAR and staff appraisal workflows",
             overviewText: "Built to replace manual APAR paperwork with a secure online workflow.",
             overviewPills: ["Internal Tool", "Secure", "Multi-Role"],
@@ -14061,6 +14425,30 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 "Enables administration to generate QR-coded passes per employee which can then be scaned by security staff to mark their daily attendance.",
                 "Built to speed up daily transport operations reducing manual paperwork."
             ]
+        },
+        {
+            id: "recyclobot",
+            name: "RecycloBot - AI-Powered Recycling Adviser",
+            shortName: "RecycloBot",
+            sidebarIcon: projectSidebarIcons.buspass,
+            image: "assets/recyclobot.png",
+            description: "AI-Powered Recycling Adviser",
+            summary: "RecycloBot helps users determine whether an item is recyclable using AI. It analyzes a description, an image, or both, and provides personalized, region-specific recycling guidance.",
+            stack: ["Gradio", "Nebius Studio API", "Google Gemini"],
+            heroLabel: "Multimodal AI Recycling Advisor",
+            heroCaption: "Image and text based recycling guidance",
+            appLink: "https://huggingface.co/spaces/tejasashinde/recycloBot",
+            appLinkLabel: "Open Hugging Face app",
+            overviewText: "Uploads an item photo or description and returns recycling guidance tailored to the user's location.",
+            overviewPills: ["Image + Text", "Region-Aware", "Environmental Impact"],
+            featuresTitle: "Key Features",
+            highlights: [
+                "Image + text-based item recognition for flexible recycling checks.",
+                "Region-aware recycling guidance tailored to the user's location.",
+                "Smart item classification covering material type, category, disposal method, and risk level.",
+                "Environmental impact scoring for CO2 impact, pollution risk, and environmental consequence.",
+                "Powered by a multimodal LLM with vision and language support via API."
+            ]
         }
     ];
 
@@ -14141,7 +14529,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             about: {
                 title: "About Me",
                 address: "about",
-                lead: "I’m a PHP Developer with 4+ years of experience building scalable web applications using Laravel and CakePHP frameworks. Currently expanding into Python, focusing on AI-driven applications and practical real-world tools.",
+                lead: "Hi! I’m Tejas, a PHP Developer with 4+ years of experience building scalable web applications using Laravel and CakePHP frameworks. Currently expanding into Python, focusing on AI-driven applications and practical real-world tools.",
                 icon: "👤",
                 content: createAboutWindow()
             },
@@ -14200,7 +14588,10 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             "Tracking": "Shows status changes and request progress at a glance.",
             "QR Passes": "Generates scannable staff passes for transport operations.",
             "Attendance": "Connects passes to daily attendance scanning.",
-            "Operations": "Simplifies recurring transport admin work."
+            "Operations": "Simplifies recurring transport admin work.",
+            "Image + Text": "Accepts a photo, a description, or both to identify the item.",
+            "Region-Aware": "Adapts guidance to the user's location and recycling rules.",
+            "Environmental Impact": "Surfaces the impact of how the item is handled."
         };
         return [
             "<div class='projects-main' data-project-detail='true'>",
@@ -14208,6 +14599,14 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             "    <div>",
             "      <h1 class='projects-main__title'>" + title + "</h1>",
             "      <p class='projects-main__subtitle'>" + subtitle + "</p>",
+            project.appLink ? (
+                "      <div class='projects-main__actions'>" +
+                "<a class='projects-app-link' href='" + project.appLink + "' target='_blank' rel='noopener noreferrer'>" +
+                "  <span class='projects-app-link__icon' aria-hidden='true'>↗</span>" +
+                "  <span>" + (project.appLinkLabel || "Open App") + "</span>" +
+                "</a>" +
+                "</div>"
+            ) : "",
             "    </div>",
             stack.length ? (
                 "    <div class='projects-tags'>" +
@@ -14270,7 +14669,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         return [
             "<section class='projects-shell' data-projects-view>",
             "  <nav class='projects-sidebar' aria-label='Project list'>",
-            "    <p class='projects-sidebar__title'>Projects</p>",
+            "    <p class='projects-sidebar__title'>My Projects</p>",
             projectEntries.map((project) => (
                 "<button class='projects-link" + (project.id === selectedProject.id ? " is-active" : "") + "' type='button' data-project-link='" + project.id + "' aria-current='" + (project.id === selectedProject.id ? "page" : "false") + "'>" +
                 "<span class='projects-link__icon'>" + (project.sidebarIcon || "") + "</span>" +
@@ -15134,9 +15533,13 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         const snapshotSource = pendingOverviewSnapshot || getOverviewSnapshotSource();
         if (!snapshotSource || !snapshotSource.sourceEl) return;
 
-    const { kind, sourceEl, sourceRect } = snapshotSource;
-    const targetScale = getOverviewTargetScale(sourceRect);
-    const overviewWidth = Math.max(0, window.innerWidth - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dock-width")) || 0) - 32);
+        const { kind, sourceEl, sourceRect } = snapshotSource;
+        const targetScale = getOverviewTargetScale(sourceRect);
+        const overviewWidth = Math.max(
+            0,
+            window.innerWidth - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dock-width")) || 0) - 32
+        );
+        const renderedHeight = Math.max(1, Math.round(sourceRect.height * targetScale));
 
         if (overviewRestoreTimer) {
             window.clearTimeout(overviewRestoreTimer);
@@ -15170,6 +15573,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         clone.style.boxShadow = "0 28px 60px rgba(8, 4, 14, 0.5)";
 
         if (overviewPreview) {
+            overviewPreview.style.height = renderedHeight + "px";
+            overviewPreview.style.minHeight = renderedHeight + "px";
             overviewPreview.replaceChildren(clone);
         }
 
@@ -15196,6 +15601,10 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             overviewRestoreTimer = null;
         }
         pendingOverviewSnapshot = null;
+        if (overviewPreview) {
+            overviewPreview.style.height = "";
+            overviewPreview.style.minHeight = "";
+        }
 
         const { cloneEl } = overviewPreviewState;
         cloneEl.classList.add("window-preview--restoring");
@@ -15284,6 +15693,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         const immediate = Boolean(options && options.immediate);
 
         lockOpen = nextOpen;
+        if (!lockOpen) {
+            closeLockScreenPowerMenu();
+        }
         if (lockScreen) {
             if (immediate) {
                 withImmediateTransition(lockScreen);
@@ -15299,6 +15711,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             closeOverview();
             closeSystemMenu();
             closeCalendarMenu();
+            closeLockScreenPowerMenu();
             requestAnimationFrame(() => {
                 if (lockScreenPassword) {
                     lockScreenPassword.value = "";
@@ -15335,10 +15748,6 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         if (bootCompleteTimer) {
             window.clearTimeout(bootCompleteTimer);
             bootCompleteTimer = null;
-        }
-        if (bootLockTimer) {
-            window.clearTimeout(bootLockTimer);
-            bootLockTimer = null;
         }
         if (restartTriggerTimer) {
             window.clearTimeout(restartTriggerTimer);
@@ -15420,6 +15829,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     function unlockScreen() {
         lockOpen = false;
         lockScreenFailedAttempts = 0;
+        closeLockScreenPowerMenu();
         if (lockScreenHelp) {
             lockScreenHelp.textContent = "";
             lockScreenHelp.classList.remove("is-visible");
@@ -15441,6 +15851,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             unlockRevealTimer = null;
         }
 
+        closeLockScreenPowerMenu();
         unlockScreen();
         clearBootTimers();
         setBootPhase("bios");
@@ -15479,12 +15890,15 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             bootScreenImage.onerror = null;
             bootScreenImage.removeAttribute("src");
         }
-        bootLockTimer = window.setTimeout(() => {
+        setLockScreenOpen(true, { immediate: true });
+
+        window.requestAnimationFrame(() => {
             if (!bootOpen) return;
-            setLockScreenOpen(true, { immediate: true });
-            setBootScreenOpen(false, { immediate: true });
-            bootLockTimer = null;
-        }, bootBlackPauseMs);
+            window.requestAnimationFrame(() => {
+                if (!bootOpen) return;
+                setBootScreenOpen(false, { immediate: true });
+            });
+        });
     }
 
     function playBootAnimationOnce(bootSource, durationMs, onComplete) {
@@ -15526,6 +15940,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     function beginBootSequence() {
         const currentBootToken = ++bootSequenceToken;
         const biosBootSource = "assets/bios_boot.gif";
+        const bootGifSource = "assets/boot.gif";
 
         clearBootTimers();
         setBootScreenOpen(true, { immediate: true });
@@ -15537,20 +15952,21 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             bootScreenImage.src = biosBootSource + "?v=" + Date.now();
         }
 
-        const launchBootGif = () => {
+        const launchBootGif = (bootDurationMs) => {
             if (!bootOpen) return;
             setBootPhase("boot");
-            if (!playBootAnimationOnce("assets/boot.gif", bootGifDurationMs, finishBootSequence) && bootOpen) {
+            if (!playBootAnimationOnce(bootGifSource, bootDurationMs, finishBootSequence) && bootOpen) {
                 finishBootSequence();
             }
         };
 
         void Promise.all([
             waitForImageLoad(bootScreenImage),
-            getAnimatedImageDurationMs(biosBootSource, bootBiosFallbackDurationMs)
-        ]).then(([, biosDurationMs]) => {
+            getAnimatedImageDurationMs(biosBootSource, bootBiosFallbackDurationMs),
+            getAnimatedImageDurationMs(bootGifSource, bootGifFallbackDurationMs)
+        ]).then(([, biosDurationMs, bootDurationMs]) => {
             if (currentBootToken !== bootSequenceToken || !bootOpen) return;
-            bootBlackTimer = window.setTimeout(launchBootGif, biosDurationMs);
+            bootBlackTimer = window.setTimeout(() => launchBootGif(bootDurationMs), biosDurationMs);
         });
     }
 
@@ -15666,6 +16082,27 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         setCalendarMenuOpen(!calendarMenuOpen);
     }
 
+    function setLockScreenPowerMenuOpen(nextOpen) {
+        if (!lockScreen) return;
+
+        lockScreenPowerMenuOpen = nextOpen;
+        if (lockScreenPowerMenu) {
+            lockScreenPowerMenu.classList.toggle("is-open", lockScreenPowerMenuOpen);
+            lockScreenPowerMenu.setAttribute("aria-hidden", lockScreenPowerMenuOpen ? "false" : "true");
+        }
+        if (lockScreenPowerButton) {
+            lockScreenPowerButton.setAttribute("aria-expanded", lockScreenPowerMenuOpen ? "true" : "false");
+        }
+    }
+
+    function closeLockScreenPowerMenu() {
+        setLockScreenPowerMenuOpen(false);
+    }
+
+    function toggleLockScreenPowerMenu() {
+        setLockScreenPowerMenuOpen(!lockScreenPowerMenuOpen);
+    }
+
     function openLockScreen() {
         setLockScreenOpen(true);
     }
@@ -15703,6 +16140,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     function startRestartSequence() {
         if (bootOpen) return;
         closeRestartModal();
+        closeLockScreenPowerMenu();
         closeSystemMenu();
         closeCalendarMenu();
         closeOverview();
@@ -15710,8 +16148,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     }
 
     function openRestartModal() {
-        if (bootOpen || lockOpen) return;
+        if (bootOpen) return;
 
+        closeLockScreenPowerMenu();
         closeSystemMenu();
         closeCalendarMenu();
         closeOverview();
@@ -16061,6 +16500,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
     if (lockScreen) {
         lockScreen.addEventListener("click", (event) => {
+            if (lockScreenPowerMenuOpen && !event.target.closest(".lock-screen__power-wrap")) {
+                closeLockScreenPowerMenu();
+            }
             if (event.target === lockScreen) {
                 if (lockScreenPassword) lockScreenPassword.focus();
             }
@@ -16147,6 +16589,14 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         if (bootOpen) {
             return;
         }
+        const lockPowerToggle = event.target.closest("[data-lock-action='toggle-power-menu']");
+        if (lockPowerToggle) {
+            toggleLockScreenPowerMenu();
+            return;
+        }
+        if (lockScreenPowerMenuOpen && !event.target.closest(".lock-screen__power-wrap")) {
+            closeLockScreenPowerMenu();
+        }
         const lockAction = event.target.closest("[data-system-action='lock']");
         if (lockAction) {
             openLockScreen();
@@ -16174,6 +16624,10 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         if (event.key === "Escape") {
             if (projectLightboxOpen) {
                 closeProjectLightbox();
+                return;
+            }
+            if (lockScreenPowerMenuOpen) {
+                closeLockScreenPowerMenu();
                 return;
             }
             if (restartModalOpen) {
