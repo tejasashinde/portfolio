@@ -87,7 +87,7 @@ a {
     min-height: 100vh;
     background-image:
         linear-gradient(180deg, rgba(10, 7, 14, 0.08), rgba(10, 7, 14, 0.3)),
-        url("assets/wallpaper.png"),
+        url("assets/images/wallpapers/wallpaper.png"),
         var(--wallpaper-fallback);
     background-size: cover;
     background-position: center;
@@ -807,7 +807,7 @@ a {
     padding: 2rem 1rem;
     background:
         linear-gradient(180deg, #500a2c, #250314),
-        url("assets/wallpaper.png"),
+        url("assets/images/wallpapers/wallpaper.png"),
         var(--wallpaper-fallback);
     background-size: cover;
     background-position: center;
@@ -1730,6 +1730,63 @@ a {
     justify-content: center;
 }
 
+.desktop-context-menu {
+    position: fixed;
+    min-width: 14.5rem;
+    padding: 0.35rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.95rem;
+    background: rgba(26, 22, 29, 0.98);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.2rem) scale(0.98);
+    transition: opacity 140ms ease, transform 140ms ease;
+    z-index: 91;
+}
+
+.desktop-context-menu.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.desktop-context-menu__button {
+    width: 100%;
+    min-height: 2.55rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    border: 0;
+    border-radius: 0.65rem;
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.desktop-context-menu__button:hover,
+.desktop-context-menu__button:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+}
+
+.desktop-context-menu__icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.desktop-context-menu__icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
 .favorites-menu__label {
     flex: 1;
     min-width: 0;
@@ -1983,6 +2040,258 @@ a {
     overflow: hidden;
     background: #f3f0ec;
     color: #1f1f20;
+}
+
+.desktop-window--image-viewer {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: #17171a;
+    box-shadow: 0 28px 62px rgba(10, 5, 16, 0.46);
+    isolation: isolate;
+}
+
+.desktop-window--image-viewer .window-body {
+    padding: 0;
+    overflow: hidden;
+    background: #17171a;
+    color: #f5f5f6;
+}
+
+.image-viewer-app {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    background: #17171a;
+    color: #f5f5f6;
+    font-family: var(--font-sans);
+}
+
+.image-viewer-toolbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.8rem;
+    min-height: 3.3rem;
+    padding: 0.55rem 0.7rem;
+    background: linear-gradient(180deg, #313136 0%, #242428 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: grab;
+    user-select: none;
+}
+
+.image-viewer-toolbar:active {
+    cursor: grabbing;
+}
+
+.image-viewer-toolbar__left,
+.image-viewer-toolbar__right,
+.image-viewer-toolbar__window-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.image-viewer-toolbar__title {
+    min-width: 0;
+    text-align: center;
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.94);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.image-viewer-toolbar__right {
+    justify-self: end;
+}
+
+.image-viewer-button {
+    width: 2rem;
+    height: 2rem;
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 0.45rem;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.88);
+    cursor: pointer;
+    transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.image-viewer-button:hover,
+.image-viewer-button:focus-visible,
+.image-viewer-button.is-active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    outline: none;
+}
+
+.image-viewer-button svg {
+    width: 1.08rem;
+    height: 1.08rem;
+    display: block;
+}
+
+.image-viewer-stage {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+    background: #111114;
+}
+
+.image-viewer-filmstrip {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.48rem;
+    padding: 0.7rem 0.55rem;
+    overflow: auto;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    background: #202025;
+}
+
+.image-viewer-thumb {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2.7rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.38rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.82);
+    text-align: left;
+    cursor: pointer;
+}
+
+.image-viewer-thumb:hover,
+.image-viewer-thumb:focus-visible,
+.image-viewer-thumb.is-active {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    outline: none;
+}
+
+.image-viewer-thumb__frame {
+    width: 2.7rem;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 0.35rem;
+    background: #101013;
+}
+
+.image-viewer-thumb__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-viewer-thumb__label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.8rem;
+}
+
+.image-viewer-canvas {
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    background:
+        linear-gradient(45deg, #151519 25%, transparent 25%),
+        linear-gradient(-45deg, #151519 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #151519 75%),
+        linear-gradient(-45deg, transparent 75%, #151519 75%),
+        #101013;
+    background-position: 0 0, 0 0.5rem, 0.5rem -0.5rem, -0.5rem 0;
+    background-size: 1rem 1rem;
+}
+
+.image-viewer-frame {
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+    overflow: auto;
+    padding: 1.25rem;
+}
+
+.image-viewer-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 0.2rem;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+    transform: scale(var(--image-viewer-zoom, 1));
+    transform-origin: center;
+    transition: transform 140ms ease;
+}
+
+.image-viewer-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.25rem;
+    padding: 0.4rem 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(24, 24, 28, 0.96);
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.82rem;
+}
+
+.image-viewer-caption__name,
+.image-viewer-caption__meta {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.image-viewer-caption__name {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 700;
+}
+
+@media (max-width: 760px) {
+    .image-viewer-toolbar {
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 0.5rem;
+    }
+
+    .image-viewer-toolbar__right {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+        justify-content: flex-end;
+    }
+
+    .image-viewer-stage {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    .image-viewer-filmstrip {
+        order: 2;
+        min-height: 5.5rem;
+        flex-direction: row;
+        border-right: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .image-viewer-thumb {
+        width: 9.5rem;
+        flex: 0 0 9.5rem;
+    }
 }
 
 .rhythmbox-app {
@@ -7586,6 +7895,16 @@ body.has-project-lightbox {
     </section>
 
     <div class="favorites-menu" id="favorites-menu" role="menu" aria-hidden="true"></div>
+    <div class="desktop-context-menu" id="desktop-context-menu" role="menu" aria-hidden="true">
+        <button class="desktop-context-menu__button" type="button" data-desktop-action="change-background" role="menuitem">
+            <span class="desktop-context-menu__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18.5v-13Zm2.5-.6a.6.6 0 0 0-.6.6v10.82l3.35-3.35a1.65 1.65 0 0 1 2.33 0l1.17 1.17 2.92-2.92a1.65 1.65 0 0 1 2.33 0l.1.1V5.5a.6.6 0 0 0-.6-.6h-11Zm11.6 9.1-1.27-1.27-2.92 2.92 3.36 3.35h.23a.6.6 0 0 0 .6-.6V14Zm-3.5 5-4.18-4.18L6.25 19h8.35ZM8.7 8.3a1.55 1.55 0 1 1 3.1 0 1.55 1.55 0 0 1-3.1 0Z"/>
+                </svg>
+            </span>
+            <span>Change Background</span>
+        </button>
+    </div>
 
     <section class="calendar-menu" id="calendar-menu" aria-hidden="true" aria-label="Notifications and calendar">
         <div class="calendar-menu__inner">
@@ -7692,7 +8011,7 @@ body.has-project-lightbox {
 
     <section class="boot-screen is-visible" id="boot-screen" aria-hidden="false" data-phase="bios">
         <div class="boot-screen__stage">
-            <img class="boot-screen__image" id="boot-screen-image" src="assets/bios_boot.gif" alt="Ubuntu BIOS boot animation" />
+            <img class="boot-screen__image" id="boot-screen-image" src="assets/images/animations/bios_boot.gif" alt="Ubuntu BIOS boot animation" />
         </div>
     </section>
 
@@ -7994,6 +8313,55 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         "</svg>"
     ].join("");
 
+    const imageViewerIconSvg = [
+        "<svg viewBox='0 0 100 100' aria-hidden='true' xmlns='http://www.w3.org/2000/svg'>",
+        "  <defs>",
+        "    <linearGradient id='image-viewer-icon-bg' x1='18' y1='12' x2='82' y2='88' gradientUnits='userSpaceOnUse'>",
+        "      <stop stop-color='#61B3FF'/>",
+        "      <stop offset='0.52' stop-color='#356AF1'/>",
+        "      <stop offset='1' stop-color='#7A42D6'/>",
+        "    </linearGradient>",
+        "    <filter id='image-viewer-icon-shadow' x='-20%' y='-20%' width='140%' height='140%'>",
+        "      <feDropShadow dx='0' dy='3' stdDeviation='2' flood-color='#000000' flood-opacity='0.24'/>",
+        "    </filter>",
+        "  </defs>",
+        "  <rect x='12' y='13' width='76' height='74' rx='18' fill='url(#image-viewer-icon-bg)' filter='url(#image-viewer-icon-shadow)'/>",
+        "  <rect x='22' y='25' width='56' height='42' rx='7' fill='rgba(255,255,255,0.92)'/>",
+        "  <path d='M28 61l13-15 10 10 7-8 14 13z' fill='#3c8f5e'/>",
+        "  <circle cx='61' cy='37' r='6' fill='#ffbf4d'/>",
+        "  <path d='M31 75h38' stroke='rgba(255,255,255,0.75)' stroke-width='5' stroke-linecap='round'/>",
+        "</svg>"
+    ].join("");
+
+    const imageViewerExcludedStems = new Set(["thunderbird-logo", "bios_boot", "boot", "boot_old", "firefox_logo"]);
+    const imageViewerImageExtensions = new Set(["png", "jpg", "jpeg", "gif", "webp", "avif", "svg"]);
+    const imageViewerAssetFolders = [
+        "assets/images/wallpapers/",
+        "assets/images/projects/"
+    ];
+    const imageViewerFallbackAssetPaths = [
+        "assets/images/wallpapers/wallpaper.png",
+        "assets/images/wallpapers/wallpaper2.png",
+        "assets/images/wallpapers/wallpaper3.png",
+        "assets/images/projects/apar.png",
+        "assets/images/projects/buspass.png",
+        "assets/images/projects/device-reg.png",
+        "assets/images/projects/manpower.png",
+        "assets/images/projects/recruitment.png",
+        "assets/images/projects/recyclobot.png"
+    ];
+    const desktopWallpaperAssetFolders = [
+        "assets/images/wallpapers/"
+    ];
+    const desktopWallpaperFallbackAssetPaths = [
+        "assets/images/wallpapers/wallpaper.png",
+        "assets/images/wallpapers/wallpaper2.png",
+        "assets/images/wallpapers/wallpaper3.png"
+    ];
+    let currentDesktopWallpaperSource = "assets/images/wallpapers/wallpaper.png";
+    let imageViewerCurrentAssets = null;
+    let pendingImageViewerSource = "";
+
     const projectSidebarIcons = {
         apar: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' d='M5 4.5h9l5 5V19.5H5z'/><path fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' d='M14 4.5v5h5'/><path fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' d='M8 12h8M8 15h8'/></svg>",
         recruitment: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' d='M7 4.5h9l3 3V19.5H7z'/><path fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' d='M16 4.5v3h3'/><path fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' d='M10 12h6M10 15h6M10 9h2'/></svg>",
@@ -8004,9 +8372,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
     const experienceEntries = [
         {
-            period: "Aug 2023 – Current",
+            period: "Aug 2023 – Aug 2026",
             icon: "💻",
-            title: "RESEARCH SCIENTIST (COMPUTER) @ SAMEER",
+            title: "RESEARCH SCIENTIST (IT) @ SAMEER",
             bullets: [
                 "Developed dynamic web-based applications including the QR code-based Bus Pass System and Manpower Requisition Portal using Laravel.",
                 "Redesigned and redeveloped the Online Recruitment Portal in Laravel",
@@ -8016,7 +8384,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         {
             period: "July 2021 – July 2023",
             icon: "💻",
-            title: "RESEARCH SCIENTIST (COMPUTER) @ SAMEER",
+            title: "RESEARCH SCIENTIST (IT) @ SAMEER",
             bullets: [
                 "Implemented CakePHP to design and develop the Online Recruitment Portal.",
                 "Developed a Device Registration Portal enabling users to register device MAC addresses for internet access through the organization’s proxy tunnel.",
@@ -8036,13 +8404,14 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
     const apps = [
         { id: "terminal", label: "Terminal", title: "Terminal", iconSvg: terminalIconSvg, kind: "terminal", width: 720, height: 540, top: 28, left: 56 },
-        { id: "projects", label: "My Projects", title: "Firefox Browser", iconBg: "linear-gradient(135deg, #3a2244, #4d2850)", iconImage: "assets/firefox_logo.png", kind: "browser", page: "projects", width: 960, height: 640, top: 42, left: 110 },
+        { id: "projects", label: "My Projects", title: "Firefox Browser", iconBg: "linear-gradient(135deg, #3a2244, #4d2850)", iconImage: "assets/images/apps/firefox_logo.png", kind: "browser", page: "projects", width: 960, height: 640, top: 42, left: 110 },
         { id: "files", label: "Files", title: "Files", iconSvg: filesIconSvg, iconBg: "linear-gradient(135deg, #ffb347, #ea6c21)", kind: "files", width: 960, height: 640, top: 56, left: 132 },
+        { id: "image-viewer", label: "Image Viewer", title: "Image Viewer", iconSvg: imageViewerIconSvg, iconBg: "linear-gradient(135deg, #4ba5ff, #6843d7)", kind: "image-viewer", width: 1040, height: 700, top: 48, left: 148 },
         { id: "rhythmbox", label: "Rhythmbox", title: "Rhythmbox", iconSvg: rhythmboxIconSvg, iconBg: "linear-gradient(135deg, #ffae4b, #f46d16)", kind: "music", width: 1160, height: 760, top: 34, left: 82 },
         { id: "text-editor", label: "Text Editor", title: "Text Editor", iconSvg: textEditorIconSvg, iconBg: "linear-gradient(135deg, #3d84f7, #203a8f)", kind: "editor", width: 980, height: 640, top: 54, left: 160 },
         { id: "mines", label: "Mines", title: "Mines", iconSvg: minesIconSvg, iconBg: "linear-gradient(135deg, #6a6f74, #404449)", kind: "mines", width: 980, height: 660, top: 44, left: 120 },
         { id: "sudoku", label: "Sudoku", title: "Sudoku", iconSvg: sudokuIconSvg, iconBg: "linear-gradient(135deg, #f2e7cf, #c6b08a)", kind: "sudoku", width: 1020, height: 680, top: 52, left: 138 },
-        { id: "contact", label: "Contact", title: "Thunderbird", iconImage: "assets/thunderbird-logo.png", iconBg: "transparent", kind: "mail", width: 960, height: 690, top: 78, left: 188 },
+        { id: "contact", label: "Contact", title: "Thunderbird", iconImage: "assets/images/apps/thunderbird-logo.png", iconBg: "transparent", kind: "mail", width: 960, height: 690, top: 78, left: 188 },
         { id: "resume", label: "Resume.pdf", title: "Resume.pdf", icon: "📄", iconBg: "linear-gradient(135deg, #b7b7b7, #5e5e5e)", kind: "resume", width: 650, height: 520, top: 44, left: 240 },
         { id: "calculator", label: "Calculator", title: "Calculator", icon: "🧮", iconBg: "linear-gradient(135deg, #ffb84d, #ff6a3d)", kind: "calculator", width: 420, height: 540, top: 96, left: 300, dock: false }
     ];
@@ -9283,12 +9652,13 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         { id: "calculator", label: "Calculator", meta: "Basic math", icon: "🧮", iconBg: "linear-gradient(135deg, #ffb84d, #ff6a3d)", action: () => openApp("calculator") },
         { id: "terminal", label: "Terminal", meta: "Portfolio commands", iconSvg: terminalIconSvg, action: () => openApp("terminal") },
         { id: "files", label: "Files", meta: "GNOME file manager", iconSvg: filesIconSvg, iconBg: "linear-gradient(135deg, #ffb347, #ea6c21)", action: () => openApp("files") },
+        { id: "image-viewer", label: "Image Viewer", meta: "Assets gallery", iconSvg: imageViewerIconSvg, iconBg: "linear-gradient(135deg, #4ba5ff, #6843d7)", action: () => openApp("image-viewer") },
         { id: "rhythmbox", label: "Rhythmbox", meta: "Music library", iconSvg: rhythmboxIconSvg, iconBg: "linear-gradient(135deg, #ffae4b, #f46d16)", action: () => openApp("rhythmbox") },
         { id: "text-editor", label: "Text Editor", meta: "Gedit-style notes", iconSvg: textEditorIconSvg, iconBg: "linear-gradient(135deg, #3d84f7, #203a8f)", action: () => openApp("text-editor") },
         { id: "mines", label: "Mines", meta: "Logic puzzle", iconSvg: minesIconSvg, iconBg: "linear-gradient(135deg, #6a6f74, #404449)", action: () => openApp("mines") },
         { id: "sudoku", label: "Sudoku", meta: "Number puzzle", iconSvg: sudokuIconSvg, iconBg: "linear-gradient(135deg, #f2e7cf, #c6b08a)", action: () => openApp("sudoku") },
-        { id: "firefox", label: "Firefox", meta: "My Projects", iconImage: "assets/firefox_logo.png", iconBg: "linear-gradient(135deg, #3a2244, #4d2850)", action: () => openBrowserPage("projects") },
-        { id: "contact", label: "Contact", meta: "Reach out", iconImage: "assets/thunderbird-logo.png", iconBg: "transparent", action: () => openApp("contact") },
+        { id: "firefox", label: "Firefox", meta: "My Projects", iconImage: "assets/images/apps/firefox_logo.png", iconBg: "linear-gradient(135deg, #3a2244, #4d2850)", action: () => openBrowserPage("projects") },
+        { id: "contact", label: "Contact", meta: "Reach out", iconImage: "assets/images/apps/thunderbird-logo.png", iconBg: "transparent", action: () => openApp("contact") },
         { id: "resume", label: "Resume.pdf", meta: "PDF version", icon: "📄", iconBg: "linear-gradient(135deg, #b7b7b7, #5e5e5e)", action: () => openApp("resume") }
     ];
 
@@ -9305,7 +9675,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             id: "portfolio-site",
             label: "My Projects",
             meta: "My Projects / About Me / Experience",
-            iconImage: "assets/firefox_logo.png",
+            iconImage: "assets/images/apps/firefox_logo.png",
             iconBg: "linear-gradient(135deg, #3a2244, #4d2850)",
             action: () => openBrowserPage("projects")
         }
@@ -9373,10 +9743,12 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     const favoriteStorageKey = "portfolio.favoriteApps";
     const defaultFavoriteAppIds = ["terminal", "files", "projects", "contact"];
     const favoriteMenu = document.getElementById("favorites-menu");
+    const desktopContextMenu = document.getElementById("desktop-context-menu");
     let favoritesMenuState = {
         open: false,
         appId: null,
-        app: null
+        app: null,
+        record: null
     };
 
     function loadFavoriteAppIds() {
@@ -9432,15 +9804,22 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         favoriteMenu.classList.remove("is-open");
         favoriteMenu.setAttribute("aria-hidden", "true");
         favoriteMenu.innerHTML = "";
-        favoritesMenuState = { open: false, appId: null, app: null };
+        favoritesMenuState = { open: false, appId: null, app: null, record: null };
     }
 
     function openFavoritesMenu(app, anchorRect, options = {}) {
         if (!favoriteMenu || !app) return;
+        const runningRecord = options.record || null;
+        const isRunning = isDockRecordRunning(runningRecord);
         const addLabel = isAppFavorited(app.id) ? "Remove from Favorites" : "Add to Favorites";
         const icon = isAppFavorited(app.id) ? "−" : "+";
 
-        favoriteMenu.innerHTML = [
+        favoriteMenu.innerHTML = isRunning ? [
+            "<button class='favorites-menu__button' type='button' data-favorites-action='close'>",
+            "  <span class='favorites-menu__icon' aria-hidden='true'>×</span>",
+            "  <span class='favorites-menu__label'>Close App</span>",
+            "</button>"
+        ].join("") : [
             "<button class='favorites-menu__button' type='button' data-favorites-action='toggle'>",
             "  <span class='favorites-menu__icon' aria-hidden='true'>" + icon + "</span>",
             "  <span class='favorites-menu__label'>" + addLabel + "</span>",
@@ -9457,8 +9836,48 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         favoritesMenuState = {
             open: true,
             appId: app.id,
-            app: app
+            app: app,
+            record: runningRecord
         };
+    }
+
+    function closeDesktopContextMenu() {
+        if (!desktopContextMenu) return;
+        desktopContextMenu.classList.remove("is-open");
+        desktopContextMenu.setAttribute("aria-hidden", "true");
+    }
+
+    function openDesktopContextMenu(clientX, clientY) {
+        if (!desktopContextMenu) return;
+        closeFavoritesMenu();
+        closeSystemMenu();
+        closeCalendarMenu();
+        const menuWidth = desktopContextMenu.offsetWidth || 232;
+        const menuHeight = desktopContextMenu.offsetHeight || 48;
+        const left = Math.min(window.innerWidth - menuWidth - 10, Math.max(10, clientX));
+        const top = Math.min(window.innerHeight - menuHeight - 10, Math.max(10, clientY));
+        desktopContextMenu.style.left = left + "px";
+        desktopContextMenu.style.top = top + "px";
+        desktopContextMenu.classList.add("is-open");
+        desktopContextMenu.setAttribute("aria-hidden", "false");
+    }
+
+    function applyDesktopWallpaper(wallpaperSrc) {
+        if (!desktopShell || !wallpaperSrc) return;
+        currentDesktopWallpaperSource = wallpaperSrc;
+        desktopShell.style.backgroundImage = [
+            "linear-gradient(180deg, rgba(10, 7, 14, 0.08), rgba(10, 7, 14, 0.3))",
+            "url(\"" + wallpaperSrc + "\")",
+            "var(--wallpaper-fallback)"
+        ].join(", ");
+    }
+
+    async function changeDesktopBackgroundRandomly() {
+        const wallpapers = await loadDesktopWallpaperAssets();
+        if (!wallpapers.length) return;
+        const candidates = wallpapers.length > 1 ? wallpapers.filter((asset) => asset.src !== currentDesktopWallpaperSource) : wallpapers;
+        const picked = candidates[Math.floor(Math.random() * candidates.length)] || wallpapers[0];
+        applyDesktopWallpaper(picked.src);
     }
 
     function clamp(value, min, max) {
@@ -9676,6 +10095,19 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         }
 
         syncDockState();
+    }
+
+    function closeDockApp(appId) {
+        const record = windowRegistry.get(appId);
+        if (!record || !record.app) return;
+
+        if (record.app.kind === "terminal") {
+            destroyTerminalWindow(appId);
+        } else if (record.app.kind === "music") {
+            destroyRhythmboxWindow(appId);
+        } else {
+            hideWindow(appId, false);
+        }
     }
 
     function toggleMaximize(appId) {
@@ -10373,10 +10805,11 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     }
 
     const thunderbirdDraftStorageKey = "portfolio.thunderbird.compose";
+    const thunderbirdRecipientAddress = "work.tejas.shinde@gmail.com";
 
     function getThunderbirdDefaultDraft() {
         return {
-            to: "",
+            to: thunderbirdRecipientAddress,
             cc: "",
             bcc: "",
             subject: "Portfolio Inquiry",
@@ -10402,7 +10835,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         const fallback = getThunderbirdDefaultDraft();
         try {
             const saved = JSON.parse(window.localStorage.getItem(thunderbirdDraftStorageKey) || "null");
-            return saved ? { ...fallback, ...saved } : fallback;
+            return saved ? { ...fallback, ...saved, to: thunderbirdRecipientAddress } : fallback;
         } catch (error) {
             return fallback;
         }
@@ -10411,7 +10844,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     function saveThunderbirdDraft(state) {
         if (!state) return;
         const draft = {
-            to: state.toInput.value,
+            to: thunderbirdRecipientAddress,
             cc: state.ccInput.value,
             bcc: state.bccInput.value,
             subject: state.subjectInput.value,
@@ -10425,6 +10858,12 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             attachmentName: state.attachmentNameEl.textContent === "No attachment selected" ? "" : state.attachmentNameEl.textContent
         };
         window.localStorage.setItem(thunderbirdDraftStorageKey, JSON.stringify(draft));
+    }
+
+    function enforceThunderbirdRecipient(state) {
+        if (!state || !state.toInput) return thunderbirdRecipientAddress;
+        state.toInput.value = thunderbirdRecipientAddress;
+        return thunderbirdRecipientAddress;
     }
 
     function setThunderbirdStatus(state, message) {
@@ -10487,6 +10926,302 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         saveThunderbirdDraft(state);
     }
 
+    function getImageViewerToolbarIcon(name) {
+        const icons = {
+            previous: "<svg viewBox='0 0 24 24' aria-hidden='true'><path d='M15 6l-6 6 6 6' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
+            next: "<svg viewBox='0 0 24 24' aria-hidden='true'><path d='M9 6l6 6-6 6' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
+            zoomIn: "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='10.5' cy='10.5' r='5.8' fill='none' stroke='currentColor' stroke-width='1.9'/><path d='M10.5 7.8v5.4M7.8 10.5h5.4M15 15l4.2 4.2' fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round'/></svg>",
+            zoomOut: "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='10.5' cy='10.5' r='5.8' fill='none' stroke='currentColor' stroke-width='1.9'/><path d='M7.8 10.5h5.4M15 15l4.2 4.2' fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round'/></svg>",
+            fit: "<svg viewBox='0 0 24 24' aria-hidden='true'><path d='M7 4H4v3M17 4h3v3M20 17v3h-3M7 20H4v-3' fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/><rect x='8' y='8' width='8' height='8' rx='1.2' fill='none' stroke='currentColor' stroke-width='1.7'/></svg>"
+        };
+        return icons[name] || "";
+    }
+
+    function createImageViewerWindow() {
+        return [
+            "<div class='image-viewer-app' data-image-viewer-app>",
+            "  <header class='image-viewer-toolbar' data-image-viewer-drag>",
+            "    <div class='image-viewer-toolbar__left'>",
+            "      <button class='image-viewer-button' type='button' data-image-viewer-action='previous' aria-label='Previous image' title='Previous image'>" + getImageViewerToolbarIcon("previous") + "</button>",
+            "      <button class='image-viewer-button' type='button' data-image-viewer-action='next' aria-label='Next image' title='Next image'>" + getImageViewerToolbarIcon("next") + "</button>",
+            "    </div>",
+            "    <div class='image-viewer-toolbar__title' data-image-viewer-title>Image Viewer</div>",
+            "    <div class='image-viewer-toolbar__right'>",
+            "      <button class='image-viewer-button' type='button' data-image-viewer-action='zoom-out' aria-label='Zoom out' title='Zoom out'>" + getImageViewerToolbarIcon("zoomOut") + "</button>",
+            "      <button class='image-viewer-button is-active' type='button' data-image-viewer-action='fit' aria-label='Fit to window' title='Fit to window'>" + getImageViewerToolbarIcon("fit") + "</button>",
+            "      <button class='image-viewer-button' type='button' data-image-viewer-action='zoom-in' aria-label='Zoom in' title='Zoom in'>" + getImageViewerToolbarIcon("zoomIn") + "</button>",
+            "      <div class='gedit-toolbar__window-controls image-viewer-toolbar__window-controls'>",
+            "        <button class='gedit-window-control' type='button' data-window-action='minimize' aria-label='Minimize'>&#8211;</button>",
+            "        <button class='gedit-window-control' type='button' data-window-action='maximize' aria-label='Maximize'>&#9633;</button>",
+            "        <button class='gedit-window-control gedit-window-control--close' type='button' data-window-action='close' aria-label='Close'>&#215;</button>",
+            "      </div>",
+            "    </div>",
+            "  </header>",
+            "  <main class='image-viewer-stage'>",
+            "    <nav class='image-viewer-filmstrip' data-image-viewer-filmstrip aria-label='Images in assets folder'></nav>",
+            "    <section class='image-viewer-canvas' aria-label='Selected image preview'>",
+            "      <div class='image-viewer-frame' data-image-viewer-frame>",
+            "        <img class='image-viewer-image' data-image-viewer-image alt='' />",
+            "      </div>",
+            "      <div class='image-viewer-caption'>",
+            "        <span class='image-viewer-caption__name' data-image-viewer-name>Image Viewer</span>",
+            "        <span class='image-viewer-caption__meta' data-image-viewer-meta></span>",
+            "      </div>",
+            "    </section>",
+            "  </main>",
+            "</div>"
+        ].join("");
+    }
+
+    function getImageViewerAssetStem(fileName) {
+        return String(fileName || "").replace(/\.[^.]+$/, "");
+    }
+
+    function getImageViewerAssetExtension(fileName) {
+        const match = String(fileName || "").match(/\.([a-z0-9]+)$/i);
+        return match ? match[1].toLowerCase() : "";
+    }
+
+    function isImageViewerAssetAllowed(filePath) {
+        const name = String(filePath || "").split(/[\\/]/).pop();
+        const extension = getImageViewerAssetExtension(name);
+        const stem = getImageViewerAssetStem(name);
+        return Boolean(name && imageViewerImageExtensions.has(extension) && !imageViewerExcludedStems.has(stem));
+    }
+
+    function createImageViewerAsset(filePath) {
+        const normalizedPath = String(filePath || "").replace(/\\/g, "/");
+        const name = normalizedPath.split("/").filter(Boolean).pop() || "";
+        const extension = getImageViewerAssetExtension(name).toUpperCase();
+        return {
+            name,
+            src: normalizedPath.split("/").map((part) => encodeURIComponent(part)).join("/"),
+            type: extension + " image"
+        };
+    }
+
+    function getImageViewerFallbackAssets() {
+        return imageViewerFallbackAssetPaths
+            .filter(isImageViewerAssetAllowed)
+            .map(createImageViewerAsset);
+    }
+
+    function getDesktopWallpaperFallbackAssets() {
+        return desktopWallpaperFallbackAssetPaths
+            .filter(isImageViewerAssetAllowed)
+            .map(createImageViewerAsset);
+    }
+
+    async function loadImageAssetsFromFolders(folders, fallbackAssets) {
+        try {
+            const discovered = [];
+            const folderResults = await Promise.all(folders.map(async (folder) => {
+                const response = await fetch(folder, { cache: "no-store" });
+                if (!response.ok) return [];
+                const html = await response.text();
+                const doc = new DOMParser().parseFromString(html, "text/html");
+                return Array.from(doc.querySelectorAll("a[href]"))
+                    .map((link) => {
+                        const href = link.getAttribute("href") || "";
+                        const cleaned = decodeURIComponent(href.split("?")[0].split("#")[0]);
+                        const name = cleaned.split("/").filter(Boolean).pop() || "";
+                        return name ? folder + name : "";
+                    })
+                    .filter(isImageViewerAssetAllowed);
+            }));
+            folderResults.forEach((paths) => discovered.push(...paths));
+            const uniquePaths = [...new Set(discovered)].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+            return uniquePaths.length ? uniquePaths.map(createImageViewerAsset) : fallbackAssets;
+        } catch (error) {
+            return fallbackAssets;
+        }
+    }
+
+    async function loadImageViewerAssets() {
+        return loadImageAssetsFromFolders(imageViewerAssetFolders, getImageViewerFallbackAssets());
+    }
+
+    async function loadDesktopWallpaperAssets() {
+        return loadImageAssetsFromFolders(desktopWallpaperAssetFolders, getDesktopWallpaperFallbackAssets());
+    }
+
+    function getImageViewerState(container) {
+        if (!container.__imageViewerState) {
+            container.__imageViewerState = {
+                assets: getImageViewerFallbackAssets(),
+                selectedIndex: 0,
+                zoom: 1,
+                titleEl: container.querySelector("[data-image-viewer-title]"),
+                filmstripEl: container.querySelector("[data-image-viewer-filmstrip]"),
+                imageEl: container.querySelector("[data-image-viewer-image]"),
+                frameEl: container.querySelector("[data-image-viewer-frame]"),
+                nameEl: container.querySelector("[data-image-viewer-name]"),
+                metaEl: container.querySelector("[data-image-viewer-meta]")
+            };
+        }
+        return container.__imageViewerState;
+    }
+
+    function getImageViewerAssetIndex(src) {
+        if (!src) return -1;
+        const normalized = String(src).replace(/^\.?\//, "");
+        const activeAssets = imageViewerCurrentAssets || getImageViewerFallbackAssets();
+        return activeAssets.findIndex((asset) => asset.src === normalized || asset.name === normalized || asset.src.endsWith("/" + normalized));
+    }
+
+    function setImageViewerSelection(container, index, options = {}) {
+        const state = getImageViewerState(container);
+        if (!state.assets.length) return;
+        const nextIndex = ((index % state.assets.length) + state.assets.length) % state.assets.length;
+        state.selectedIndex = nextIndex;
+        if (options.keepZoom !== true) {
+            state.zoom = 1;
+        }
+        syncImageViewer(container);
+    }
+
+    function syncImageViewer(container) {
+        const state = getImageViewerState(container);
+        const asset = state.assets[state.selectedIndex] || state.assets[0];
+        if (!asset) return;
+
+        if (state.titleEl) {
+            state.titleEl.textContent = asset.name + " - Image Viewer";
+        }
+        if (state.imageEl && state.imageEl.getAttribute("src") !== asset.src) {
+            state.imageEl.src = asset.src;
+            state.imageEl.alt = asset.name;
+        }
+        if (state.imageEl) {
+            state.imageEl.style.setProperty("--image-viewer-zoom", state.zoom);
+        }
+        if (state.nameEl) {
+            state.nameEl.textContent = asset.name;
+        }
+        if (state.metaEl) {
+            const dimensions = state.imageEl && state.imageEl.naturalWidth ? state.imageEl.naturalWidth + " x " + state.imageEl.naturalHeight + " px" : "Loading dimensions";
+            state.metaEl.textContent = asset.type + " · " + dimensions + " · " + Math.round(state.zoom * 100) + "%";
+        }
+        if (state.filmstripEl) {
+            state.filmstripEl.innerHTML = state.assets.map((item, itemIndex) => [
+                "<button class='image-viewer-thumb" + (itemIndex === state.selectedIndex ? " is-active" : "") + "' type='button' data-image-viewer-image-index='" + itemIndex + "'>",
+                "  <span class='image-viewer-thumb__frame'><img src='" + item.src + "' alt='' loading='lazy' /></span>",
+                "  <span class='image-viewer-thumb__label'>" + escapeFilesHtml(item.name) + "</span>",
+                "</button>"
+            ].join("")).join("");
+            const selectedThumb = state.filmstripEl.querySelector("[data-image-viewer-image-index='" + state.selectedIndex + "']");
+            if (selectedThumb) {
+                selectedThumb.scrollIntoView({ block: "nearest" });
+            }
+        }
+    }
+
+    function bootImageViewer(container) {
+        if (!container) return;
+        const state = getImageViewerState(container);
+        const pendingIndex = getImageViewerAssetIndex(pendingImageViewerSource);
+        if (pendingIndex >= 0) {
+            state.selectedIndex = pendingIndex;
+            state.zoom = 1;
+            pendingImageViewerSource = "";
+        }
+
+        if (container.dataset.ready === "true") {
+            syncImageViewer(container);
+            loadImageViewerAssets().then((assets) => {
+                if (!container.isConnected || !assets.length) return;
+                const currentAsset = state.assets[state.selectedIndex] || null;
+                imageViewerCurrentAssets = assets;
+                state.assets = assets;
+                const nextIndex = getImageViewerAssetIndex(pendingImageViewerSource || (currentAsset && currentAsset.name) || "");
+                state.selectedIndex = nextIndex >= 0 ? nextIndex : Math.min(state.selectedIndex, state.assets.length - 1);
+                pendingImageViewerSource = "";
+                syncImageViewer(container);
+            });
+            return;
+        }
+
+        container.dataset.ready = "true";
+
+        if (state.imageEl) {
+            state.imageEl.addEventListener("load", () => syncImageViewer(container));
+        }
+
+        container.addEventListener("click", (event) => {
+            const thumb = event.target.closest("[data-image-viewer-image-index]");
+            if (thumb) {
+                setImageViewerSelection(container, Number(thumb.getAttribute("data-image-viewer-image-index")) || 0);
+                return;
+            }
+
+            const actionButton = event.target.closest("[data-image-viewer-action]");
+            if (!actionButton) return;
+            const action = actionButton.getAttribute("data-image-viewer-action");
+            if (action === "previous") {
+                setImageViewerSelection(container, state.selectedIndex - 1);
+            } else if (action === "next") {
+                setImageViewerSelection(container, state.selectedIndex + 1);
+            } else if (action === "zoom-in") {
+                state.zoom = Math.min(2.5, Math.round((state.zoom + 0.25) * 100) / 100);
+                syncImageViewer(container);
+            } else if (action === "zoom-out") {
+                state.zoom = Math.max(0.5, Math.round((state.zoom - 0.25) * 100) / 100);
+                syncImageViewer(container);
+            } else if (action === "fit") {
+                state.zoom = 1;
+                syncImageViewer(container);
+            }
+        });
+
+        container.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                setImageViewerSelection(container, state.selectedIndex - 1);
+            } else if (event.key === "ArrowRight") {
+                event.preventDefault();
+                setImageViewerSelection(container, state.selectedIndex + 1);
+            } else if (event.key === "+" || event.key === "=") {
+                event.preventDefault();
+                state.zoom = Math.min(2.5, Math.round((state.zoom + 0.25) * 100) / 100);
+                syncImageViewer(container);
+            } else if (event.key === "-") {
+                event.preventDefault();
+                state.zoom = Math.max(0.5, Math.round((state.zoom - 0.25) * 100) / 100);
+                syncImageViewer(container);
+            } else if (event.key === "0") {
+                event.preventDefault();
+                state.zoom = 1;
+                syncImageViewer(container);
+            }
+        });
+
+        syncImageViewer(container);
+        loadImageViewerAssets().then((assets) => {
+            if (!container.isConnected || !assets.length) return;
+            const currentAsset = state.assets[state.selectedIndex] || null;
+            imageViewerCurrentAssets = assets;
+            state.assets = assets;
+            const nextIndex = getImageViewerAssetIndex(pendingImageViewerSource || (currentAsset && currentAsset.name) || "");
+            state.selectedIndex = nextIndex >= 0 ? nextIndex : Math.min(state.selectedIndex, state.assets.length - 1);
+            pendingImageViewerSource = "";
+            syncImageViewer(container);
+        });
+        if (container.tabIndex < 0) {
+            container.tabIndex = 0;
+        }
+        container.focus({ preventScroll: true });
+    }
+
+    function openImageViewerApp(src) {
+        pendingImageViewerSource = src || "";
+        openApp("image-viewer");
+        const record = windowRegistry.get("image-viewer");
+        const shell = record && record.window ? record.window.querySelector("[data-image-viewer-app]") : null;
+        if (shell) {
+            bootImageViewer(shell);
+        }
+    }
+
     function createThunderbirdWindow() {
         return [
             "<div class='mail-app' data-mail-app>",
@@ -10527,7 +11262,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             "      </div>",
             "      <div class='mail-row'>",
             "        <label class='mail-row__label' for='mail-to-field'>To</label>",
-            "        <div class='mail-row__field'><input class='mail-row__input' id='mail-to-field' type='text' data-mail-to autocomplete='off' /></div>",
+            "        <div class='mail-row__field'><input class='mail-row__input' id='mail-to-field' type='email' data-mail-to autocomplete='off' readonly aria-readonly='true' /></div>",
             "      </div>",
             "      <div class='mail-row is-hidden' data-mail-cc-row>",
             "        <label class='mail-row__label' for='mail-cc-field'>Cc</label>",
@@ -10604,6 +11339,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
         const draft = readThunderbirdDraft();
         state.toInput.value = draft.to;
+        enforceThunderbirdRecipient(state);
         state.ccInput.value = draft.cc;
         state.bccInput.value = draft.bcc;
         state.subjectInput.value = draft.subject;
@@ -10679,7 +11415,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                     return;
                 }
                 if (action === "send") {
-                    const to = state.toInput.value.trim();
+                    const to = enforceThunderbirdRecipient(state);
                     const cc = state.ccInput.value.trim();
                     const bcc = state.bccInput.value.trim();
                     const subject = state.subjectInput.value.trim();
@@ -11072,6 +11808,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         const docs = getEditorDocuments();
         const existing = docId ? state.tabs.find((tab) => tab.sourceId === docId) : null;
         if (existing && options.allowDuplicate !== true) {
+            refreshEditorTabFromSource(existing, docs.find((doc) => doc.id === docId));
             state.activeTabId = existing.id;
             syncEditorView(container);
             return existing;
@@ -11095,6 +11832,14 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         state.activeTabId = tab.id;
         syncEditorView(container);
         return tab;
+    }
+
+    function refreshEditorTabFromSource(tab, source) {
+        if (!tab || !source) return;
+        tab.title = source.title || tab.title;
+        if (!tab.dirty) {
+            tab.content = source.content || "";
+        }
     }
 
     function activateEditorTab(container, tabId) {
@@ -11135,6 +11880,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         const state = getEditorState(container);
         const existing = state.tabs.find((tab) => tab.sourceId === docId);
         if (existing) {
+            refreshEditorTabFromSource(existing, getEditorDocument(docId));
             activateEditorTab(container, existing.id);
             return;
         }
@@ -11481,7 +12227,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 items: [
                     createFilesDocumentLauncher("projects.txt"),
                     createFilesDocumentLauncher("experience.txt"),
-                    { id: "files-recent-apar", label: "apar.png", kind: "image", src: "assets/apar.png", meta: "Image preview" },
+                    { id: "files-recent-apar", label: "apar.png", kind: "image", src: "assets/images/projects/apar.png", meta: "Image preview" },
                     { id: "files-recent-resume", label: "resume.pdf", kind: "pdf", meta: "PDF document" }
                 ]
             },
@@ -11494,7 +12240,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 items: [
                     createFilesDocumentLauncher("about.txt"),
                     { id: "files-starred-resume", label: "resume.pdf", kind: "pdf", meta: "Pinned document" },
-                    { id: "files-starred-wallpaper", label: "wallpaper.png", kind: "image", src: "assets/wallpaper.png", meta: "Desktop wallpaper" }
+                    { id: "files-starred-wallpaper", label: "wallpaper.png", kind: "image", src: "assets/images/wallpapers/wallpaper.png", meta: "Desktop wallpaper" }
                 ]
             },
             trash: {
@@ -11528,12 +12274,12 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 sidebarSection: "folders",
                 emptyMessage: "",
                 items: [
-                    { id: "files-picture-apar", label: "apar.png", kind: "image", src: "assets/apar.png", meta: "APAR project" },
-                    { id: "files-picture-recruitment", label: "recruitment.png", kind: "image", src: "assets/recruitment.png", meta: "Recruitment portal" },
-                    { id: "files-picture-device", label: "device-reg.png", kind: "image", src: "assets/device-reg.png", meta: "Device registration" },
-                    { id: "files-picture-manpower", label: "manpower.png", kind: "image", src: "assets/manpower.png", meta: "Manpower portal" },
-                    { id: "files-picture-buspass", label: "buspass.png", kind: "image", src: "assets/buspass.png", meta: "Bus pass portal" },
-                    { id: "files-picture-wallpaper", label: "wallpaper.png", kind: "image", src: "assets/wallpaper.png", meta: "Desktop wallpaper" }
+                    { id: "files-picture-apar", label: "apar.png", kind: "image", src: "assets/images/projects/apar.png", meta: "APAR project" },
+                    { id: "files-picture-recruitment", label: "recruitment.png", kind: "image", src: "assets/images/projects/recruitment.png", meta: "Recruitment portal" },
+                    { id: "files-picture-device", label: "device-reg.png", kind: "image", src: "assets/images/projects/device-reg.png", meta: "Device registration" },
+                    { id: "files-picture-manpower", label: "manpower.png", kind: "image", src: "assets/images/projects/manpower.png", meta: "Manpower portal" },
+                    { id: "files-picture-buspass", label: "buspass.png", kind: "image", src: "assets/images/projects/buspass.png", meta: "Bus pass portal" },
+                    { id: "files-picture-wallpaper", label: "wallpaper.png", kind: "image", src: "assets/images/wallpapers/wallpaper.png", meta: "Desktop wallpaper" }
                 ]
             },
             videos: {
@@ -11552,8 +12298,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 emptyMessage: "",
                 items: [
                     { id: "files-download-resume", label: "resume.pdf", kind: "pdf", meta: "Resume export" },
-                    { id: "files-download-boot", label: "boot.gif", kind: "image", src: "assets/boot.gif", meta: "Boot animation" },
-                    { id: "files-download-bios", label: "bios_boot.gif", kind: "image", src: "assets/bios_boot.gif", meta: "BIOS splash" },
+                    { id: "files-download-boot", label: "boot.gif", kind: "image", src: "assets/images/animations/boot.gif", meta: "Boot animation" },
+                    { id: "files-download-bios", label: "bios_boot.gif", kind: "image", src: "assets/images/animations/bios_boot.gif", meta: "BIOS splash" },
                     { id: "files-download-sound", label: "ubuntu-start-sound.mp3", kind: "audio", meta: "Startup sound" }
                 ]
             },
@@ -11564,7 +12310,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 sidebarSection: "folders",
                 emptyMessage: "",
                 items: [
-                    { id: "files-desktop-firefox", label: "Firefox Portfolio", kind: "app", appId: "projects", meta: "Open browser", iconImage: "assets/firefox_logo.png" },
+                    { id: "files-desktop-firefox", label: "Firefox Portfolio", kind: "app", appId: "projects", meta: "Open browser", iconImage: "assets/images/apps/firefox_logo.png" },
                     { id: "files-desktop-editor", label: "Text Editor", kind: "app", appId: "text-editor", meta: "Open gedit", iconSvg: textEditorIconSvg },
                     { id: "files-desktop-terminal", label: "Terminal", kind: "app", appId: "terminal", meta: "Portfolio shell", icon: ">_" },
                     { id: "files-desktop-resume", label: "resume.pdf", kind: "pdf", meta: "Pinned document" }
@@ -11590,7 +12336,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 items: [
                     { id: "files-snap-terminal", label: "terminal.desktop", kind: "app", appId: "terminal", meta: "Launcher" },
                     { id: "files-snap-files", label: "files.desktop", kind: "app", appId: "files", meta: "Launcher" },
-                    { id: "files-snap-firefox", label: "firefox.desktop", kind: "app", appId: "projects", meta: "Launcher", iconImage: "assets/firefox_logo.png" }
+                    { id: "files-snap-firefox", label: "firefox.desktop", kind: "app", appId: "projects", meta: "Launcher", iconImage: "assets/images/apps/firefox_logo.png" }
                 ]
             },
             templates: {
@@ -12216,7 +12962,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         }
         if (entry.kind === "image" && entry.src) {
             syncFilesWindow(container);
-            openProjectLightbox(entry.src, entry.label);
+            openImageViewerApp(entry.src);
             return;
         }
         if (entry.kind === "pdf") {
@@ -12538,8 +13284,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             "    <div class='resume-sheet'>",
             "      <div class='resume-view'>",
             "        <div class='resume-view__frame'>",
-            "          <object class='resume-view__pdf' data='assets/resume.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' type='application/pdf' aria-label='Resume PDF'>",
-            "            <iframe class='resume-view__pdf' src='assets/resume.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' title='Resume PDF'></iframe>",
+            "          <object class='resume-view__pdf' data='assets/documents/resume.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' type='application/pdf' aria-label='Resume PDF'>",
+            "            <iframe class='resume-view__pdf' src='assets/documents/resume.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' title='Resume PDF'></iframe>",
             "          </object>",
             "        </div>",
             "      </div>",
@@ -14328,7 +15074,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             name: "Online Annual Performance Appraisal Report Management System",
             shortName: "APAR System",
             sidebarIcon: projectSidebarIcons.apar,
-            image: "assets/apar.png",
+            image: "assets/images/projects/apar.png",
             description: "Annual Performance Appraisal Report Management System",
             summary: "Developed a web-based APAR system using CakePHP and MySQL to digitize and streamline the annual employee performance appraisal process. The application enables employees to submit yearly performance reports through a structured reporting hierarchy, allowing Reporting Officers, Reviewing Officers, the Central Coordination Office, and Nodal Officers to process appraisal records efficiently.",
             stack: ["CakePHP", "MySQL"],
@@ -14350,7 +15096,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             name: "Online Recruitment and Application Management System",
             shortName: "Recruitment Portal",
             sidebarIcon: projectSidebarIcons.recruitment,
-            image: "assets/recruitment.png",
+            image: "assets/images/projects/recruitment.png",
             description: "Recruitment Portal",
             summary: "Developed a web-based Recruitment Portal to digitize the offline recruitment process and provide candidates with a smooth, step-by-step application experience.",
             stack: ["Laravel", "MySQL"],
@@ -14374,7 +15120,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             name: "Device Registration Portal",
             shortName: "Device Portal",
             sidebarIcon: projectSidebarIcons.device,
-            image: "assets/device-reg.png",
+            image: "assets/images/projects/device-reg.png",
             description: "Device Registration Portal",
             summary: "Web application enabling employees to register devices and MAC addresses for availing internet access within organization.",
             stack: ["Laravel", "MySQL"],
@@ -14394,7 +15140,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             name: "Manpower Requisition Portal",
             shortName: "Manpower Portal",
             sidebarIcon: projectSidebarIcons.manpower,
-            image: "assets/manpower.png",
+            image: "assets/images/projects/manpower.png",
             description: "Manpower Portal",
             summary: "Web application for maintaining records of manpower requests and allocation per project basis.",
             stack: ["Laravel", "MySQL"],
@@ -14413,7 +15159,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             name: "Bus Pass Portal",
             shortName: "Bus Pass Portal",
             sidebarIcon: projectSidebarIcons.buspass,
-            image: "assets/buspass.png",
+            image: "assets/images/projects/buspass.png",
             description: "Bus Pass Portal",
             summary: "Web application for generating QR code-based bus passes for staff and managing daily attendance.",
             stack: ["Laravel", "MySQL"],
@@ -14432,7 +15178,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             name: "RecycloBot - AI-Powered Recycling Adviser",
             shortName: "RecycloBot",
             sidebarIcon: projectSidebarIcons.buspass,
-            image: "assets/recyclobot.png",
+            image: "assets/images/projects/recyclobot.png",
             description: "AI-Powered Recycling Adviser",
             summary: "RecycloBot helps users determine whether an item is recyclable using AI. It analyzes a description, an image, or both, and provides personalized, region-specific recycling guidance.",
             stack: ["Gradio", "Nebius Studio API", "Google Gemini"],
@@ -14949,7 +15695,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             const isActive = tab.id === activeTab.id;
             return [
                 "<div class='browser-tab" + (isActive ? " is-active" : "") + "' data-browser-tab='" + tab.id + "'>",
-                "  <img class='browser-logo' src='assets/firefox_logo.png' alt='' />",
+                "  <img class='browser-logo' src='assets/images/apps/firefox_logo.png' alt='' />",
                 "  <span class='browser-tab__title'>" + (page ? page.title : getBrowserTabTitle(tab.page)) + "</span>",
                 "  <button class='browser-tab__close' type='button' data-browser-tab-close='" + tab.id + "' aria-label='Close tab'>×</button>",
                 "</div>"
@@ -15143,6 +15889,12 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             return;
         }
 
+        if (app.kind === "image-viewer") {
+            body.innerHTML = createImageViewerWindow();
+            bootImageViewer(body.querySelector("[data-image-viewer-app]") || body);
+            return;
+        }
+
         if (app.kind === "mail") {
             body.innerHTML = createThunderbirdWindow();
             bootThunderbird(body);
@@ -15161,7 +15913,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                     const action = button.getAttribute("data-resume-action");
                     if (action === "save") {
                         const link = document.createElement("a");
-                        link.href = "assets/resume.pdf";
+                        link.href = "assets/documents/resume.pdf";
                         link.download = "resume.pdf";
                         link.rel = "noopener";
                         document.body.appendChild(link);
@@ -15244,6 +15996,13 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             body.innerHTML = createFilesWindow();
             headerRoot = body;
             dragHandle = body.querySelector("[data-files-drag]") || body;
+        } else if (app.kind === "image-viewer") {
+            windowEl.classList.add("desktop-window--image-viewer");
+            windowEl.innerHTML = "<div class='window-body window-body--image-viewer'></div>";
+            body = windowEl.querySelector(".window-body--image-viewer");
+            body.innerHTML = createImageViewerWindow();
+            headerRoot = body;
+            dragHandle = body.querySelector("[data-image-viewer-drag]") || body;
         } else if (app.kind === "resume") {
             windowEl.classList.add("desktop-window--resume");
             windowEl.innerHTML = createStandardWindowShell(app.title, "window-body--resume", createResumeWindow());
@@ -15294,6 +16053,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             bootEditor(body);
         } else if (app.kind === "files") {
             bootFiles(body);
+        } else if (app.kind === "image-viewer") {
+            bootImageViewer(body.querySelector("[data-image-viewer-app]") || body);
         } else if (app.kind === "resume") {
             // PDF viewer has no boot state beyond wiring the shell.
         } else if (app.kind === "mail") {
@@ -15306,6 +16067,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             dragHandle = body.querySelector("[data-editor-drag]") || dragHandle;
         } else if (app.kind === "files") {
             dragHandle = body.querySelector("[data-files-drag]") || dragHandle;
+        } else if (app.kind === "image-viewer") {
+            dragHandle = body.querySelector("[data-image-viewer-drag]") || dragHandle;
         } else if (app.kind === "resume") {
             dragHandle = body.querySelector("[data-resume-drag]") || dragHandle;
         } else if (app.kind === "browser") {
@@ -15399,6 +16162,15 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                     if (action === "maximize") toggleMaximize(app.id);
                 });
             });
+        } else if (app.kind === "image-viewer") {
+            body.querySelectorAll("[data-window-action]").forEach((button) => {
+                const action = button.getAttribute("data-window-action");
+                button.addEventListener("click", () => {
+                    if (action === "close") hideWindow(app.id, false);
+                    if (action === "minimize") hideWindow(app.id, true);
+                    if (action === "maximize") toggleMaximize(app.id);
+                });
+            });
         } else if (app.kind === "resume") {
             body.querySelectorAll("[data-window-action]").forEach((button) => {
                 const action = button.getAttribute("data-window-action");
@@ -15472,6 +16244,12 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 const currentLocation = record.window.querySelector("[data-files-location].is-active");
                 if (currentLocation) {
                     currentLocation.focus();
+                }
+            } else if (app.kind === "image-viewer") {
+                const shell = record.window.querySelector("[data-image-viewer-app]");
+                if (shell) {
+                    bootImageViewer(shell);
+                    shell.focus({ preventScroll: true });
                 }
             } else if (app.kind === "mail") {
                 const editor = record.window.querySelector("[data-mail-editor]");
@@ -15940,8 +16718,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
     function beginBootSequence() {
         const currentBootToken = ++bootSequenceToken;
-        const biosBootSource = "assets/bios_boot.gif";
-        const bootGifSource = "assets/boot.gif";
+        const biosBootSource = "assets/images/animations/bios_boot.gif";
+        const bootGifSource = "assets/images/animations/boot.gif";
 
         clearBootTimers();
         setBootScreenOpen(true, { immediate: true });
@@ -15985,7 +16763,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         if (startupSoundPlayed || !window.Audio) return;
 
         if (!startupSoundAudio) {
-            startupSoundAudio = new Audio("assets/ubuntu-start-sound.mp3");
+            startupSoundAudio = new Audio("assets/audio/ubuntu-start-sound.mp3");
             startupSoundAudio.preload = "auto";
             startupSoundAudio.volume = 0.85;
         }
@@ -16290,7 +17068,8 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
                 const rect = button.getBoundingClientRect();
                 openFavoritesMenu(app, rect, {
                     offsetX: event.clientX - rect.left,
-                    offsetY: event.clientY - rect.top
+                    offsetY: event.clientY - rect.top,
+                    record: entry.record
                 });
             });
 
@@ -16407,10 +17186,15 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
 
     if (favoriteMenu) {
         favoriteMenu.addEventListener("click", (event) => {
-            const actionButton = event.target.closest("[data-favorites-action='toggle']");
+            const actionButton = event.target.closest("[data-favorites-action]");
             if (!actionButton || !favoritesMenuState.app) return;
-            const nextFavorite = !isAppFavorited(favoritesMenuState.app.id);
-            setAppFavorited(favoritesMenuState.app.id, nextFavorite);
+            const action = actionButton.getAttribute("data-favorites-action");
+            if (action === "close") {
+                closeDockApp(favoritesMenuState.appId);
+            } else if (action === "toggle") {
+                const nextFavorite = !isAppFavorited(favoritesMenuState.app.id);
+                setAppFavorited(favoritesMenuState.app.id, nextFavorite);
+            }
             closeFavoritesMenu();
         });
     }
@@ -16561,6 +17345,9 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
         if (event.target.closest("#favorites-menu")) {
             return;
         }
+        if (event.target.closest("#desktop-context-menu")) {
+            return;
+        }
         if (event.target.closest("#calendar-menu, #system-time")) {
             return;
         }
@@ -16571,6 +17358,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             closeOverview();
         }
         closeFavoritesMenu();
+        closeDesktopContextMenu();
         if (calendarMenuOpen) {
             closeCalendarMenu();
         }
@@ -16580,11 +17368,31 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
     });
 
     document.addEventListener("contextmenu", (event) => {
-        if (event.target.closest("#app-overview, #app-menu-button, #favorites-menu, #calendar-menu, #system-time, #system-menu, #system-menu-button")) {
+        if (event.target.closest("#app-overview, #app-menu-button, #favorites-menu, #desktop-context-menu, #calendar-menu, #system-time, #system-menu, #system-menu-button")) {
+            return;
+        }
+        const desktopTarget = event.target.closest(".desktop");
+        const blockedDesktopTarget = event.target.closest(".desktop-window, .desktop-shortcut, .dock, .top-bar, .app-overview, .calendar-menu, .system-menu, .favorites-menu");
+        if (!bootOpen && !lockOpen && desktopTarget && !blockedDesktopTarget) {
+            event.preventDefault();
+            openDesktopContextMenu(event.clientX, event.clientY);
             return;
         }
         closeFavoritesMenu();
+        closeDesktopContextMenu();
     });
+
+    if (desktopContextMenu) {
+        desktopContextMenu.addEventListener("click", (event) => {
+            const actionButton = event.target.closest("[data-desktop-action]");
+            if (!actionButton) return;
+            const action = actionButton.getAttribute("data-desktop-action");
+            closeDesktopContextMenu();
+            if (action === "change-background") {
+                void changeDesktopBackgroundRandomly();
+            }
+        });
+    }
 
     document.addEventListener("click", (event) => {
         if (bootOpen) {
@@ -16637,6 +17445,7 @@ Bachelor of Engineering in Computer Engineering - 🏛️ Mumbai University
             }
             if (overviewOpen) closeOverview();
             closeFavoritesMenu();
+            closeDesktopContextMenu();
             if (calendarMenuOpen) closeCalendarMenu();
             if (systemMenuOpen) closeSystemMenu();
         }
